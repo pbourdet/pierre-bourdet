@@ -3,6 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+    fetch('http://192.168.10.10/api')
+        .then(response => response.json())
+        .then(data => console.log(data.test));
   return (
     <div className="App">
       <header className="App-header">
