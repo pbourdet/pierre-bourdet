@@ -13,11 +13,6 @@ class ApiController extends AbstractController
      */
     public function index(): JsonResponse
     {
-        $response = new Jsonresponse();
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        $response->setContent(json_encode(['test' => 'ok']));
-        $response->setStatusCode(200);
-
-        return $response;
+        return $this->json(['test' => 'ok'], 200, ['Access-Control-Allow-Origin' => '*']);
     }
 }
