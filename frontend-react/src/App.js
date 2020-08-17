@@ -1,28 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Nav from "./Nav";
+import About from "./About";
+import Resume from "./Resume";
+import Home from "./Home";
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 function App() {
-    fetch(process.env.REACT_APP_API_URL + '/api')
-        .then(response => response.json())
-        .then(data => console.log(data.test));
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <Router>
+            <div className="App">
+                <Nav/>
+                <Switch>
+                    <Route path="/" exact component={Home}/>
+                    <Route path="/about" component={About}/>
+                    <Route path="/resume" component={Resume}/>
+                </Switch>
+            </div>
+        </Router>
     );
 }
 
