@@ -13,30 +13,94 @@ defaults: &defaults
               - MYSQL_PASSWORD=azerty
               - MYSQL_ROOT_PASSWORD=azerty
 
+filter_merge: &filter_merge
+    filters:
+        branches:
+            ignore:
+                - master
+
+only_master: &only_master
+    filters:
+        branches:
+            only:
+                - master
+
 commands:
-    test_command:
+    install:
         steps:
-            - checkout
             - run:
-                  name: Test SSH
+                  name: Install node packages
                   command: |
-                    ssh-keyscan -p 5022 $HOSTNAME >> ~/.ssh/known_hosts
-                    sudo apt-get update
-                    sudo apt-get install sshpass
-                    sshpass -p $SERVERPASS ssh-copy-id $USERNAME@$HOSTNAME -p 5022
-                    ssh ghugkvrz@node6-fr.n0c.com -p 5022 'pwd && exit'
+                    cd frontend-react/
+                    yarn --frozen-lockfile
+                    cd ..
+            - run:
+                  name: Install composer packages
+                  command: |
+                    cd symfony/
+                    composer install
+                    cd ..
+    phpunit:
+        steps:
+            - run:
+                  name: Run PHPUnits tests
+                  command: |
+                    cd symfony/
+                    ./vendor/bin/simple-phpunit
+                    cd ..
+
+    lint:
+        steps:
+            - run:
+                  name: PHP CS Fixer
+                  command: |
+                      cd symfony/
+                      ./vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --stop-on-violation --using-cache=no
+                      cd ..
+            - run:
+                  name: Yaml lint
+                  command: |
+                      cd symfony/
+                       ./vendor/bin/yaml-lint ./config
+                      cd ..
+
+    phpstan:
+        steps:
+            - run:
+                  name: Run PHPStan
+                  command: |
+                      cd symfony/
+                      vendor/bin/phpstan analyse -l 8 src
+                      cd ..
 
 jobs:
-    test_job:
+    check_pr:
+        <<: *defaults
+        steps:
+            - checkout
+            - install
+            - phpunit
+            - lint
+            - phpstan
+    deploy_prod:
         <<: *defaults
         steps:
             - add_ssh_keys:
                 fingerprint:
                     - "c9:23:91:68:e5:89:8f:9c:36:ce:1c:b7:55:9e:91:ea"
-            - test_command
+            - run:
+                  name: Production deploy
+                  command: |
+                    chmod 755 .circleci/deploy.sh
+                    ./.circleci/deploy.sh
 
 workflows:
     version: 2
-    test:
+    check:
         jobs:
-            - test_job
+            - check_pr:
+                  <<: *filter_merge
+    deploy:
+        jobs:
+            - deploy_prod:
+                  <<: *only_master
