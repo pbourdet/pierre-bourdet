@@ -4,6 +4,7 @@
 ssh-keyscan -p 5022 $HOSTNAME >> ~/.ssh/known_hosts
 sudo apt-get update
 sudo apt-get install sshpass
+sudo apt install rsync
 sshpass -p $SERVERPASS ssh-copy-id $USERNAME@$HOSTNAME -p 5022
 
 #Build react
