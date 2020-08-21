@@ -13,6 +13,6 @@ class ApiController extends AbstractController
      */
     public function index(): JsonResponse
     {
-        return $this->json(['test' => 'ok'], 200, ['Access-Control-Allow-Origin' => '*']);
+        return $this->json(['test' => 'ok'], 201, ['Access-Control-Allow-Origin' => '*']);
     }
 }
