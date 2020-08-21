@@ -73,6 +73,14 @@ commands:
                       vendor/bin/phpstan analyse -l 8 src
                       cd ..
 
+    deploy:
+        steps:
+            - run:
+                  name: Production deploy
+                  command: |
+                      chmod 755 .circleci/deploy.sh
+                      ./.circleci/deploy.sh
+
 jobs:
     check_pr:
         <<: *defaults
@@ -82,17 +90,15 @@ jobs:
             - phpunit
             - lint
             - phpstan
+
     deploy_prod:
         <<: *defaults
         steps:
             - add_ssh_keys:
                 fingerprint:
                     - "c9:23:91:68:e5:89:8f:9c:36:ce:1c:b7:55:9e:91:ea"
-            - run:
-                  name: Production deploy
-                  command: |
-                    chmod 755 .circleci/deploy.sh
-                    ./.circleci/deploy.sh
+            - checkout
+            - deploy
 
 workflows:
     version: 2
@@ -100,6 +106,7 @@ workflows:
         jobs:
             - check_pr:
                   <<: *filter_merge
+
     deploy:
         jobs:
             - deploy_prod:
