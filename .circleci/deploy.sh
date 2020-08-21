@@ -8,6 +8,7 @@ sshpass -p $SERVERPASS ssh-copy-id $USERNAME@$HOSTNAME -p 5022
 
 #Build react
 cd frontend-react/
+yarn --frozen-lockfile --prod
 yarn build
 
 #Delete server react build and transmit new on
