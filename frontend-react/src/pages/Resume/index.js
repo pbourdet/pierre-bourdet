@@ -1,12 +1,12 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 
-function Home() {
+function Resume() {
     return (
         <div className="App">
-            <h1>Homepage</h1>
+            <h1>Resume</h1>
         </div>
     );
 }
 
-export default Home;
+export default Resume;

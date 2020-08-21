@@ -43,10 +43,19 @@ commands:
     phpunit:
         steps:
             - run:
-                  name: Run PHPUnits tests
+                  name: Run PHPUnit tests
                   command: |
                     cd symfony/
                     ./vendor/bin/simple-phpunit
+                    cd ..
+
+    jest:
+        steps:
+            - run:
+                name: Run Jest tests
+                command: |
+                    cd frontend-react/
+                    yarn test src/
                     cd ..
 
     lint:
@@ -88,6 +97,7 @@ jobs:
             - checkout
             - install
             - phpunit
+            - jest
             - lint
             - phpstan
 
