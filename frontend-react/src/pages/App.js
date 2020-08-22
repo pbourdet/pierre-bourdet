@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import Nav from "../components/Nav";
-import About from "./About";
-import Resume from "./Resume";
-import Home from "./Home";
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Nav from '../components/Nav';
+import About from './About';
+import Resume from './Resume';
+import Home from './Home';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-function App() {
+function App () {
     return (
         <Router>
             <div className="App">

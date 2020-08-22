@@ -1,5 +1,5 @@
 import React from 'react';
-import Resume from "./index";
+import Resume from './index';
 import { render } from '@testing-library/react';
 
 test('renders resume page', () => {

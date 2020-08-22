@@ -72,6 +72,12 @@ commands:
                       cd symfony/
                        ./vendor/bin/yaml-lint ./config
                       cd ..
+            - run:
+                  name: JS lint
+                  command: |
+                      cd frontend-react/
+                      yarn eslint src/
+                      cd ..
 
     phpstan:
         steps:

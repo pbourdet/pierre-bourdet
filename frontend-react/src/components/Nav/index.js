@@ -1,8 +1,8 @@
 import React from 'react';
 import '../../pages/App.css';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function Nav() {
+function Nav () {
     const navStyle = {
         color: 'white'
     };

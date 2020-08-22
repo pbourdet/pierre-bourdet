@@ -1,6 +1,6 @@
 import React from 'react';
-import Nav from "./index";
-import { BrowserRouter as Router } from "react-router-dom";
+import Nav from './index';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 test('renders nav bar', () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import About from "./index";
+import About from './index';
 import { render } from '@testing-library/react';
 
 test('renders about page', () => {
