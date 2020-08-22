@@ -19,6 +19,6 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
 
     public function dataUrlProvider()
     {
-        yield ['/api'];
+        yield ['/'];
     }
 }
