@@ -3,6 +3,8 @@
 php74
 cd code/
 composer install
+php bin/console doctrine:migration:migrate --no-interaction
+php bin/console doctrine:fixtures:load --no-interaction
 
 # If you would like to do some extra provisioning you may
 # add any commands you wish to this file and they will
