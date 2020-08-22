@@ -13,12 +13,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private int $id;
+    use ResourceId;
+    use Timestampable;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -37,9 +33,9 @@ class User implements UserInterface
      */
     private string $password;
 
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getEmail(): ?string
