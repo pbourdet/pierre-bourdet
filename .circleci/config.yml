@@ -4,14 +4,13 @@ defaults: &defaults
     working_directory: ~/pbourdet
     docker:
         - image: circleci/php:7.4-node
-        - image: circleci/mysql:8.0.4
+        - image: mysql:5.7
           environment:
-              - MYSQL_ALLOW_EMPTY_PASSWORD=true
-              - MYSQL_HOST=127.0.0.1
-              - MYSQL_DATABASE=pierre-bourdet_test
-              - MYSQL_USER=pierre
-              - MYSQL_PASSWORD=azerty
-              - MYSQL_ROOT_PASSWORD=azerty
+              - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+              - MYSQL_USER=homestead
+              - MYSQL_PASSWORD=secret
+              - MYSQL_ROOT_PASSWORD=secret
+              - MYSQL_DATABASE=homestead
 
 filter_merge: &filter_merge
     filters:
@@ -39,6 +38,17 @@ commands:
                   command: |
                     cd symfony/
                     composer install
+                    cd ..
+
+    database:
+        steps:
+            - run:
+                name: Setup database
+                command: |
+                    cd symfony/
+                    sudo docker-php-ext-install pdo_mysql
+                    php bin/console doctrine:migration:migrate --no-interaction
+                    php bin/console doctrine:fixtures:load --no-interaction
                     cd ..
     phpunit:
         steps:
@@ -102,6 +112,7 @@ jobs:
         steps:
             - checkout
             - install
+            - database
             - phpunit
             - jest
             - lint
