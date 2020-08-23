@@ -18,7 +18,7 @@ scp -P 5022 -r ./build/* $USERNAME@$HOSTNAME:build/
 
 #Synchronization back to server
 cd ../symfony/
-rsync -h -v -r -P -e 'ssh -p 5022' ./ $USERNAME@$HOSTNAME:~/symfony --include=.env.prod --include=public/.htaccess --exclude-from=.gitignore --exclude=".*" --delete
+rsync -c -v -r -P -e 'ssh -p 5022' ./ $USERNAME@$HOSTNAME:~/symfony --include=.env.prod --include=public/.htaccess --exclude-from=.gitignore --exclude=".*" --delete
 
 # install back dependencies & update database schema
 ssh $USERNAME@$HOSTNAME -p 5022 'cd symfony/ && php composer.phar dump-env prod && php composer.phar install --no-dev --optimize-autoloader &&  php bin/console do:mi:mi --no-interaction && php bin/console cache:clear'

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Functionnal;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -20,5 +22,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
     public function dataUrlProvider()
     {
         yield ['/'];
+        yield ['/users/10'];
+        yield ['/users'];
     }
 }
