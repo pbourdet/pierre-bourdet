@@ -27,6 +27,8 @@ only_master: &only_master
 commands:
     install:
         steps:
+            - restore_cache:
+                  key: dependencies-{{ checksum "symfony/composer.lock" }}-{{ checksum "symfony/symfony.lock" }}-{{ checksum "frontend-react/yarn.lock" }}
             - run:
                   name: Install node packages
                   command: |
@@ -39,6 +41,11 @@ commands:
                     cd symfony/
                     composer install
                     cd ..
+            - save_cache:
+                  key: dependencies-{{ checksum "symfony/composer.lock" }}-{{ checksum "symfony/symfony.lock" }}-{{ checksum "frontend-react/yarn.lock" }}
+                  paths:
+                    - symfony/vendor
+                    - frontend-react/node_modules
 
     database:
         steps:
@@ -50,6 +57,7 @@ commands:
                     php bin/console doctrine:migration:migrate --no-interaction
                     php bin/console doctrine:fixtures:load --no-interaction
                     cd ..
+
     phpunit:
         steps:
             - run:
