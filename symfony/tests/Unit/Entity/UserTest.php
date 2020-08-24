@@ -47,4 +47,19 @@ class UserTest extends TestCase
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals($password, $this->testedObject->getPassword());
     }
+
+    public function testGetUpdatedAt(): void
+    {
+        $updatedAt = new \DateTimeImmutable();
+
+        $user = $this->testedObject->setUpdatedAt($updatedAt);
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertEquals($updatedAt, $user->getUpdatedAt());
+    }
+
+    public function testEraseCredentials(): void
+    {
+        $this->assertNull($this->testedObject->eraseCredentials());
+    }
 }
