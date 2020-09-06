@@ -4,26 +4,61 @@ declare(strict_types=1);
 
 namespace App\Tests\Functionnal;
 
+use App\DataFixtures\UserFixtures;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractEndPoint extends WebTestCase
 {
-    private const SERVER_INFORMATIONS = ['ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json'];
+    protected const SERVER_INFORMATIONS = ['ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json'];
+    protected const TOKEN_NOT_FOUND = 'JWT Token not found';
+    protected const NOT_YOUR_RESOURCE = 'This is not your resource';
+    protected const LOGIN_PAYLOAD = '{"username":"%s","password":"%s"}';
 
-    public function getResponseFromRequest(string $method, string $uri, string $payload = ''): Response
-    {
-        $client = self::createClient();
+    public function getResponseFromRequest(
+        string $method,
+        string $uri,
+        string $payload = '',
+        array $parameters = [],
+        bool $withAuthentification = true
+    ): Response {
+        $client = $this->createApiClient($withAuthentification);
 
         $client->request(
             $method,
             $uri.'.json',
-            [],
+            $parameters,
             [],
             self::SERVER_INFORMATIONS,
             $payload
         );
 
         return $client->getResponse();
+    }
+
+    protected function createApiClient(bool $withAuthentification): KernelBrowser
+    {
+        $client = self::createClient();
+
+        if (!$withAuthentification) {
+            return $client;
+        }
+
+        $client->request(
+            Request::METHOD_POST,
+            '/login_check',
+            [],
+            [],
+            self::SERVER_INFORMATIONS,
+            sprintf(self::LOGIN_PAYLOAD, UserFixtures::DEFAULT_EMAIL, UserFixtures::DEFAULT_PASSWORD)
+        );
+
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
+
+        return $client;
     }
 }
