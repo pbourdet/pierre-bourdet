@@ -11,7 +11,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ApiResource(
- *     itemOperations={"put", "delete", "get"},
+ *     itemOperations={
+ *         "put",
+ *         "delete",
+ *         "get"={
+ *             "controller"=NotFoundAction::class,
+ *             "read"=false,
+ *             "output"=false,
+ *         },
+ *     },
  *     collectionOperations={
  *         "get",
  *         "post"
