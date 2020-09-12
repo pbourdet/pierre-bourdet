@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
- * See https://api-platform.com/docs/core/jwt/#adding-endpoint-to-swaggerui-to-retrieve-a-jwt-token.
+ * See https://api-platform.com/docs/core/swagger/#overriding-the-openapi-specification.
  */
 final class SwaggerDecorator implements NormalizerInterface
 {
@@ -31,7 +31,10 @@ final class SwaggerDecorator implements NormalizerInterface
      */
     public function normalize($object, string $format = null, array $context = []): array
     {
+        /** @var array<mixed> $docs */
         $docs = $this->decorated->normalize($object, $format, $context);
+
+        unset($docs['paths']['/todos/{id}']['get']);
 
         $docs['components']['schemas']['Token'] = [
             'type' => 'object',

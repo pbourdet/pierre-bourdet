@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Entity;
 
+use App\Entity\Todo;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
@@ -61,5 +62,27 @@ class UserTest extends TestCase
     public function testEraseCredentials(): void
     {
         $this->assertNull($this->testedObject->eraseCredentials());
+    }
+
+    public function testAddTodo(): void
+    {
+        $todo = new Todo();
+
+        $user = $this->testedObject->addTodo($todo);
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertContains($todo, $user->getTodos());
+    }
+
+    public function testRemoveTodo(): void
+    {
+        $todo = new Todo();
+        $user = $this->testedObject
+            ->addTodo($todo)
+            ->removeTodo($todo)
+        ;
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertNotContains($todo, $user->getTodos());
     }
 }
