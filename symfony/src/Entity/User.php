@@ -6,12 +6,17 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={"get", "put", "delete"},
+ *     collectionOperations={"get", "post"}
+ * )
  */
 class User implements UserInterface
 {
@@ -35,9 +40,17 @@ class User implements UserInterface
      */
     private string $password;
 
+    /**
+     * @var Collection<int, Todo>
+     *
+     * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="user", orphanRemoval=true)
+     */
+    private Collection $todos;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->todos = new ArrayCollection();
     }
 
     public function getEmail(): ?string
@@ -114,5 +127,32 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Todo>
+     */
+    public function getTodos(): Collection
+    {
+        return $this->todos;
+    }
+
+    public function addTodo(Todo $todo): self
+    {
+        if (!$this->todos->contains($todo)) {
+            $this->todos[] = $todo;
+            $todo->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTodo(Todo $todo): self
+    {
+        if ($this->todos->contains($todo)) {
+            $this->todos->removeElement($todo);
+        }
+
+        return $this;
     }
 }

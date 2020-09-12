@@ -17,7 +17,6 @@ class UserSubscriber implements EventSubscriberInterface
     private const METHODS_ALLOWED = [
         Request::METHOD_PUT,
         Request::METHOD_DELETE,
-        Request::METHOD_PATCH,
     ];
 
     private UserAuthorizationChecker $userAuthorizationChecker;
