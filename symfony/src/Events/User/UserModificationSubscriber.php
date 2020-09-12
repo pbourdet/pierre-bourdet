@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Events;
+namespace App\Events\User;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Authorization\UserAuthorizationChecker;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class UserSubscriber implements EventSubscriberInterface
+class UserModificationSubscriber implements EventSubscriberInterface
 {
     private const METHODS_ALLOWED = [
         Request::METHOD_PUT,
