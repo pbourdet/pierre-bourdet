@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 trait Timestampable
 {
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"get_user", "get_users"})
      */
     private \DateTimeInterface $createdAt;
     /**
