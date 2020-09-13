@@ -95,4 +95,12 @@ class UserTest extends TestCase
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals($nickname, $user->getNickname());
     }
+
+    public function testHasBeenUpdated()
+    {
+        $now = new \DateTimeImmutable();
+        $this->testedObject->hasBeenUpdated();
+
+        $this->assertEquals($now->format('d/m/Y H:i'), $this->testedObject->getUpdatedAt()->format('d/m/Y H:i'));
+    }
 }

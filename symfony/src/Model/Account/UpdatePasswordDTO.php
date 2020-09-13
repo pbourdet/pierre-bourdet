@@ -88,7 +88,7 @@ class UpdatePasswordDTO
     /**
      * @Assert\IsTrue()
      */
-    public function isConfirmedPasswordEqualsToNewPassword(): bool
+    public function isConfirmedPasswordEqualToNewPassword(): bool
     {
         return $this->newPassword === $this->confirmedPassword;
     }
