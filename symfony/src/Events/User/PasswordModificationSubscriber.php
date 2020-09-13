@@ -15,7 +15,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class PasswordModificationSubscriber implements EventSubscriberInterface
 {
     private const METHODS_ALLOWED = [
-        Request::METHOD_PUT,
         Request::METHOD_POST,
     ];
 

@@ -15,7 +15,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class UserModificationSubscriber implements EventSubscriberInterface
 {
     private const METHODS_ALLOWED = [
-        Request::METHOD_PUT,
         Request::METHOD_DELETE,
     ];
 

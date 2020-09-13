@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait Timestampable
 {
@@ -15,6 +16,8 @@ trait Timestampable
     private \DateTimeInterface $createdAt;
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"get_user"})
+     * @Assert\IsNull()
      */
     private ?\DateTimeInterface $updatedAt;
 

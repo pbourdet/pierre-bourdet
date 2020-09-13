@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functionnal;
+namespace App\Tests\Functional;
 
 use Faker\Factory;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,12 +83,23 @@ class UserTest extends AbstractEndPoint
             false
         );
 
-        $content = $response->getContent();
-        $contentDecoded = json_decode($content, true);
+        $this->assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $response->getStatusCode());
+    }
 
-        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
-        $this->assertJson($content);
-        $this->assertNotEmpty($contentDecoded);
+    /**
+     * @depends testGetDefaultUser
+     */
+    public function testPatchDefaultUser(int $id): void
+    {
+        $response = $this->getResponseFromRequest(
+                Request::METHOD_PATCH,
+                self::USERS_URI.'/'.$id,
+                $this->getPayload(),
+                [],
+                false
+            );
+
+        $this->assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $response->getStatusCode());
     }
 
     /**
@@ -146,8 +157,10 @@ class UserTest extends AbstractEndPoint
 
     private function getPayload(): string
     {
-        $email = (Factory::create())->email;
+        $faker = Factory::create();
+        $email = $faker->email;
+        $nickname = $faker->firstName;
 
-        return sprintf('{"email":"%s","password":"123456"}', $email);
+        return sprintf('{"email":"%s","password":"123456","nickname":"%s"}', $email, $nickname);
     }
 }

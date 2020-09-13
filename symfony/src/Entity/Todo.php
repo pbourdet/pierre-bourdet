@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -33,27 +34,32 @@ class Todo
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private string $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="100")
      */
     private string $description;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\GreaterThan("today")
      */
     private ?\DateTime $date;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\IsFalse()
      */
-    private bool $isDone;
+    private bool $isDone = false;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="todos")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\IsNull()
      */
     private UserInterface $user;
 
