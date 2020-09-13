@@ -22,13 +22,14 @@ abstract class AbstractEndPoint extends WebTestCase
         string $uri,
         string $payload = '',
         array $parameters = [],
-        bool $withAuthentification = true
+        bool $withAuthentication = true,
+        string $json = '.json'
     ): Response {
-        $client = $this->createApiClient($withAuthentification);
+        $client = $this->createApiClient($withAuthentication);
 
         $client->request(
             $method,
-            $uri.'.json',
+            $uri.$json,
             $parameters,
             [],
             self::SERVER_INFORMATIONS,

@@ -59,7 +59,6 @@ class Todo
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="todos")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\IsNull()
      */
     private UserInterface $user;
 
