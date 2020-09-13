@@ -20,9 +20,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         "get"={
  *             "normalization_context"={"groups"={"get_user"}}
  *         },
- *         "put"={
- *             "normalization_context"={"groups"={"get_user"}}
- *         },
  *         "delete"
  *     },
  *     collectionOperations={
