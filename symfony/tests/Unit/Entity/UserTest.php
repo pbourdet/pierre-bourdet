@@ -85,4 +85,14 @@ class UserTest extends TestCase
         $this->assertInstanceOf(User::class, $user);
         $this->assertNotContains($todo, $user->getTodos());
     }
+
+    public function testGetNickname(): void
+    {
+        $nickname = 'spiderman';
+
+        $user = $this->testedObject->setNickname($nickname);
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertEquals($nickname, $user->getNickname());
+    }
 }

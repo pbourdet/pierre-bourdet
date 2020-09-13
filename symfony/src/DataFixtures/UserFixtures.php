@@ -14,6 +14,7 @@ class UserFixtures extends Fixture
 {
     public const DEFAULT_EMAIL = 'test@test.fr';
     public const DEFAULT_PASSWORD = '123456';
+    public const DEFAULT_NICKNAME = 'pierre';
 
     private UserPasswordEncoderInterface $encoder;
 
@@ -30,6 +31,7 @@ class UserFixtures extends Fixture
         $defaultUser
             ->setPassword($password)
             ->setEmail(self::DEFAULT_EMAIL)
+            ->setNickname(self::DEFAULT_NICKNAME)
         ;
 
         $manager->persist($defaultUser);
@@ -44,6 +46,7 @@ class UserFixtures extends Fixture
             $user
                 ->setEmail($faker->email)
                 ->setPassword($password)
+                ->setNickname($faker->firstName)
             ;
 
             $manager->persist($user);

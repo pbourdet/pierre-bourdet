@@ -28,7 +28,7 @@ class TodoCreationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::VIEW => ['setTodoUser', EventPriorities::PRE_VALIDATE],
+            KernelEvents::VIEW => ['setTodoUser', EventPriorities::POST_VALIDATE],
         ];
     }
 
