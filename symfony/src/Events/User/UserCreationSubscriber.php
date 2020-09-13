@@ -12,12 +12,8 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class PasswordModificationSubscriber implements EventSubscriberInterface
+class UserCreationSubscriber implements EventSubscriberInterface
 {
-    private const METHODS_ALLOWED = [
-        Request::METHOD_POST,
-    ];
-
     private UserPasswordEncoderInterface $encoder;
 
     public function __construct(UserPasswordEncoderInterface $userPasswordEncoder)
@@ -40,7 +36,7 @@ class PasswordModificationSubscriber implements EventSubscriberInterface
         $user = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if ($user instanceof User && in_array($method, self::METHODS_ALLOWED)) {
+        if ($user instanceof User && Request::METHOD_POST === $method) {
             $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
         }
     }

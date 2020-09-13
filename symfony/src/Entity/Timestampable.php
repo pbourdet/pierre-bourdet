@@ -37,4 +37,9 @@ trait Timestampable
 
         return $this;
     }
+
+    public function hasBeenUpdated(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
 }

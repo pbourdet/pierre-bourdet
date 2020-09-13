@@ -12,12 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class UserModificationSubscriber implements EventSubscriberInterface
+class UserDeletionSubscriber implements EventSubscriberInterface
 {
-    private const METHODS_ALLOWED = [
-        Request::METHOD_DELETE,
-    ];
-
     private UserAuthorizationChecker $userAuthorizationChecker;
 
     public function __construct(UserAuthorizationChecker $userAuthorizationChecker)
@@ -40,9 +36,8 @@ class UserModificationSubscriber implements EventSubscriberInterface
         $user = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if ($user instanceof User && in_array($method, self::METHODS_ALLOWED)) {
+        if ($user instanceof User && Request::METHOD_DELETE === $method) {
             $this->userAuthorizationChecker->check($user);
-            $user->setUpdatedAt(new \DateTimeImmutable());
         }
     }
 }

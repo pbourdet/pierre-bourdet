@@ -17,7 +17,7 @@ class UserAuthorizationChecker
         $this->security = $security;
     }
 
-    public function check(User $user): void
+    public function check(User $resourceUser): void
     {
         /** @var User|null $loggedInUser */
         $loggedInUser = $this->security->getUser();
@@ -27,7 +27,7 @@ class UserAuthorizationChecker
             throw new UnauthorizedHttpException($errorMessage, $errorMessage);
         }
 
-        if ($loggedInUser->getId() !== $user->getId()) {
+        if ($loggedInUser->getId() !== $resourceUser->getId()) {
             $errorMessage = 'This is not your resource';
             throw new UnauthorizedHttpException($errorMessage, $errorMessage);
         }
