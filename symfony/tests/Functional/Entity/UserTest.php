@@ -84,7 +84,12 @@ class UserTest extends AbstractEndPoint
             false
         );
 
+        $content = $response->getContent();
+        $contentDecoded = json_decode($content, true);
+
+        $this->assertJson($content);
         $this->assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $response->getStatusCode());
+        $this->assertArrayHasKey('message', $contentDecoded);
     }
 
     /**
@@ -100,7 +105,12 @@ class UserTest extends AbstractEndPoint
                 false
             );
 
+        $content = $response->getContent();
+        $contentDecoded = json_decode($content, true);
+
+        $this->assertJson($content);
         $this->assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $response->getStatusCode());
+        $this->assertArrayHasKey('message', $contentDecoded);
     }
 
     /**
@@ -140,7 +150,7 @@ class UserTest extends AbstractEndPoint
         $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
         $this->assertJson($content);
         $this->assertNotEmpty($contentDecoded);
-        $this->assertEquals(self::NOT_YOUR_RESOURCE, $contentDecoded['detail']);
+        $this->assertEquals(self::NOT_YOUR_RESOURCE, $contentDecoded['message']);
     }
 
     /**

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Authorization;
 
+use App\Authorization\Exception\AuthenticationException;
+use App\Authorization\Exception\ResourceAccessException;
 use App\Entity\User;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 
 class UserAuthorizationChecker
@@ -23,13 +25,11 @@ class UserAuthorizationChecker
         $loggedInUser = $this->security->getUser();
 
         if (null === $loggedInUser) {
-            $errorMessage = 'You are not authenticated';
-            throw new UnauthorizedHttpException($errorMessage, $errorMessage);
+            throw new AuthenticationException(Response::HTTP_UNAUTHORIZED, AuthenticationException::AUTHENTICATION_EXCEPTION);
         }
 
         if ($loggedInUser->getId() !== $resourceUser->getId()) {
-            $errorMessage = 'This is not your resource';
-            throw new UnauthorizedHttpException($errorMessage, $errorMessage);
+            throw new ResourceAccessException(Response::HTTP_UNAUTHORIZED, ResourceAccessException::RESOURCE_ACCESS_EXCEPTION);
         }
     }
 }

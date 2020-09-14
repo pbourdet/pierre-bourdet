@@ -96,7 +96,7 @@ class UserTest extends TestCase
         $this->assertEquals($nickname, $user->getNickname());
     }
 
-    public function testHasBeenUpdated()
+    public function testHasBeenUpdated(): void
     {
         $now = new \DateTimeImmutable();
         $this->testedObject->hasBeenUpdated();
