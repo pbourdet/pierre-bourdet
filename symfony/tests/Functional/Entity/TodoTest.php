@@ -68,6 +68,25 @@ class TodoTest extends AbstractEndPoint
     /**
      * @depends testPostTodo
      */
+    public function testPatchTodo(int $id): void
+    {
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_PATCH,
+            self::TODOS_URI.'/'.$id,
+            $this->getPayload()
+        );
+
+        $content = $response->getContent();
+        $contentDecoded = json_decode($content, true);
+
+        $this->assertEquals(Response::HTTP_METHOD_NOT_ALLOWED, $response->getStatusCode());
+        $this->assertJson($content);
+        $this->assertArrayHasKey('message', $contentDecoded);
+    }
+
+    /**
+     * @depends testPostTodo
+     */
     public function testDeleteTodo(int $id): void
     {
         $response = $this->getResponseFromRequest(
