@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional;
+namespace App\Tests\Functional\Entity;
 
+use App\Tests\Functional\AbstractEndPoint;
 use Faker\Factory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -126,34 +127,34 @@ class UserTest extends AbstractEndPoint
     /**
      * @depends testPostUser
      */
-    /*    public function testDeleteOtherUserWithJWT(int $id): void
-        {
-            $response = $this->getResponseFromRequest(
+    public function testDeleteOtherUserWithJWT(int $id): void
+    {
+        $response = $this->getResponseFromRequest(
                 Request::METHOD_DELETE,
                 self::USERS_URI.'/'.$id
             );
 
-            $content = $response->getContent();
-            $contentDecoded = json_decode($content, true);
+        $content = $response->getContent();
+        $contentDecoded = json_decode($content, true);
 
-            $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
-            $this->assertJson($content);
-            $this->assertNotEmpty($contentDecoded);
-            $this->assertEquals(self::NOT_YOUR_RESOURCE, $contentDecoded['detail']);
-        }*/
+        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
+        $this->assertJson($content);
+        $this->assertNotEmpty($contentDecoded);
+        $this->assertEquals(self::NOT_YOUR_RESOURCE, $contentDecoded['detail']);
+    }
 
     /**
      * @depends testGetDefaultUser
      */
-    /*    public function testDeleteDefaultUserWithJWT(int $id): void
-        {
-            $response = $this->getResponseFromRequest(
+    public function testDeleteDefaultUserWithJWT(int $id): void
+    {
+        $response = $this->getResponseFromRequest(
                 Request::METHOD_DELETE,
                 self::USERS_URI.'/'.$id
             );
 
-            $this->assertEquals(Response::HTTP_NO_CONTENT, $response->getStatusCode());
-        }*/
+        $this->assertEquals(Response::HTTP_NO_CONTENT, $response->getStatusCode());
+    }
 
     private function getPayload(): string
     {
