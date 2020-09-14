@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     itemOperations={},
  *     collectionOperations={
- *          "updatePassword"={
+ *          "post"={
  *              "path"="account/update-password",
  *              "controller"=UpdatePasswordController::class,
  *              "input"=UpdatePasswordDTO::class,
