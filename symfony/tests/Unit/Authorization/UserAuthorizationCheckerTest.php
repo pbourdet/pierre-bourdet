@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Authorization;
 
+use App\Authorization\Exception\AuthenticationException;
+use App\Authorization\Exception\ResourceAccessException;
 use App\Authorization\UserAuthorizationChecker;
 use App\Entity\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\Security;
 
 class UserAuthorizationCheckerTest extends TestCase
@@ -49,7 +50,7 @@ class UserAuthorizationCheckerTest extends TestCase
 
     public function testCheckNoLoggedInUser(): void
     {
-        $this->expectException(UnauthorizedHttpException::class);
+        $this->expectException(AuthenticationException::class);
 
         $user = $this->getMockBuilder(User::class)->getMock();
 
@@ -62,7 +63,7 @@ class UserAuthorizationCheckerTest extends TestCase
 
     public function testCheckWithDifferentUser(): void
     {
-        $this->expectException(UnauthorizedHttpException::class);
+        $this->expectException(ResourceAccessException::class);
 
         $loggedInUser = $this->getMockBuilder(User::class)->getMock();
         $user = $this->getMockBuilder(User::class)->getMock();
