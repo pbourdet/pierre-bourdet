@@ -32,6 +32,6 @@ class UpdatePasswordController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-        return $this->json('PASSWORD_UPDATED', Response::HTTP_OK);
+        return $this->json(['message' => 'PASSWORD_UPDATED'], Response::HTTP_OK);
     }
 }
