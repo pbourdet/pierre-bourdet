@@ -24,10 +24,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                  "summary"="A user can update his password.",
  *                  "responses"={
  *                      "200"={
- *                          "description"="Password successfully updated."
+ *                          "description"="Password successfully updated.",
+ *                          "content"={
+ *                              "application/json"={}
+ *                          }
  *                      },
  *                      "400"={
- *                          "description"="Input data is not valid."
+ *                          "description"="Input data is not valid.",
+ *                          "content"={
+ *                              "application/json"={}
+ *                          }
  *                      }
  *                  }
  *              }

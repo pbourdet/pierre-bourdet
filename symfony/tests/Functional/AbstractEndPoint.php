@@ -12,7 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractEndPoint extends WebTestCase
 {
-    protected const SERVER_INFORMATIONS = ['ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json'];
+    protected const SERVER_INFORMATIONS = [
+        'HTTP_ACCEPT' => 'application/json',
+        'ACCEPT' => 'application/json',
+        'CONTENT_TYPE' => 'application/json',
+    ];
     protected const TOKEN_NOT_FOUND = 'JWT Token not found';
     protected const NOT_YOUR_RESOURCE = 'This is not your resource';
     protected const LOGIN_PAYLOAD = '{"username":"%s","password":"%s"}';

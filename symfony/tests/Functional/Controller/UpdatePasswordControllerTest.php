@@ -31,7 +31,12 @@ class UpdatePasswordControllerTest extends AbstractEndPoint
             ''
         );
 
+        $content = $response->getContent();
+        $contentDecoded = json_decode($content, true);
+
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertJson($content);
+        $this->assertArrayHasKey('message', $contentDecoded);
     }
 
     public function testUpdatePasswordNotLoggedIn(): void
@@ -52,6 +57,67 @@ class UpdatePasswordControllerTest extends AbstractEndPoint
             ''
         );
 
+        $content = $response->getContent();
+        $contentDecoded = json_decode($content, true);
+
         $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
+        $this->assertJson($content);
+        $this->assertArrayHasKey('message', $contentDecoded);
+    }
+
+    public function testUpdatePasswordWithWrongPassword(): void
+    {
+        $payload = sprintf(
+            '{"previousPassword": "%s","newPassword": "%s","confirmedPassword": "%s"}',
+            'password',
+            UserFixtures::DEFAULT_PASSWORD,
+            UserFixtures::DEFAULT_PASSWORD,
+        );
+
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_POST,
+            self::UPDATE_PASSWORD_URI,
+            $payload,
+            [],
+            true,
+            ''
+        );
+
+        $content = $response->getContent();
+        $contentDecoded = json_decode($content, true);
+
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertJson($content);
+        $this->assertArrayHasKey('detail', $contentDecoded);
+        $this->assertArrayHasKey('violations', $contentDecoded);
+        $this->assertEquals($contentDecoded['violations'][0]['propertyPath'], 'previousPassword');
+    }
+
+    public function testUpdatePasswordWithDifferentPassword(): void
+    {
+        $payload = sprintf(
+            '{"previousPassword": "%s","newPassword": "%s","confirmedPassword": "%s"}',
+            UserFixtures::DEFAULT_PASSWORD,
+            UserFixtures::DEFAULT_PASSWORD,
+            'password'
+        );
+
+        $response = $this->getResponseFromRequest(
+            Request::METHOD_POST,
+            self::UPDATE_PASSWORD_URI,
+            $payload,
+            [],
+            true,
+            ''
+        );
+
+        $content = $response->getContent();
+        $contentDecoded = json_decode($content, true);
+
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertJson($content);
+        $this->assertArrayHasKey('detail', $contentDecoded);
+        $this->assertArrayHasKey('violations', $contentDecoded);
+        $this->assertEquals($contentDecoded['violations'][0]['propertyPath'], 'confirmedPasswordEqualToNewPassword');
     }
 }
