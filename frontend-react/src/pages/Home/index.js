@@ -5,7 +5,7 @@ function Home () {
     return (
         <div className="App">
             <h1>Homepage</h1>
-            <p>Site under construction !</p>
+            <p>Site under construction...</p>
         </div>
     );
 }
