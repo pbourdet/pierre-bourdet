@@ -6,16 +6,14 @@ import Resume from './Resume';
 import Home from './Home';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
-import fr from '../translations/fr.json';
-import en from '../translations/en.json';
+import translations from '../translations';
 import { useLocale } from '../contexts/LocaleContext';
 
 function App () {
-    const messages = { en, fr };
     const locale = useLocale();
 
     return (
-        <IntlProvider locale={locale} messages={messages[locale]}>
+        <IntlProvider locale={locale} messages={translations[locale]}>
             <Router>
                 <div className="App">
                     <Nav/>

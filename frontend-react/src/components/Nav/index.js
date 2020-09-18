@@ -2,6 +2,7 @@ import React from 'react';
 import '../../pages/App.css';
 import { Link } from 'react-router-dom';
 import { useLocaleUpdate } from '../../contexts/LocaleContext';
+import { FormattedMessage } from 'react-intl';
 
 function Nav () {
     const navStyle = {
@@ -12,16 +13,16 @@ function Nav () {
 
     return (
         <nav>
-            <button onClick={toggleLocale}>Toggle Locale</button>
+            <button onClick={toggleLocale}><FormattedMessage id="navbar.langage"/></button>
             <Link style={navStyle} to="/">
-                <h3>Welcome</h3>
+                <h3><FormattedMessage id="navbar.welcome"/></h3>
             </Link>
             <ul className="nav-links">
                 <Link style={navStyle} to="/about">
-                    <li>About</li>
+                    <li><FormattedMessage id="navbar.about"/></li>
                 </Link>
                 <Link style={navStyle} to="/resume">
-                    <li>Resume</li>
+                    <li><FormattedMessage id="navbar.resume"/></li>
                 </Link>
             </ul>
         </nav>
