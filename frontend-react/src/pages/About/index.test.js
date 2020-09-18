@@ -1,9 +1,10 @@
 import React from 'react';
 import About from './index';
-import { render } from '@testing-library/react';
+import { mountWithIntl } from '../../helpers/intl-enzyme-test-helper';
 
-test('renders about page', () => {
-    const { getByText } = render(<About/>);
-    const aboutText = getByText(/About/i);
-    expect(aboutText).toBeInTheDocument();
+test('renders home page', () => {
+    const wrapper = mountWithIntl(<About />);
+    const title = wrapper.find('h1').text();
+
+    expect(title).toBe('About');
 });
