@@ -1,6 +1,6 @@
 export default {
     navbar: {
-        langage: 'English',
+        language: 'English',
         welcome: 'Bienvenue',
         about: 'A propos',
         resume: 'CV'

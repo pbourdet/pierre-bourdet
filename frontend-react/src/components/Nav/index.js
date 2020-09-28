@@ -1,19 +1,22 @@
 import React from 'react';
 import '../../pages/App.css';
 import { Link } from 'react-router-dom';
-import { useLocaleUpdate } from '../../contexts/LocaleContext';
 import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
 
-function Nav () {
+function Nav ({ locale, setLocale }) {
     const navStyle = {
         color: 'white'
     };
 
-    const toggleLocale = useLocaleUpdate();
+    function toggleLocale () {
+        const newLocale = locale === 'fr' ? 'en' : 'fr';
+        setLocale(newLocale);
+    }
 
     return (
         <nav>
-            <button onClick={toggleLocale}><FormattedMessage id="navbar.langage"/></button>
+            <button onClick={toggleLocale}><FormattedMessage id="navbar.language"/></button>
             <Link style={navStyle} to="/">
                 <h3><FormattedMessage id="navbar.welcome"/></h3>
             </Link>
@@ -28,5 +31,10 @@ function Nav () {
         </nav>
     );
 }
+
+Nav.propTypes = {
+    locale: PropTypes.string,
+    setLocale: PropTypes.func
+};
 
 export default Nav;
