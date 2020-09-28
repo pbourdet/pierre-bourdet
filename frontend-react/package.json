@@ -5,13 +5,16 @@
   "dependencies": {
     "@sentry/react": "^5.23.0",
     "@sentry/tracing": "^5.23.0",
+    "boostrap": "^2.0.0",
+    "bootswatch": "^4.5.2",
     "env-cmd": "^10.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intl": "^5.8.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "reactstrap": "^8.6.0"
   },
   "scripts": {
     "start": "env-cmd -e dev react-scripts start",
@@ -24,7 +27,9 @@
     "extends": "react-app"
   },
   "jest": {
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "browserslist": {
     "production": [
