@@ -4,7 +4,6 @@ import App from './pages/App';
 import * as serviceWorker from './serviceWorker';
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
-import LocaleProvider from "./contexts/LocaleContext";
 
 Sentry.init({
     environment: process.env.REACT_APP_ENV,
@@ -17,9 +16,7 @@ Sentry.init({
 
 ReactDOM.render(
     <React.StrictMode>
-        <LocaleProvider>
-            <App />
-        </LocaleProvider>
+        <App />
     </React.StrictMode>,
     document.getElementById('root')
 );
