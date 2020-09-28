@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import 'bootswatch/dist/flatly/bootstrap.min.css';
 import './App.css';
 import Nav from '../components/Nav';
 import About from './About';
