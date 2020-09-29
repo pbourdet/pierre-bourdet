@@ -9,7 +9,7 @@ test('renders nav bar', () => {
             <Nav/>
         </Router>
     );
-    const welcomeText = wrapper.find('h3').text();
+    const welcomeText = wrapper.find('NavbarBrand').text();
 
-    expect(welcomeText).toBe('Welcome');
+    expect(welcomeText).toBe('Homepage');
 });

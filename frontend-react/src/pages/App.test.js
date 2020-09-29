@@ -11,7 +11,7 @@ it('renders without crashing', () => {
 test('button changes language', () => {
     const wrapper = mountWithIntl(<App/>);
 
-    expect(wrapper.find('h3').text()).toBe('Welcome');
-    wrapper.find('button').simulate('click');
-    expect(wrapper.find('h3').text()).toBe('Bienvenue');
+    expect(wrapper.find('NavbarBrand').text()).toBe('Homepage');
+    wrapper.find('#language-flag').simulate('click');
+    expect(wrapper.find('NavbarBrand').text()).toBe('Accueil');
 });

@@ -1,9 +1,11 @@
 export default {
     navbar: {
         language: 'Français',
-        welcome: 'Welcome',
+        home: 'Homepage',
         about: 'About',
-        resume: 'Resume'
+        resume: 'Resume',
+        signin: 'Sign in',
+        signup: 'Sign up'
     },
 
     homepage: {
