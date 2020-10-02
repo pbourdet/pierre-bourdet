@@ -8,10 +8,10 @@ it('renders without crashing', () => {
     ReactDOM.render(<App/>, div);
 });
 
-test('button changes language', () => {
+test('flag changes language', () => {
     const wrapper = mountWithIntl(<App/>);
 
     expect(wrapper.find('NavbarBrand').text()).toBe('Homepage');
-    wrapper.find('#language-flag').simulate('click');
+    wrapper.find('LocaleSelector').simulate('click');
     expect(wrapper.find('NavbarBrand').text()).toBe('Accueil');
 });

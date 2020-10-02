@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import 'bootswatch/dist/flatly/bootstrap.min.css';
-import './App.css';
-import Nav from '../components/Nav';
+import NavigationBar from '../components/NavigationBar';
 import About from './About';
 import Resume from './Resume';
 import Home from './Home';
@@ -16,7 +15,7 @@ function App () {
         <IntlProvider locale={locale} messages={translations[locale]}>
             <Router>
                 <div className="App">
-                    <Nav locale={locale} setLocale={setLocale} />
+                    <NavigationBar locale={locale} setLocale={setLocale} />
                     <Switch>
                         <Route path="/" exact component={Home}/>
                         <Route path="/about" component={About}/>
