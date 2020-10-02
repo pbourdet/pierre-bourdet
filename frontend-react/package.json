@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.11.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.31",
+    "@fortawesome/free-solid-svg-icons": "^5.15.0",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "@sentry/react": "^5.23.0",
     "@sentry/tracing": "^5.23.0",
     "boostrap": "^2.0.0",
@@ -10,12 +14,15 @@
     "env-cmd": "^10.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.3.0",
     "react-dom": "^16.13.1",
     "react-intl": "^5.8.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
-    "reactstrap": "^8.6.0"
+    "react-scripts": "3.4.3"
   },
+  "nohoist": [
+    "**/babel-preset-react-app/@babel/runtime"
+  ],
   "scripts": {
     "start": "env-cmd -e dev react-scripts start",
     "build": "env-cmd -e prod react-scripts build",

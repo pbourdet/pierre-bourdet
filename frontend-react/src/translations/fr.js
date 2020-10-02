@@ -8,8 +8,18 @@ export default {
         signup: 'S\'inscrire'
     },
 
+    login: {
+        header: 'Se connecter',
+        labelEmail: 'Email',
+        placeholderEmail: 'Votre adresse email',
+        labelPassword: 'Mot de passe',
+        placeholderPassword: 'Votre mot de passe',
+        signinButton: 'Se connecter',
+        cancelButton: 'Annuler'
+    },
+
     homepage: {
-        title: "Page d'accueil",
+        title: 'Page d\'accueil',
         info: 'Site en construction...'
     },
 
