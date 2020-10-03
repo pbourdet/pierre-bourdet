@@ -18,7 +18,7 @@ function NavigationBar ({ locale, setLocale }) {
                 <Container>
                     <LocaleSelector locale={locale} setLocale={setLocale}/>
                     <Link to="/">
-                        <Navbar.Brand as="span">
+                        <Navbar.Brand className="p-2" as="span">
                             <FormattedMessage id="navbar.home"/>
                         </Navbar.Brand>
                     </Link>
@@ -42,9 +42,9 @@ function NavigationBar ({ locale, setLocale }) {
                             </Link>
                         </Nav>
                         <LoginModal/>
-                        <Nav.Item className="btn" as="span">
+                        <Navbar.Text className="btn btn-link" as="span">
                             <FormattedMessage id="navbar.signup"/>
-                        </Nav.Item>
+                        </Navbar.Text>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

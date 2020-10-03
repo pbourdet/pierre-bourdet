@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import 'bootswatch/dist/flatly/bootstrap.min.css';
+import 'bootswatch/dist/litera/bootstrap.min.css';
 import NavigationBar from '../components/NavigationBar';
 import About from './About';
 import Resume from './Resume';
