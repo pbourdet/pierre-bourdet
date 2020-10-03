@@ -7,7 +7,7 @@ function LocaleSelector ({ locale, setLocale }) {
     return (
         <Dropdown>
             <Dropdown.Toggle className="mr-2" size="sm" variant="link" id="dropdown-basic">
-                <img className="mr-1" alt={"flag_"+locale} height="30" width="35" src={img.flag[locale]}/>
+                <img className="mr-1" alt={'flag_' + locale} height="30" width="35" src={img.flag[locale]}/>
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 <Dropdown.Item onClick={() => setLocale('fr')}><img id="french-flag" className="mr-1" alt="flag_fr" height="25" width="30" src={img.flag.fr}/>Français</Dropdown.Item>
