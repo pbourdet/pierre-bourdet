@@ -8,14 +8,35 @@ export default {
         signup: 'Sign up'
     },
 
-    login: {
+    signinModal: {
         header: 'Sign in',
-        labelEmail: 'Email',
-        placeholderEmail: 'Your email address',
-        labelPassword: 'Password',
-        placeholderPassword: 'Your password',
-        signinButton: 'Sign in',
+        submitButton: 'Sign in',
         cancelButton: 'Cancel'
+    },
+
+    signupModal: {
+        header: 'Sign up',
+        submitButton: 'Sign up',
+        cancelButton: 'Cancel'
+    },
+
+    userForm: {
+        email: {
+            placeholder: 'Your email address',
+            label: 'Email',
+        },
+        password: {
+            placeholder: 'Your password',
+            label: 'Password',
+        },
+        confirmPassword: {
+            placeholder: 'Confirm your password',
+            label: 'Password Confirmation',
+        },
+        nickname: {
+            placeholder: 'Your nickname',
+            label: 'Nickname',
+        },
     },
 
     homepage: {
