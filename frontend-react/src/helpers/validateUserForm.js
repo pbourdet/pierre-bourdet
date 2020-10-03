@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-export default function validateSignup (values) {
+export default function validateUserForm (values) {
     const errors = {};
 
     if (values.nickname.trim().length < 3) {

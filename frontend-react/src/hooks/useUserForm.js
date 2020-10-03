@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import validateSignup from "../helpers/validateUserForm";
 
-const useSignupForm = (validate) => {
+const useUserForm = () => {
     const [values, setValues] = useState({
         email: '',
         nickname: '',
@@ -28,7 +29,7 @@ const useSignupForm = (validate) => {
             ...touched,
             [name]: value !== ''
         });
-        setErrors(validate(values));
+        setErrors(validateSignup(values));
     };
 
     const clearAll = () => {
@@ -45,4 +46,4 @@ const useSignupForm = (validate) => {
     return { values, errors, touched, handleChange, handleBlur, handleSubmit, clearAll };
 };
 
-export default useSignupForm;
+export default useUserForm;
