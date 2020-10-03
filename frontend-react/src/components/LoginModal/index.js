@@ -32,11 +32,11 @@ function LoginModal () {
                             <Form.Control type="password" name="password" id="examplePassword" placeholder={intl.formatMessage({ id: 'login.placeholderPassword' })} />
                         </Form.Group>
                     </Form>
+                    <div className="d-flex justify-content-around mt-4">
+                        <Button variant="success" onClick={toggle}><FormattedMessage id="login.signinButton"/></Button>
+                        <Button variant="warning" onClick={toggle}><FormattedMessage id="login.cancelButton"/></Button>
+                    </div>
                 </Modal.Body>
-                <Modal.Footer className="d-flex justify-content-around">
-                    <Button variant="success" onClick={toggle}><FormattedMessage id="login.signinButton"/></Button>{' '}
-                    <Button variant="danger" onClick={toggle}><FormattedMessage id="login.cancelButton"/></Button>
-                </Modal.Footer>
             </Modal>
         </>
     );
