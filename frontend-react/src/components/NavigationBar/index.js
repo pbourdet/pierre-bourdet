@@ -9,7 +9,7 @@ import {
     Navbar,
     Nav
 } from 'react-bootstrap';
-import LoginModal from '../LoginModal';
+import SigninModal from "../SigninModal";
 
 function NavigationBar ({ locale, setLocale }) {
     return (
@@ -41,7 +41,7 @@ function NavigationBar ({ locale, setLocale }) {
                                 </Nav.Link>
                             </Link>
                         </Nav>
-                        <LoginModal/>
+                        <SigninModal/>
                         <Navbar.Text className="btn btn-link" as="span">
                             <FormattedMessage id="navbar.signup"/>
                         </Navbar.Text>

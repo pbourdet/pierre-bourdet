@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-function LoginModal () {
+function SigninModal () {
     const [modal, setModal] = useState(false);
     const intl = useIntl();
 
@@ -45,4 +45,4 @@ function LoginModal () {
     );
 }
 
-export default LoginModal;
+export default SigninModal;
