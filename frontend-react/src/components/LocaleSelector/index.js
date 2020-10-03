@@ -6,7 +6,7 @@ import { Dropdown } from 'react-bootstrap';
 function LocaleSelector ({ locale, setLocale }) {
     return (
         <Dropdown>
-            <Dropdown.Toggle className="mr-2" size="sm" variant="link" id="dropdown-basic">
+            <Dropdown.Toggle as="div" className="mr-2" size="sm" variant="link" id="dropdown-basic">
                 <img className="mr-1" alt={'flag_' + locale} height="30" width="35" src={img.flag[locale]}/>
             </Dropdown.Toggle>
             <Dropdown.Menu>

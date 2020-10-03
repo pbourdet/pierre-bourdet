@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,9 @@ import { FormattedMessage, useIntl } from 'react-intl';
 function LoginModal () {
     const [modal, setModal] = useState(false);
     const intl = useIntl();
+
+    const innerRef = useRef();
+    useEffect(() => innerRef.current && innerRef.current.focus(), [modal]);
 
     const toggle = () => setModal(!modal);
 
@@ -25,7 +28,7 @@ function LoginModal () {
                     <Form>
                         <Form.Group>
                             <Form.Label htmlFor="exampleEmail"><FormattedMessage id="login.labelEmail"/></Form.Label>
-                            <Form.Control type="email" name="email" id="exampleEmail" placeholder={intl.formatMessage({ id: 'login.placeholderEmail' })} />
+                            <Form.Control ref={innerRef} type="email" name="email" id="exampleEmail" placeholder={intl.formatMessage({ id: 'login.placeholderEmail' })} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label htmlFor="examplePassword"><FormattedMessage id="login.labelPassword"/></Form.Label>
@@ -33,7 +36,7 @@ function LoginModal () {
                         </Form.Group>
                     </Form>
                     <div className="d-flex justify-content-around mt-4">
-                        <Button variant="success" onClick={toggle}><FormattedMessage id="login.signinButton"/></Button>
+                        <Button variant="success" type="submit" onClick={toggle}><FormattedMessage id="login.signinButton"/></Button>
                         <Button variant="warning" onClick={toggle}><FormattedMessage id="login.cancelButton"/></Button>
                     </div>
                 </Modal.Body>
