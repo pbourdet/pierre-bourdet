@@ -9,8 +9,8 @@ import {
     Navbar,
     Nav
 } from 'react-bootstrap';
-import SigninModal from "../SigninModal";
-import SignupModal from "../SignupModal";
+import SigninModal from '../SigninModal';
+import SignupModal from '../SignupModal';
 
 function NavigationBar ({ locale, setLocale }) {
     return (

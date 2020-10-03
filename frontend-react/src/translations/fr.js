@@ -1,6 +1,5 @@
 export default {
     navbar: {
-        language: 'English',
         home: 'Accueil',
         about: 'A propos',
         resume: 'CV',
@@ -23,20 +22,40 @@ export default {
     userForm: {
         email: {
             placeholder: 'Votre adresse email',
-            label: 'Email',
+            label: 'Email'
         },
         password: {
             placeholder: 'Votre mot de passe',
-            label: 'Mot de passe',
+            label: 'Mot de passe'
         },
         confirmPassword: {
             placeholder: 'Confirmez votre mot de passe',
-            label: 'Confirmation mot de passe',
+            label: 'Confirmation mot de passe'
         },
         nickname: {
             placeholder: 'Votre pseudo',
-            label: 'Pseudo',
+            label: 'Pseudo'
         },
+        error: {
+            email: {
+                invalid: 'L\'adresse mail n\'est pas valide.',
+                empty: 'Vous devez indiquer une adresse mail.'
+            },
+            password: {
+                invalid: 'Le mot de passe doit contenir au moins un chiffre.',
+                short: 'Le mot de passe doit faire au moins 4 caractères de long.',
+                empty: 'Vous devez indiquer un mot de passe.'
+            },
+            nickname: {
+                invalid: 'Le pseudo ne peut contenir que des chiffres et des lettres.',
+                short: 'Le pseudo doit faire au moins 3 caractères de long.',
+                empty: 'Vous devez indiquer un pseudo.'
+            },
+            confirmPassword: {
+                empty: 'Vous devez vérifier votre mot de passe.',
+                different: 'Les mots de passe ne correspondent pas.'
+            }
+        }
     },
 
     homepage: {

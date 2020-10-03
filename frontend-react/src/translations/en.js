@@ -1,6 +1,5 @@
 export default {
     navbar: {
-        language: 'Français',
         home: 'Homepage',
         about: 'About',
         resume: 'Resume',
@@ -23,20 +22,36 @@ export default {
     userForm: {
         email: {
             placeholder: 'Your email address',
-            label: 'Email',
+            label: 'Email'
         },
         password: {
             placeholder: 'Your password',
-            label: 'Password',
+            label: 'Password'
         },
         confirmPassword: {
             placeholder: 'Confirm your password',
-            label: 'Password Confirmation',
+            label: 'Password Confirmation'
         },
         nickname: {
             placeholder: 'Your nickname',
-            label: 'Nickname',
+            label: 'Nickname'
         },
+        error: {
+            email: {
+                invalid: 'The email address is not valid.',
+            },
+            password: {
+                invalid: 'The password must contains at least one number.',
+                short: 'The password must be at least 4 characters long.',
+            },
+            nickname: {
+                invalid: 'The nickname can only contain letters or digits.',
+                short: 'The nickname must be at least 3 characters long.',
+            },
+            confirmPassword: {
+                different: 'The passwords do not match.'
+            }
+        }
     },
 
     homepage: {
