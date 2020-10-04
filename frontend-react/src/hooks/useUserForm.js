@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import validateSignup from '../helpers/validateUserForm';
+import { useEffect, useState } from 'react';
+import validateUserForm from '../helpers/validateUserForm';
 
 const useUserForm = () => {
     const [values, setValues] = useState({
@@ -11,25 +11,24 @@ const useUserForm = () => {
     const [touched, setTouched] = useState({});
     const [errors, setErrors] = useState({});
 
+    useEffect(() => {
+        setErrors(validateUserForm(values));
+    }, [values]);
+
     const handleChange = e => {
         const { name, value } = e.target;
         setValues({
             ...values,
             [name]: value
         });
-    };
-
-    const handleSubmit = e => {
-        e.preventDefault();
-    };
-
-    const handleBlur = e => {
-        const { name, value } = e.target;
         setTouched({
             ...touched,
             [name]: value !== ''
         });
-        setErrors(validateSignup(values));
+    };
+
+    const handleSubmit = e => {
+        e.preventDefault();
     };
 
     const clearAll = () => {
@@ -43,7 +42,7 @@ const useUserForm = () => {
         });
     };
 
-    return { values, errors, touched, handleChange, handleBlur, handleSubmit, clearAll };
+    return { values, errors, touched, handleChange, handleSubmit, clearAll };
 };
 
 export default useUserForm;

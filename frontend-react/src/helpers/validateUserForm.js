@@ -6,7 +6,7 @@ export default function validateUserForm (values) {
 
     if (values.nickname.trim().length < 3) {
         errors.nickname = <FormattedMessage id='userForm.error.nickname.short'/>;
-    } else if (!/^[a-zA-Z0-9]{3}/.test(values.nickname)) {
+    } else if (!/^[a-zA-Z0-9]{3,}$/.test(values.nickname)) {
         errors.nickname = <FormattedMessage id='userForm.error.nickname.invalid'/>;
     }
 
