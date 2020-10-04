@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-function UserFormInput ({ type, innerRef, handleChange, values, errors, touched }) {
+function UserFormInput ({ type, asterisk, innerRef, handleChange, values, errors, touched }) {
     const labelId = `userForm.${type}.label`;
     const ref = type === 'email' ? innerRef : null;
     const htmlType = type === 'confirmPassword' ? 'password' : type;
@@ -11,7 +11,7 @@ function UserFormInput ({ type, innerRef, handleChange, values, errors, touched 
 
     return (
         <Form.Group>
-            <Form.Label htmlFor={type}><FormattedMessage id={labelId}/><span className="text-danger"> *</span></Form.Label>
+            <Form.Label htmlFor={type}><FormattedMessage id={labelId}/>{asterisk && <span className="text-danger"> *</span>}</Form.Label>
             <Form.Control
                 ref={ref}
                 onChange={handleChange}
@@ -24,6 +24,7 @@ function UserFormInput ({ type, innerRef, handleChange, values, errors, touched 
 
 UserFormInput.propTypes = {
     type: PropTypes.string,
+    asterisk: PropTypes.bool,
     innerRef: PropTypes.object,
     handleChange: PropTypes.func,
     values: PropTypes.object,

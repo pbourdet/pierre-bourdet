@@ -19,8 +19,7 @@ function SignupModal () {
     const toggleModal = () => setModal(!modal);
 
     const inputTypes = ['email', 'nickname', 'password', 'confirmPassword'];
-
-    const isFormValid = Object.keys(errors).length === 0 && Object.keys(touched).length === 4;
+    const isFormValid = Object.keys(errors).length === 0 && Object.keys(touched).length === inputTypes.length;
 
     return (
         <>
@@ -38,6 +37,7 @@ function SignupModal () {
                         {inputTypes.map((type, index) => (
                             <UserFormInput
                                 type={type}
+                                asterisk={true}
                                 innerRef={innerRef}
                                 values={values}
                                 errors={errors}
