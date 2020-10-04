@@ -6,7 +6,7 @@ import UserFormInput from '../Input/UserFormInput';
 
 function SignupModal () {
     const [modal, setModal] = useState(false);
-    const { values, errors, touched, handleChange, handleBlur, handleSubmit, clearAll } = useUserForm();
+    const { values, errors, touched, handleChange, handleSubmit, clearAll } = useUserForm();
 
     const innerRef = useRef();
     useEffect(() => innerRef.current && innerRef.current.focus(), [modal]);
@@ -42,7 +42,6 @@ function SignupModal () {
                                 values={values}
                                 errors={errors}
                                 touched={touched}
-                                handleBlur={handleBlur}
                                 handleChange={handleChange}
                                 key={index}
                             />
