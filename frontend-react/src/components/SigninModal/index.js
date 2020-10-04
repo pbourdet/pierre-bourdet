@@ -3,7 +3,7 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage, useIntl } from 'react-intl';
-import useUserForm from "../../hooks/useUserForm";
+import useUserForm from '../../hooks/useUserForm';
 
 function SigninModal () {
     const [modal, setModal] = useState(false);

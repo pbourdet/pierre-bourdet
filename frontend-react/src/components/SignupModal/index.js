@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form, Modal, Navbar } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import useUserForm from '../../hooks/useUserForm';
-import UserFormInput from "../Input/UserFormInput";
+import UserFormInput from '../Input/UserFormInput';
 
 function SignupModal () {
     const [modal, setModal] = useState(false);

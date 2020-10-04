@@ -1,11 +1,12 @@
 import React from 'react';
-import {Form} from "react-bootstrap";
-import {FormattedMessage, useIntl} from "react-intl";
+import { Form } from 'react-bootstrap';
+import { FormattedMessage, useIntl } from 'react-intl';
+import PropTypes from 'prop-types';
 
-function UserFormInput({type, innerRef, handleBlur, handleChange, values, errors, touched}) {
+function UserFormInput ({ type, innerRef, handleBlur, handleChange, values, errors, touched }) {
     const labelId = `userForm.${type}.label`;
-    const ref = 'email' === type ? innerRef : null;
-    const htmlType = 'confirmPassword' === type ? 'password' : type;
+    const ref = type === 'email' ? innerRef : null;
+    const htmlType = type === 'confirmPassword' ? 'password' : type;
     const intl = useIntl();
 
     return (
@@ -21,4 +22,14 @@ function UserFormInput({type, innerRef, handleBlur, handleChange, values, errors
     );
 }
 
-export default UserFormInput
+UserFormInput.propTypes = {
+    type: PropTypes.string,
+    innerRef: PropTypes.object,
+    handleBlur: PropTypes.func,
+    handleChange: PropTypes.func,
+    values: PropTypes.object,
+    errors: PropTypes.object,
+    touched: PropTypes.object
+};
+
+export default UserFormInput;
