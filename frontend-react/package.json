@@ -9,6 +9,7 @@
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@sentry/react": "^5.23.0",
     "@sentry/tracing": "^5.23.0",
+    "axios": "^0.20.0",
     "boostrap": "^2.0.0",
     "bootswatch": "^4.5.2",
     "env-cmd": "^10.1.0",
