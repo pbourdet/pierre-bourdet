@@ -11,8 +11,16 @@ import {
 } from 'react-bootstrap';
 import SigninModal from '../SigninModal';
 import SignupModal from '../SignupModal';
+import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
 
 function NavigationBar ({ locale, setLocale }) {
+    const auth = useAuth();
+    const updateAuth = useAuthUpdate();
+
+    const logout = () => {
+        updateAuth(null);
+    };
+
     return (
         <div>
             <Navbar bg="light" expand="md">
@@ -42,8 +50,22 @@ function NavigationBar ({ locale, setLocale }) {
                                 </Nav.Link>
                             </Link>
                         </Nav>
-                        <SigninModal/>
-                        <SignupModal/>
+                        {auth
+                            ? <>
+                                <Link to="/me">
+                                    <Navbar.Text className="btn btn-link" as="span">
+                                        <FormattedMessage id="navbar.profile"/>
+                                    </Navbar.Text>
+                                </Link>
+                                <Navbar.Text onClick={logout} className="btn btn-link" as="span">
+                                    <FormattedMessage id="navbar.logout"/>
+                                </Navbar.Text>
+                            </>
+                            : <>
+                                <SigninModal/>
+                                <SignupModal/>
+                            </>
+                        }
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

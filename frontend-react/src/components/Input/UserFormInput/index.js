@@ -1,17 +1,16 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 function UserFormInput ({ type, asterisk, innerRef, handleChange, values, errors, touched }) {
-    const labelId = `userForm.${type}.label`;
     const ref = type === 'email' ? innerRef : null;
     const htmlType = type === 'confirmPassword' ? 'password' : type;
     const intl = useIntl();
 
     return (
         <Form.Group>
-            <Form.Label htmlFor={type}><FormattedMessage id={labelId}/>{asterisk && <span className="text-danger"> *</span>}</Form.Label>
+            <Form.Label htmlFor={type}>{intl.formatMessage({ id: `userForm.${type}.label` })}{asterisk && <span className="text-danger"> *</span>}</Form.Label>
             <Form.Control
                 ref={ref}
                 onChange={handleChange}

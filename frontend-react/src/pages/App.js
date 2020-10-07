@@ -7,7 +7,7 @@ import Home from './Home';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import translations from '../translations';
-import {AuthProvider} from "../contexts/AuthContext";
+import { AuthProvider } from '../contexts/AuthContext';
 
 function App () {
     const [locale, setLocale] = useState('en');

@@ -13,14 +13,11 @@ export function useAuthUpdate () {
 }
 
 export function AuthProvider ({ children }) {
-    const [auth, setAuth] = useState({
-        token: '',
-        user: {},
-        exp: 0
-    });
+    const [auth, setAuth] = useState(JSON.parse(localStorage.getItem('auth')));
 
     function updateAuth (newAuth) {
         setAuth(newAuth);
+        localStorage.setItem('auth', JSON.stringify(newAuth));
     }
 
     return (
