@@ -20,17 +20,11 @@ final class TodoCollectionDataProvider implements CollectionDataProviderInterfac
         $this->security = $security;
     }
 
-    /**
-     * @param array<mixed> $context
-     */
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
     {
         return Todo::class === $resourceClass;
     }
 
-    /**
-     * @return Collection<int, Todo>
-     */
     public function getCollection(string $resourceClass, string $operationName = null): Collection
     {
         /** @var User $user */

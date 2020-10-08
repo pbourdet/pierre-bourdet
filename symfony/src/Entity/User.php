@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\Account\GetMeController;
+use App\Model\User\CreateUserDTO;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,13 +22,27 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         "get"={
  *             "normalization_context"={"groups"={"get_user"}}
  *         },
+ *         "get_me"={
+ *             "method"="GET",
+ *             "normalization_context"={"groups"={"get_me"}},
+ *             "path"="/account/me",
+ *             "controller"=GetMeController::class,
+ *             "openapi_context"={
+ *                 "tags"={"Account"},
+ *                 "summary"="Retrieves current user resource.",
+ *                 "parameters"={}
+ *             },
+ *             "read"=false
+ *         },
  *         "delete"
  *     },
  *     collectionOperations={
  *         "get"={
  *             "normalization_context"={"groups"={"get_users"}}
  *         },
- *         "post"={
+ *         "create"={
+ *             "method"="POST",
+ *             "input"=CreateUserDTO::class,
  *             "normalization_context"={"groups"={"get_user"}}
  *         }
  *     }
@@ -39,7 +55,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"get_user", "get_users"})
+     * @Groups({"get_me"})
      * @Assert\Email()
      * @Assert\NotBlank()
      */
@@ -55,6 +71,7 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Assert\Length(min="4")
+     * @Assert\Regex("/\d/")
      * @Assert\NotBlank()
      */
     private string $password;
@@ -68,8 +85,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get_user"})
-     * @Assert\Regex(pattern="/^[a-zA-Z0-9]{3}/")
+     * @Groups({"get_user", "get_me"})
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9]{3,}$/")
      * @Assert\Length(max="15")
      */
     private string $nickname;

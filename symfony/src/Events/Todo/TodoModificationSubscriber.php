@@ -27,9 +27,6 @@ class TodoModificationSubscriber implements EventSubscriberInterface
         $this->userAuthorizationChecker = $userAuthorizationChecker;
     }
 
-    /**
-     * @return array<array>
-     */
     public static function getSubscribedEvents(): array
     {
         return [

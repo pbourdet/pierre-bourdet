@@ -11,12 +11,11 @@ trait Timestampable
 {
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"get_user", "get_users"})
+     * @Groups({"get_user", "get_me"})
      */
     private \DateTimeInterface $createdAt;
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"get_user"})
      * @Assert\IsNull()
      */
     private ?\DateTimeInterface $updatedAt;

@@ -20,7 +20,7 @@ class UserTest extends AbstractEndPoint
             self::USERS_URI,
             '',
             [],
-            false
+            true
         );
 
         $content = $response->getContent();
@@ -58,7 +58,7 @@ class UserTest extends AbstractEndPoint
             self::USERS_URI.'/1',
             '',
             [],
-            false
+            true
         );
 
         $content = $response->getContent();

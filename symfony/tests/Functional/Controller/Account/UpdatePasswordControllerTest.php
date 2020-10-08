@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Controller;
+namespace App\Tests\Functional\Controller\Account;
 
 use App\DataFixtures\UserFixtures;
 use App\Tests\Functional\AbstractEndPoint;

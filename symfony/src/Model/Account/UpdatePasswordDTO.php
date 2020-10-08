@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Account;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Controller\UpdatePasswordController;
+use App\Controller\Account\UpdatePasswordController;
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 

@@ -22,9 +22,6 @@ class TodoCreationSubscriber implements EventSubscriberInterface
         $this->security = $security;
     }
 
-    /**
-     * @return array<array>
-     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
+    private const SERVER_ERROR_EXCEPTION = 500;
+
     /**
      * @return array<array>
      */
@@ -26,12 +28,16 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         /** @var HttpException $exception */
         $exception = $event->getThrowable();
+        $statusCode = method_exists($exception, 'getStatusCode')
+            ? $exception->getStatusCode()
+            : self::SERVER_ERROR_EXCEPTION
+        ;
 
         $event->setResponse(new JsonResponse([
-                    'code' => $exception->getStatusCode(),
+                    'code' => $statusCode,
                     'message' => $exception->getMessage(),
                 ],
-                $exception->getStatusCode()
+                $statusCode
             )
         );
     }
