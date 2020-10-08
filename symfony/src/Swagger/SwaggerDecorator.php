@@ -24,11 +24,6 @@ final class SwaggerDecorator implements NormalizerInterface
         return $this->decorated->supportsNormalization($data, $format);
     }
 
-    /**
-     * @param array<mixed> $context
-     *
-     * @return array<array>
-     */
     public function normalize($object, string $format = null, array $context = []): array
     {
         /** @var array<mixed> $docs */

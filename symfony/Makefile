@@ -2,7 +2,7 @@ csfix:
 	./vendor/bin/php-cs-fixer fix --allow-risky=yes $(1)
 
 phpstan:
-	./vendor/bin/phpstan analyse -l 8 src/
+	./vendor/bin/phpstan analyse -c phpstan.neon
 
 yamlint:
 	./vendor/bin/yaml-lint config/

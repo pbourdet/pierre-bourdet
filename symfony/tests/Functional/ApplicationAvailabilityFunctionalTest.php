@@ -22,7 +22,5 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
     public function dataUrlProvider()
     {
         yield ['/'];
-        yield ['/users/10'];
-        yield ['/users'];
     }
 }
