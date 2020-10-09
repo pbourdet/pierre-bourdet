@@ -54,7 +54,7 @@ class TodoTest extends AbstractEndPoint
         $response = $this->getResponseFromRequest(
             Request::METHOD_PUT,
             self::TODOS_URI.'/'.$id,
-            $this->getPayload()
+            $this->getUpdatePayload()
         );
 
         $content = $response->getContent();
@@ -156,6 +156,16 @@ class TodoTest extends AbstractEndPoint
         $description = $faker->sentence;
         $date = '2120-09-13T23:52:32.989Z';
 
-        return sprintf('{"name":"%s","description":"%s","date":"%s"}', $name, $description, $date);
+        return sprintf('{"name":"%s","description":"%s","date":"%s","isDone":false}', $name, $description, $date);
+    }
+
+    private function getUpdatePayload(): string
+    {
+        $faker = Factory::create();
+        $name = $faker->word;
+        $description = $faker->sentence;
+        $date = '2019-09-13T23:52:32.989Z';
+
+        return sprintf('{"name":"%s","description":"%s","date":"%s","isDone":true}', $name, $description, $date);
     }
 }

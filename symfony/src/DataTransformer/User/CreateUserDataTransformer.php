@@ -22,11 +22,9 @@ final class CreateUserDataTransformer implements DataTransformerInterface
     /**
      * @param CreateUserDTO $object
      *
-     * @return User
-     *
      * @throws ValidationException
      */
-    public function transform($object, string $to, array $context = [])
+    public function transform($object, string $to, array $context = []): User
     {
         $this->validator->validate($object);
         $user = new User();

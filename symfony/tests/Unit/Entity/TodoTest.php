@@ -52,7 +52,7 @@ class TodoTest extends TestCase
         $todo = $this->testedObject->setIsDone(false);
 
         $this->assertInstanceOf(Todo::class, $todo);
-        $this->assertEquals(false, $this->testedObject->isDone());
+        $this->assertEquals(false, $this->testedObject->getIsDone());
     }
 
     public function testGetUser(): void

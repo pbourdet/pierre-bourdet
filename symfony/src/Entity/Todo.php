@@ -5,15 +5,20 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Model\Todo\PersistTodoDTO;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
  *     itemOperations={
- *         "put",
+ *         "update"={
+ *             "method"="PUT",
+ *             "input"=PersistTodoDTO::class,
+ *             "normalization_context"={"groups"={"persist_todo"}}
+ *         },
  *         "delete",
  *         "get"={
  *             "controller"=NotFoundAction::class,
@@ -22,8 +27,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         },
  *     },
  *     collectionOperations={
- *         "get",
- *         "post"
+ *         "get"={
+ *             "normalization_context"={"groups"={"get_todos"}}
+ *         },
+ *         "create"={
+ *             "method"="POST",
+ *             "input"=PersistTodoDTO::class,
+ *             "normalization_context"={"groups"={"persist_todo"}}
+ *         },
  *     }
  * )
  * @ORM\Entity(repositoryClass=TodoRepository::class)
@@ -34,25 +45,25 @@ class Todo
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Groups({"get_todos", "persist_todo"})
      */
     private string $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(max="100")
+     * @Groups({"get_todos", "persist_todo"})
      */
-    private string $description;
+    private ?string $description;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\GreaterThan("today")
+     * @Groups({"get_todos", "persist_todo"})
      */
     private ?\DateTime $date;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Assert\IsFalse()
+     * @Groups({"get_todos", "persist_todo"})
      */
     private bool $isDone = false;
 
@@ -74,12 +85,12 @@ class Todo
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): Todo
+    public function setDescription(?string $description): Todo
     {
         $this->description = $description;
 
@@ -98,7 +109,7 @@ class Todo
         return $this;
     }
 
-    public function isDone(): bool
+    public function getIsDone(): bool
     {
         return $this->isDone;
     }
