@@ -4,13 +4,16 @@ export default {
         about: 'A propos',
         resume: 'CV',
         signin: 'Se connecter',
-        signup: 'S\'inscrire'
+        signup: 'S\'inscrire',
+        profile: 'Mon profil',
+        logout: 'Déconnexion'
     },
 
     signinModal: {
         header: 'Se connecter',
         submitButton: 'Se connecter',
-        cancelButton: 'Annuler'
+        cancelButton: 'Annuler',
+        authError: 'Mot de passe ou email incorrect.'
     },
 
     signupModal: {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import validateUserForm from '../helpers/validateUserForm';
 
-const useUserForm = () => {
+export default function useUserFormValidation () {
     const [values, setValues] = useState({
         email: '',
         nickname: '',
@@ -27,10 +27,6 @@ const useUserForm = () => {
         });
     };
 
-    const handleSubmit = e => {
-        e.preventDefault();
-    };
-
     const clearAll = () => {
         setErrors({});
         setTouched({});
@@ -42,7 +38,5 @@ const useUserForm = () => {
         });
     };
 
-    return { values, errors, touched, handleChange, handleSubmit, clearAll };
+    return { values, errors, touched, handleChange, clearAll };
 };
-
-export default useUserForm;

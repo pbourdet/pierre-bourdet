@@ -4,13 +4,16 @@ export default {
         about: 'About',
         resume: 'Resume',
         signin: 'Sign in',
-        signup: 'Sign up'
+        signup: 'Sign up',
+        profile: 'My profile',
+        logout: 'Log out'
     },
 
     signinModal: {
         header: 'Sign in',
         submitButton: 'Sign in',
-        cancelButton: 'Cancel'
+        cancelButton: 'Cancel',
+        authError: 'Incorrect username or password.'
     },
 
     signupModal: {

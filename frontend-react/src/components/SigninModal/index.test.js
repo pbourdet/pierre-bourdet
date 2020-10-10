@@ -21,7 +21,7 @@ test('cancel button close modal', () => {
     const wrapper = mountWithIntl(<SigninModal/>);
 
     wrapper.find('button').simulate('click');
-    wrapper.find('.btn-warning').simulate('click');
+    wrapper.find('.btn-danger').simulate('click');
 
     expect(wrapper.find('Modal').first().props().show).toBe(false);
 });
@@ -30,10 +30,10 @@ test('submit button is disabled then enabled when input filled', () => {
     const wrapper = mountWithIntl(<SigninModal/>);
     wrapper.find('button').simulate('click');
 
-    expect(wrapper.find('.btn-success').first().props().disabled).toBe(true);
+    expect(wrapper.find('.btn-primary').last().props().disabled).toBe(true);
 
     wrapper.find('input#email').last().simulate('change', { target: { name: 'email', value: 'test@test.fr' } });
     wrapper.find('input#password').last().simulate('change', { target: { name: 'password', value: 'Azerty123' } });
 
-    expect(wrapper.find('.btn-success').first().props().disabled).toBe(false);
+    expect(wrapper.find('.btn-primary').last().props().disabled).toBe(false);
 });

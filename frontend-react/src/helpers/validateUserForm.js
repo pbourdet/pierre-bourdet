@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 export default function validateUserForm (values) {
     const errors = {};
 
-    if (values.nickname.trim().length < 3) {
+    if (values.nickname && values.nickname.trim().length < 3) {
         errors.nickname = <FormattedMessage id='userForm.error.nickname.short'/>;
     } else if (!/^[a-zA-Z0-9]{3,}$/.test(values.nickname)) {
         errors.nickname = <FormattedMessage id='userForm.error.nickname.invalid'/>;

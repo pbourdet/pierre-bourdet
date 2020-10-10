@@ -7,6 +7,7 @@ import Home from './Home';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import translations from '../translations';
+import { AuthProvider } from '../contexts/AuthContext';
 
 function App () {
     const [locale, setLocale] = useState('en');
@@ -15,12 +16,14 @@ function App () {
         <IntlProvider locale={locale} messages={translations[locale]}>
             <Router>
                 <div className="App">
-                    <NavigationBar locale={locale} setLocale={setLocale} />
-                    <Switch>
-                        <Route path="/" exact component={Home}/>
-                        <Route path="/about" component={About}/>
-                        <Route path="/resume" component={Resume}/>
-                    </Switch>
+                    <AuthProvider>
+                        <NavigationBar locale={locale} setLocale={setLocale} />
+                        <Switch>
+                            <Route path="/" exact component={Home}/>
+                            <Route path="/about" component={About}/>
+                            <Route path="/resume" component={Resume}/>
+                        </Switch>
+                    </AuthProvider>
                 </div>
             </Router>
         </IntlProvider>
