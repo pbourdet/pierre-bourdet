@@ -17,15 +17,6 @@ test('button open modal', () => {
     expect(wrapper.find('Modal').first().props().show).toBe(true);
 });
 
-test('cancel button close modal', () => {
-    const wrapper = mountWithIntl(<SigninModal/>);
-
-    wrapper.find('button').simulate('click');
-    wrapper.find('.btn-danger').simulate('click');
-
-    expect(wrapper.find('Modal').first().props().show).toBe(false);
-});
-
 test('submit button is disabled then enabled when input filled', () => {
     const wrapper = mountWithIntl(<SigninModal/>);
     wrapper.find('button').simulate('click');

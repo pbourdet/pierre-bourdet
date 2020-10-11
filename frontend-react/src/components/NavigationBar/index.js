@@ -2,19 +2,14 @@ import React from 'react';
 import '../../pages/App.css';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import PropTypes from 'prop-types';
 import LocaleSelector from '../LocaleSelector';
-import {
-    Container,
-    Navbar,
-    Nav
-} from 'react-bootstrap';
+import { Container, Navbar, Nav } from 'react-bootstrap';
 import SigninModal from '../SigninModal';
 import SignupModal from '../SignupModal';
 import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 
-function NavigationBar ({ locale, setLocale }) {
+function NavigationBar () {
     const auth = useAuth();
     const updateAuth = useAuthUpdate();
 
@@ -27,7 +22,7 @@ function NavigationBar ({ locale, setLocale }) {
         <div>
             <Navbar bg="light" expand="md">
                 <Container>
-                    <LocaleSelector locale={locale} setLocale={setLocale}/>
+                    <LocaleSelector/>
                     <Link to="/">
                         <Navbar.Brand className="p-2" as="span">
                             <FormattedMessage id="navbar.home"/>
@@ -74,10 +69,5 @@ function NavigationBar ({ locale, setLocale }) {
         </div>
     );
 }
-
-NavigationBar.propTypes = {
-    locale: PropTypes.string,
-    setLocale: PropTypes.func
-};
 
 export default NavigationBar;
