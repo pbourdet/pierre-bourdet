@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
 import { signupSubmit, signinSubmit } from '../../helpers/submitUserForm';
-import { useAuthUpdate } from '../../contexts/AuthContext';
+import { useAuthUpdate } from '../../contexts/AuthContext/index';
 import { toast } from 'react-toastify';
 
 function SignupModal () {

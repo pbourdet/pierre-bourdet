@@ -6,7 +6,7 @@ import LocaleSelector from '../LocaleSelector';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import SigninModal from '../SigninModal';
 import SignupModal from '../SignupModal';
-import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
+import { useAuth, useAuthUpdate } from '../../contexts/AuthContext/index';
 import { toast } from 'react-toastify';
 
 function NavigationBar () {

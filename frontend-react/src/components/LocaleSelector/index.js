@@ -1,7 +1,7 @@
 import React from 'react';
 import img from '../../assets/img';
 import { Dropdown } from 'react-bootstrap';
-import {useLocale, useLocaleUpdate} from "../../contexts/LocaleContext";
+import { useLocale, useLocaleUpdate } from '../../contexts/LocaleContext/index';
 
 function LocaleSelector () {
     const locale = useLocale();

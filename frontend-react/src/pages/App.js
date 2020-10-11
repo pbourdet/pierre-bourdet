@@ -7,9 +7,9 @@ import Resume from './Resume';
 import Home from './Home';
 import Profile from './Profile';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { AuthProvider } from '../contexts/AuthContext';
+import AuthProvider from '../contexts/AuthContext/index';
 import { ToastContainer } from 'react-toastify';
-import LocaleProvider from "../contexts/LocaleContext";
+import LocaleProvider from '../contexts/LocaleContext/index';
 
 function App () {
     return (

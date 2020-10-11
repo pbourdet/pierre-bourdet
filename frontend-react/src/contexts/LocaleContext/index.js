@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import {IntlProvider} from "react-intl";
-import translations from "../translations";
+import { IntlProvider } from 'react-intl';
+import translations from '../../translations';
 
 const LocaleContext = React.createContext();
 const LocaleUpdateContext = React.createContext();
@@ -14,7 +14,7 @@ export function useLocaleUpdate () {
     return useContext(LocaleUpdateContext);
 }
 
-function LocaleProvider ({ children }) {
+export default function LocaleProvider ({ children }) {
     const [locale, setLocale] = useState('en');
 
     function updateLocale (newLocale) {
@@ -38,5 +38,3 @@ LocaleProvider.propTypes = {
         PropTypes.node
     ]).isRequired
 };
-
-export default LocaleProvider;
