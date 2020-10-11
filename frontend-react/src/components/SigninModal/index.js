@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
 import { signinSubmit } from '../../helpers/submitUserForm';
-import { useAuthUpdate } from '../../contexts/AuthContext';
+import { useAuthUpdate } from '../../contexts/AuthContext/index';
 import { toast } from 'react-toastify';
 
 function SigninModal () {
@@ -77,9 +77,8 @@ function SigninModal () {
                     <div className="d-flex justify-content-around mt-4">
                         {loading
                             ? <Spinner animation="border" variant="primary"/>
-                            : <Button disabled={!isFormFilled} variant="primary" type="submit" onClick={handleSigninSubmit}><FormattedMessage id="signinModal.submitButton"/></Button>
+                            : <Button className="mr-4 ml-4" disabled={!isFormFilled} variant="primary" type="submit" onClick={handleSigninSubmit} block><FormattedMessage id="signinModal.submitButton"/></Button>
                         }
-                        <Button variant="danger" onClick={handleCancel}><FormattedMessage id="signinModal.cancelButton"/></Button>
                     </div>
                 </Modal.Body>
             </Modal>

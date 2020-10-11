@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'bootswatch/dist/litera/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import NavigationBar from '../components/NavigationBar';
@@ -7,20 +7,17 @@ import Resume from './Resume';
 import Home from './Home';
 import Profile from './Profile';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { IntlProvider } from 'react-intl';
-import translations from '../translations';
-import { AuthProvider } from '../contexts/AuthContext';
+import AuthProvider from '../contexts/AuthContext/index';
 import { ToastContainer } from 'react-toastify';
+import LocaleProvider from '../contexts/LocaleContext/index';
 
 function App () {
-    const [locale, setLocale] = useState('en');
-
     return (
-        <IntlProvider locale={locale} messages={translations[locale]}>
+        <LocaleProvider>
             <Router>
                 <div className="App">
                     <AuthProvider>
-                        <NavigationBar locale={locale} setLocale={setLocale} />
+                        <NavigationBar/>
                         <ToastContainer
                             position="top-center"
                             autoClose={4000}
@@ -36,7 +33,7 @@ function App () {
                     </AuthProvider>
                 </div>
             </Router>
-        </IntlProvider>
+        </LocaleProvider>
     );
 }
 

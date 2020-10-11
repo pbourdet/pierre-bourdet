@@ -12,7 +12,7 @@ export function useAuthUpdate () {
     return useContext(AuthUpdateContext);
 }
 
-export function AuthProvider ({ children }) {
+export default function AuthProvider ({ children }) {
     const [auth, setAuth] = useState(JSON.parse(localStorage.getItem('auth')));
 
     function updateAuth (newAuth) {

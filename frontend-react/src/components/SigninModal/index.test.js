@@ -2,38 +2,33 @@ import React from 'react';
 import SigninModal from './index';
 import { mountWithIntl } from '../../helpers/intl-enzyme-test-helper';
 
-test('component renders', () => {
-    const wrapper = mountWithIntl(<SigninModal/>);
-    const button = wrapper.find('Button');
+describe('<SigninModal />', () => {
+    let wrapper;
+    beforeEach(() => {
+        wrapper = mountWithIntl(<SigninModal />);
+    });
 
-    expect(button.text()).toBe('Sign in');
-});
+    it('should render component', function () {
+        const button = wrapper.find('Button');
 
-test('button open modal', () => {
-    const wrapper = mountWithIntl(<SigninModal/>);
-    expect(wrapper.find('Modal').first().props().show).toBe(false);
+        expect(button.text()).toBe('Sign in');
+    });
 
-    wrapper.find('button').simulate('click');
-    expect(wrapper.find('Modal').first().props().show).toBe(true);
-});
+    it('should open model on click', function () {
+        expect(wrapper.find('Modal').first().props().show).toBe(false);
 
-test('cancel button close modal', () => {
-    const wrapper = mountWithIntl(<SigninModal/>);
+        wrapper.find('button').simulate('click');
+        expect(wrapper.find('Modal').first().props().show).toBe(true);
+    });
 
-    wrapper.find('button').simulate('click');
-    wrapper.find('.btn-danger').simulate('click');
+    it('should make submit button enabled when filling form', function () {
+        wrapper.find('button').simulate('click');
 
-    expect(wrapper.find('Modal').first().props().show).toBe(false);
-});
+        expect(wrapper.find('.btn-primary').last().props().disabled).toBe(true);
 
-test('submit button is disabled then enabled when input filled', () => {
-    const wrapper = mountWithIntl(<SigninModal/>);
-    wrapper.find('button').simulate('click');
+        wrapper.find('input#email').last().simulate('change', { target: { name: 'email', value: 'test@test.fr' } });
+        wrapper.find('input#password').last().simulate('change', { target: { name: 'password', value: 'Azerty123' } });
 
-    expect(wrapper.find('.btn-primary').last().props().disabled).toBe(true);
-
-    wrapper.find('input#email').last().simulate('change', { target: { name: 'email', value: 'test@test.fr' } });
-    wrapper.find('input#password').last().simulate('change', { target: { name: 'password', value: 'Azerty123' } });
-
-    expect(wrapper.find('.btn-primary').last().props().disabled).toBe(false);
+        expect(wrapper.find('.btn-primary').last().props().disabled).toBe(false);
+    });
 });

@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
 import { signupSubmit, signinSubmit } from '../../helpers/submitUserForm';
-import { useAuthUpdate } from '../../contexts/AuthContext';
+import { useAuthUpdate } from '../../contexts/AuthContext/index';
 import { toast } from 'react-toastify';
 
 function SignupModal () {
@@ -75,9 +75,10 @@ function SignupModal () {
                         <div className="d-flex justify-content-around mt-4">
                             {loading
                                 ? <Spinner animation="border" variant="primary"/>
-                                : <Button disabled={!isFormValid} variant="primary" type="submit" onClick={handleSignupSubmit}><FormattedMessage id="signupModal.submitButton"/></Button>
+                                : <Button className="mr-4 ml-4" disabled={!isFormValid} variant="primary" type="submit" onClick={handleSignupSubmit} block>
+                                    <FormattedMessage id="signupModal.submitButton"/>
+                                </Button>
                             }
-                            <Button variant="danger" onClick={handleCancel}><FormattedMessage id="signupModal.cancelButton"/></Button>
                         </div>
                     </Form>
                 </Modal.Body>
