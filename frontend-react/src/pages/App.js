@@ -4,6 +4,7 @@ import NavigationBar from '../components/NavigationBar';
 import About from './About';
 import Resume from './Resume';
 import Home from './Home';
+import Profile from './Profile';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import translations from '../translations';
@@ -22,6 +23,7 @@ function App () {
                             <Route path="/" exact component={Home}/>
                             <Route path="/about" component={About}/>
                             <Route path="/resume" component={Resume}/>
+                            <Route path="/me" component={Profile}/>
                         </Switch>
                     </AuthProvider>
                 </div>

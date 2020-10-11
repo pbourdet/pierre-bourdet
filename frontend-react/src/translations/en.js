@@ -19,7 +19,8 @@ export default {
     signupModal: {
         header: 'Sign up',
         submitButton: 'Sign up',
-        cancelButton: 'Cancel'
+        cancelButton: 'Cancel',
+        signupError: 'This address email is already taken, try another one.'
     },
 
     userForm: {

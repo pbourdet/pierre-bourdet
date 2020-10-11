@@ -19,7 +19,8 @@ export default {
     signupModal: {
         header: 'S\'inscrire',
         submitButton: 'S\'inscrire',
-        cancelButton: 'Annuler'
+        cancelButton: 'Annuler',
+        signupError: 'Cette adresse email est déjà utilisée, essayez-en une autre.'
     },
 
     userForm: {

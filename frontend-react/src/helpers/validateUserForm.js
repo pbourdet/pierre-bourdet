@@ -10,7 +10,7 @@ export default function validateUserForm (values) {
         errors.nickname = <FormattedMessage id='userForm.error.nickname.invalid'/>;
     }
 
-    if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(values.email)) {
+    if (!/^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(values.email)) {
         errors.email = <FormattedMessage id='userForm.error.email.invalid'/>;
     }
 

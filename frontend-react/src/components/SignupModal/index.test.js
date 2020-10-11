@@ -20,7 +20,7 @@ test('button open modal', () => {
 test('cancel button close modal', () => {
     const wrapper = mountWithIntl(<SignupModal/>);
     wrapper.find('NavbarText').simulate('click');
-    wrapper.find('.btn-warning').simulate('click');
+    wrapper.find('.btn-danger').simulate('click');
 
     expect(wrapper.find('Modal').first().props().show).toBe(false);
 });

@@ -34,3 +34,19 @@ export async function signinSubmit (values) {
 
     return { auth: auth, isError: false };
 }
+
+export async function signupSubmit (values) {
+    const payload = {
+        email: values.email,
+        nickname: values.nickname,
+        password: values.password
+    };
+    return await axios.post('/users', JSON.stringify(payload))
+        .then(response => {
+            return response.status === 201;
+        })
+        .catch(error => {
+            console.log(error);
+            return false;
+        });
+}
