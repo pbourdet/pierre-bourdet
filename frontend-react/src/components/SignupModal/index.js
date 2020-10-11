@@ -1,25 +1,44 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Form, Modal, Navbar } from 'react-bootstrap';
+import {Alert, Button, Form, Modal, Navbar, Spinner} from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
+import {signupSubmit, signinSubmit} from '../../helpers/submitUserForm'
+import {useAuthUpdate} from "../../contexts/AuthContext";
 
 function SignupModal () {
     const [modal, setModal] = useState(false);
     const { values, errors, touched, handleChange, handleSubmit, clearAll } = useUserFormValidation();
+    const [loading, setLoading] = useState(false);
+    const [inError, setInError] = useState(false);
+    const updateAuth = useAuthUpdate();
 
     const innerRef = useRef();
     useEffect(() => innerRef.current && innerRef.current.focus(), [modal]);
 
     const handleCancel = () => {
+        setLoading(false);
         clearAll();
         toggleModal();
     };
 
-    const toggleModal = () => setModal(!modal);
-
     const inputTypes = ['email', 'nickname', 'password', 'confirmPassword'];
     const isFormValid = Object.keys(errors).length === 0 && Object.keys(touched).length === inputTypes.length;
+
+    const toggleModal = () => setModal(!modal);
+
+    const handleSignupSubmit = async () => {
+        setLoading(true);
+        const isCreated = await signupSubmit(values);
+
+        if (isCreated) {
+            const auth = await signinSubmit(values);
+            updateAuth(auth);
+        } else {
+            setInError(true);
+            setLoading(false);
+        }
+    };
 
     return (
         <>
@@ -46,9 +65,17 @@ function SignupModal () {
                                 key={index}
                             />
                         ))}
+                        {inError &&
+                        <Alert variant="danger" onClose={() => setInError(false)} dismissible>
+                            <p><FormattedMessage id="signupModal.signupError"/></p>
+                        </Alert>
+                        }
                         <div className="d-flex justify-content-around mt-4">
-                            <Button disabled={!isFormValid} variant="success" type="submit"><FormattedMessage id="signupModal.submitButton"/></Button>
-                            <Button variant="warning" onClick={handleCancel}><FormattedMessage id="signupModal.cancelButton"/></Button>
+                            {loading
+                                ? <Spinner animation="border" variant="primary"/>
+                                : <Button disabled={!isFormValid} variant="primary" type="submit" onClick={handleSignupSubmit}><FormattedMessage id="signupModal.submitButton"/></Button>
+                            }
+                            <Button variant="danger" onClick={handleCancel}><FormattedMessage id="signupModal.cancelButton"/></Button>
                         </div>
                     </Form>
                 </Modal.Body>
