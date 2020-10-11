@@ -32,7 +32,7 @@ export async function signinSubmit (values) {
         user: user
     };
 
-    return { auth: auth, isError: false };
+    return { auth, isError: false };
 }
 
 export async function signupSubmit (values) {

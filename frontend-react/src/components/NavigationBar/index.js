@@ -12,6 +12,7 @@ import {
 import SigninModal from '../SigninModal';
 import SignupModal from '../SignupModal';
 import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 function NavigationBar ({ locale, setLocale }) {
     const auth = useAuth();
@@ -19,6 +20,7 @@ function NavigationBar ({ locale, setLocale }) {
 
     const logout = () => {
         updateAuth(null);
+        toast.info(<FormattedMessage id="toast.user.logout" />);
     };
 
     return (

@@ -9,6 +9,14 @@ export default {
         logout: 'Déconnexion'
     },
 
+    toast: {
+        user: {
+            signup: 'Bienvenue {name} !',
+            signin: 'Bonjour {name} !',
+            logout: 'Vous êtes déconnectés.'
+        }
+    },
+
     signinModal: {
         header: 'Se connecter',
         submitButton: 'Se connecter',

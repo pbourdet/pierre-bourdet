@@ -7,6 +7,7 @@ import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
 import { signinSubmit } from '../../helpers/submitUserForm';
 import { useAuthUpdate } from '../../contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 function SigninModal () {
     const [modal, setModal] = useState(false);
@@ -38,6 +39,7 @@ function SigninModal () {
             setLoading(false);
         } else {
             updateAuth(auth);
+            toast.success(<FormattedMessage id='toast.user.signin' values={{ name: auth.user.nickname }}/>);
         }
     };
 
