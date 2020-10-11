@@ -9,6 +9,14 @@ export default {
         logout: 'Log out'
     },
 
+    toast: {
+        user: {
+            signup: 'Welcome {name} !',
+            signin: 'Hello {name} !',
+            logout: 'You are now logged out.'
+        }
+    },
+
     signinModal: {
         header: 'Sign in',
         submitButton: 'Sign in',
@@ -20,7 +28,7 @@ export default {
         header: 'Sign up',
         submitButton: 'Sign up',
         cancelButton: 'Cancel',
-        signupError: 'This address email is already taken, try another one.'
+        error: 'This address email is already taken, try another one.'
     },
 
     userForm: {

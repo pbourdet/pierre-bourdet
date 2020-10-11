@@ -5,6 +5,7 @@ import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
 import { signupSubmit, signinSubmit } from '../../helpers/submitUserForm';
 import { useAuthUpdate } from '../../contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 function SignupModal () {
     const [modal, setModal] = useState(false);
@@ -32,8 +33,9 @@ function SignupModal () {
         const isCreated = await signupSubmit(values);
 
         if (isCreated) {
-            const auth = await signinSubmit(values);
+            const { auth } = await signinSubmit(values);
             updateAuth(auth);
+            toast.success(<FormattedMessage id='toast.user.signup' values={{ name: auth.user.nickname }}/>);
         } else {
             setInError(true);
             setLoading(false);
@@ -45,7 +47,7 @@ function SignupModal () {
             <Navbar.Text onClick={toggleModal} className="btn btn-link" as="span">
                 <FormattedMessage id="navbar.signup"/>
             </Navbar.Text>
-            <Modal size="md" show={modal} onHide={toggleModal}>
+            <Modal size="md" show={modal} onHide={handleCancel}>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         <FormattedMessage id="signupModal.header"/>
@@ -67,7 +69,7 @@ function SignupModal () {
                         ))}
                         {inError &&
                         <Alert variant="danger" onClose={() => setInError(false)} dismissible>
-                            <p><FormattedMessage id="signupModal.signupError"/></p>
+                            <p><FormattedMessage id="signupModal.error"/></p>
                         </Alert>
                         }
                         <div className="d-flex justify-content-around mt-4">
