@@ -6,6 +6,7 @@ import About from './About';
 import Resume from './Resume';
 import Home from './Home';
 import Profile from './Profile';
+import Todos from './Todos';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AuthProvider from '../contexts/AuthContext/index';
 import { ToastContainer } from 'react-toastify';
@@ -29,6 +30,7 @@ function App () {
                             <Route path="/about" component={About}/>
                             <Route path="/resume" component={Resume}/>
                             <Route path="/me" component={Profile}/>
+                            <Route path="/todo" component={Todos}/>
                         </Switch>
                     </AuthProvider>
                 </div>

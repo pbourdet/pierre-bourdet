@@ -81,5 +81,10 @@ export default {
 
     resume: {
         title: 'CV'
+    },
+
+    todos: {
+        title: 'Todos',
+        info: 'Vos todos'
     }
 };

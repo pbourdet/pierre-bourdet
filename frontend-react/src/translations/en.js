@@ -77,5 +77,10 @@ export default {
 
     resume: {
         title: 'Resume'
+    },
+
+    todos: {
+        title: 'Todos',
+        info: 'Your todos'
     }
 };
