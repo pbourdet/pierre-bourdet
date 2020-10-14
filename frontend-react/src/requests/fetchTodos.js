@@ -2,7 +2,7 @@ import axios from '../config/axios';
 
 export async function fetchTodos (auth) {
     if (auth === null) {
-        return {};
+        return [];
     }
 
     return await axios.get('/todos', {

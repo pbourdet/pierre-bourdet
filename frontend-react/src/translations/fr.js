@@ -28,7 +28,7 @@ export default {
         header: 'S\'inscrire',
         submitButton: 'S\'inscrire',
         cancelButton: 'Annuler',
-        signupError: 'Cette adresse email est déjà utilisée, essayez-en une autre.'
+        error: 'Cette adresse email est déjà utilisée, essayez-en une autre.'
     },
 
     userForm: {
@@ -86,5 +86,10 @@ export default {
     todos: {
         title: 'Todos',
         info: 'Vos todos'
+    },
+
+    todoTable: {
+        task: 'Tâche',
+        date: 'Date & Heure'
     }
 };

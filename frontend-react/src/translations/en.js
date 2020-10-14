@@ -82,5 +82,10 @@ export default {
     todos: {
         title: 'Todos',
         info: 'Your todos'
+    },
+
+    todoTable: {
+        task: 'Task',
+        date: 'Date & Time'
     }
 };
