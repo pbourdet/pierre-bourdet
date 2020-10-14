@@ -30,10 +30,13 @@ class TodoFixtures extends Fixture implements DependentFixtureInterface
             for ($t = 0; $t < 5; ++$t) {
                 $todo = new Todo();
 
+                $dateTime = $faker->dateTimeInInterval('-7 days', '+7 days');
+                $dateTime->setTimestamp((int) (300 * ceil($dateTime->getTimestamp() / 300)));
+
                 $todo
                     ->setName($faker->word)
                     ->setDescription($faker->sentence)
-                    ->setDate($faker->dateTimeInInterval('-7 days', '+7 days'))
+                    ->setDate($dateTime)
                     ->setUser($user)
                     ->setIsDone($faker->boolean)
                 ;
