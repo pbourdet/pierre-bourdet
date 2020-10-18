@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, Table, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
+import CreateTodoModal from '../CreateTodoModal';
 
 function TodoTable ({ todos }) {
     if (!Object.keys(todos).length) {
@@ -14,21 +15,21 @@ function TodoTable ({ todos }) {
     return (
         <Row className="justify-content-center">
             <Col lg={10}>
-                <Table borderless size="md">
+                <Table bordered size="md">
                     <thead>
                         <tr>
-                            <th><FormattedMessage id="todoTable.task"/></th>
-                            <th className="d-none d-sm-table-cell">Description</th>
-                            <th><FormattedMessage id="todoTable.date"/></th>
-                            <th><Button variant="primary"><FontAwesomeIcon icon={faPlus}/><span className="d-none d-sm-inline">Add</span></Button></th>
+                            <th className="align-middle"><FormattedMessage id="todoTable.task"/></th>
+                            <th className="align-middle d-none d-sm-table-cell">Description</th>
+                            <th className="align-middle"><FormattedMessage id="todoTable.date"/></th>
+                            <th><CreateTodoModal/></th>
                         </tr>
                     </thead>
                     <tbody>
                         {todos.map((todo, index) => (
-                            <tr className="border-top" key={index}>
-                                <td className="border-right align-middle">{todo.name}</td>
+                            <tr key={index}>
+                                <td className="align-middle">{todo.name}</td>
                                 <td className="align-middle d-none d-sm-table-cell"><div>{todo.description}</div></td>
-                                <td className="w-25 border-right border-left align-middle">
+                                <td className="w-25 align-middle">
                                     <div><FormattedDate value={todo.date}/></div>
                                     <div><FormattedTime value={todo.date}/></div>
                                 </td>

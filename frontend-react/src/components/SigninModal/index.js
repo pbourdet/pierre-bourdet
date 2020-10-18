@@ -55,7 +55,7 @@ function SigninModal () {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form onChange={handleChange}>
                         {inputTypes.map((type, index) => (
                             <UserFormInput
                                 type={type}
@@ -64,7 +64,6 @@ function SigninModal () {
                                 values={values}
                                 errors={{}}
                                 touched={{}}
-                                handleChange={handleChange}
                                 key={index}
                             />
                         ))}
@@ -77,7 +76,7 @@ function SigninModal () {
                     <div className="d-flex justify-content-around mt-4">
                         {loading
                             ? <Spinner animation="border" variant="primary"/>
-                            : <Button className="mr-4 ml-4" disabled={!isFormFilled} variant="primary" type="submit" onClick={handleSigninSubmit} block><FormattedMessage id="signinModal.submitButton"/></Button>
+                            : <Button disabled={!isFormFilled} onClick={handleSigninSubmit} block><FormattedMessage id="signinModal.submitButton"/></Button>
                         }
                     </div>
                 </Modal.Body>

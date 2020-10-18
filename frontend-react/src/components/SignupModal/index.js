@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 function SignupModal () {
     const [modal, setModal] = useState(false);
-    const { values, errors, touched, handleChange, handleSubmit, clearAll } = useUserFormValidation();
+    const { values, errors, touched, handleChange, clearAll } = useUserFormValidation();
     const [loading, setLoading] = useState(false);
     const [inError, setInError] = useState(false);
     const updateAuth = useAuthUpdate();
@@ -54,7 +54,7 @@ function SignupModal () {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={handleSubmit}>
+                    <Form onChange={handleChange}>
                         {inputTypes.map((type, index) => (
                             <UserFormInput
                                 type={type}
@@ -63,7 +63,6 @@ function SignupModal () {
                                 values={values}
                                 errors={errors}
                                 touched={touched}
-                                handleChange={handleChange}
                                 key={index}
                             />
                         ))}
@@ -75,7 +74,7 @@ function SignupModal () {
                         <div className="d-flex justify-content-around mt-4">
                             {loading
                                 ? <Spinner animation="border" variant="primary"/>
-                                : <Button className="mr-4 ml-4" disabled={!isFormValid} variant="primary" type="submit" onClick={handleSignupSubmit} block>
+                                : <Button disabled={!isFormValid} onClick={handleSignupSubmit} block>
                                     <FormattedMessage id="signupModal.submitButton"/>
                                 </Button>
                             }

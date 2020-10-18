@@ -91,6 +91,15 @@ export default {
 
     todoTable: {
         task: 'Task',
-        date: 'Date & Time'
+        date: 'Date & Time',
+        add: 'Add'
+    },
+
+    todoModal: {
+        header: 'Add a todo',
+        task: 'Task',
+        description: 'Description',
+        date: 'Date',
+        time: 'Time'
     }
 };
