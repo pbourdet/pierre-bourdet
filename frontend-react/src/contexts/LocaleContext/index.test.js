@@ -10,16 +10,16 @@ describe('LocaleProvider', () => {
 
             return <>
                 <div>{locale}</div>
-                <button onClick={() => updateLocale('es')}>Auth</button>
+                <button onClick={() => updateLocale('fr-FR')}>Change locale</button>
             </>;
         };
 
         const wrapper = mount(<LocaleProvider><TestComponent/></LocaleProvider>);
 
-        expect(wrapper.find('div').text()).toEqual('en');
+        expect(wrapper.find('div').text()).toEqual('en-GB');
 
         wrapper.find('button').simulate('click');
 
-        expect(wrapper.find('div').text()).toEqual('es');
+        expect(wrapper.find('div').text()).toEqual('fr-FR');
     });
 });
