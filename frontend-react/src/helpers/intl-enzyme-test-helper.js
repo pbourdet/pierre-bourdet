@@ -3,8 +3,8 @@ import { mount, shallow } from 'enzyme';
 import translations from '../translations';
 
 // You can pass your messages to the IntlProvider. Optional: remove if unneeded.
-const defaultLocale = 'fr';
-const locale = 'en';
+const defaultLocale = 'fr-FR';
+const locale = 'en-GB';
 const messages = translations[locale]; // en.js
 
 export function mountWithIntl (node) {

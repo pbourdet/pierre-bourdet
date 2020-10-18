@@ -3,7 +3,7 @@ import { Button, Table, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
 
 function TodoTable ({ todos }) {
     if (!Object.keys(todos).length) {
@@ -29,8 +29,8 @@ function TodoTable ({ todos }) {
                                 <td className="border-right align-middle">{todo.name}</td>
                                 <td className="align-middle d-none d-sm-table-cell"><div>{todo.description}</div></td>
                                 <td className="w-25 border-right border-left align-middle">
-                                    <div>{todo.date.slice(0, 10).split('-').reverse().join('/')}</div>
-                                    <div>{todo.date.slice(11, 16)}</div>
+                                    <div><FormattedDate value={todo.date}/></div>
+                                    <div><FormattedTime value={todo.date}/></div>
                                 </td>
                                 <td className="w-25 align-middle">
                                     <Button className="mr-1" size="sm" variant="success"><FontAwesomeIcon icon={faCheck}/></Button>

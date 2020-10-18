@@ -16,8 +16,8 @@ const flattenMessages = (nestedMessages, prefix = '') =>
     }, {});
 
 const translations = {
-    en: flattenMessages(en),
-    fr: flattenMessages(fr)
+    'en-GB': flattenMessages(en),
+    'fr-FR': flattenMessages(fr)
 };
 
 export default translations;

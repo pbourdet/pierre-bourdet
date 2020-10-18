@@ -1,4 +1,9 @@
 export default {
+    languages: {
+        'fr-FR': 'Français',
+        'en-GB': 'English'
+    },
+
     navbar: {
         home: 'Homepage',
         about: 'About',

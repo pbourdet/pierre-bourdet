@@ -1,6 +1,6 @@
 export default {
     flag: {
-        fr: require('./french-flag.svg'),
-        en: require('./uk-flag.svg')
+        'fr-FR': require('./french-flag.svg'),
+        'en-GB': require('./uk-flag.svg')
     }
 };
