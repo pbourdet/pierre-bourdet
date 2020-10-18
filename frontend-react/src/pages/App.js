@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootswatch/dist/litera/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import NavigationBar from '../components/NavigationBar';
 import About from './About';
 import Resume from './Resume';
