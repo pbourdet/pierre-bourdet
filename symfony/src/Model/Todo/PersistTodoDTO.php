@@ -36,7 +36,7 @@ class PersistTodoDTO
     /**
      * @Assert\IsFalse(groups={"create_todo"})
      */
-    private bool $isDone;
+    private bool $isDone = false;
 
     public function getName(): string
     {
