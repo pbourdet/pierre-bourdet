@@ -154,9 +154,9 @@ class TodoTest extends AbstractEndPoint
         $faker = Factory::create();
         $name = $faker->word;
         $description = $faker->sentence;
-        $date = '2120-09-13T23:52:32.989Z';
+        $date = (new \DateTime())->getTimestamp();
 
-        return sprintf('{"name":"%s","description":"%s","date":"%s","isDone":false}', $name, $description, $date);
+        return sprintf('{"name":"%s","description":"%s","date":%s,"isDone":false}', $name, $description, $date);
     }
 
     private function getUpdatePayload(): string
@@ -164,8 +164,8 @@ class TodoTest extends AbstractEndPoint
         $faker = Factory::create();
         $name = $faker->word;
         $description = $faker->sentence;
-        $date = '2019-09-13T23:52:32.989Z';
+        $date = (new \DateTime())->getTimestamp();
 
-        return sprintf('{"name":"%s","description":"%s","date":"%s","isDone":true}', $name, $description, $date);
+        return sprintf('{"name":"%s","description":"%s","date":%s,"isDone":true}', $name, $description, $date);
     }
 }
