@@ -90,11 +90,13 @@ export default {
 
     todos: {
         title: 'Todos',
-        info: 'Vos todos'
+        noTodos: 'Vous n\'avez aucune todo !',
+        loggedOut: 'Connectez-vous pour utiliser les todos.'
     },
 
     todoTable: {
         task: 'Tâche',
-        date: 'Date & Heure'
+        description: 'Description',
+        date: 'Date et heure'
     }
 };

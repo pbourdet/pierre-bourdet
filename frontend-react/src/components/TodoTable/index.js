@@ -1,53 +1,49 @@
 import React from 'react';
-import { Button, Table, Col, Row } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
-import PropTypes from 'prop-types';
+import { faCheck, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
+import { useTodos } from '../../contexts/TodoContext';
 
-function TodoTable ({ todos }) {
+function TodoTable () {
+    const todos = useTodos();
+
     if (!Object.keys(todos).length) {
         return (
-            <div>Ajoutez des todos !</div>
+            <div><FormattedMessage id="todos.noTodos"/></div>
         );
     }
+
     return (
-        <Row className="justify-content-center">
-            <Col lg={10}>
-                <Table borderless size="md">
-                    <thead>
-                        <tr>
-                            <th><FormattedMessage id="todoTable.task"/></th>
-                            <th className="d-none d-sm-table-cell">Description</th>
-                            <th><FormattedMessage id="todoTable.date"/></th>
-                            <th><Button variant="primary"><FontAwesomeIcon icon={faPlus}/><span className="d-none d-sm-inline">Add</span></Button></th>
+        <div className="m-lg-5">
+            <Table bordered size="md">
+                <thead>
+                    <tr>
+                        <th className="align-middle"><FormattedMessage id="todoTable.task"/></th>
+                        <th className="align-middle d-none d-sm-table-cell"><FormattedMessage id="todoTable.description"/></th>
+                        <th className="align-middle"><FormattedMessage id="todoTable.date"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {todos.map((todo, index) => (
+                        <tr key={index}>
+                            <td className="align-middle">{todo.name}</td>
+                            <td className="align-middle d-none d-sm-table-cell"><div>{todo.description}</div></td>
+                            <td className="w-25- align-middle">
+                                <div>{todo.date && <FormattedDate value={todo.date}/>}</div>
+                                <div>{todo.date && <FormattedTime value={todo.date}/>}</div>
+                            </td>
+                            <td className="w-25 align-middle">
+                                <Button className="mr-1" size="sm" variant="success"><FontAwesomeIcon icon={faCheck}/></Button>
+                                <Button className="mr-1" size="sm"><FontAwesomeIcon icon={faPen}/></Button>
+                                <Button className="mr-1" size="sm" variant="danger"><FontAwesomeIcon icon={faTrash}/></Button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {todos.map((todo, index) => (
-                            <tr className="border-top" key={index}>
-                                <td className="border-right align-middle">{todo.name}</td>
-                                <td className="align-middle d-none d-sm-table-cell"><div>{todo.description}</div></td>
-                                <td className="w-25 border-right border-left align-middle">
-                                    <div><FormattedDate value={todo.date}/></div>
-                                    <div><FormattedTime value={todo.date}/></div>
-                                </td>
-                                <td className="w-25 align-middle">
-                                    <Button className="mr-1" size="sm" variant="success"><FontAwesomeIcon icon={faCheck}/></Button>
-                                    <Button className="mr-1" size="sm"><FontAwesomeIcon icon={faPen}/></Button>
-                                    <Button className="mr-1" size="sm" variant="danger"><FontAwesomeIcon icon={faTrash}/></Button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </Col>
-        </Row>
+                    ))}
+                </tbody>
+            </Table>
+        </div>
     );
 }
-
-TodoTable.propTypes = {
-    todos: PropTypes.array
-};
 
 export default TodoTable;

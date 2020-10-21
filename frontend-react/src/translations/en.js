@@ -86,11 +86,13 @@ export default {
 
     todos: {
         title: 'Todos',
-        info: 'Your todos'
+        noTodos: 'You have no todo !',
+        loggedOut: 'Sign in to use the todo list.'
     },
 
     todoTable: {
         task: 'Task',
-        date: 'Date & Time'
+        description: 'Description',
+        date: 'Date and time'
     }
 };
