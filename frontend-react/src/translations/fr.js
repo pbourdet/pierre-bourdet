@@ -97,6 +97,40 @@ export default {
     todoTable: {
         task: 'Tâche',
         description: 'Description',
-        date: 'Date et heure'
+        date: 'Date et heure',
+        add: 'Ajouter',
+        cancel: 'Annuler'
+    },
+
+    todoForm: {
+        addTodo: 'Ajouter todo',
+        name: {
+            placeholder: 'Une tâche',
+            label: 'Tâche'
+        },
+        description: {
+            placeholder: 'Une description',
+            label: 'Description'
+        },
+        date: {
+            label: 'Date'
+        },
+        time: {
+            label: 'Heure'
+        },
+        error: {
+            name: {
+                long: 'La tâche ne doit pas excéder 50 caractères'
+            },
+            description: {
+                long: 'La description ne doit pas excéder 100 caractères'
+            },
+            date: {
+                soon: 'La date ne peut pas être antérieur à aujourd\'hui.'
+            },
+            time: {
+                missing: 'Vous devez aussi choisir une date.'
+            }
+        }
     }
 };

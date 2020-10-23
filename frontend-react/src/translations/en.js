@@ -93,6 +93,40 @@ export default {
     todoTable: {
         task: 'Task',
         description: 'Description',
-        date: 'Date and time'
+        date: 'Date and time',
+        add: 'Add',
+        cancel: 'Cancel'
+    },
+
+    todoForm: {
+        addTodo: 'Add todo',
+        name: {
+            placeholder: 'A task',
+            label: 'Task'
+        },
+        description: {
+            placeholder: 'A description',
+            label: 'Description'
+        },
+        date: {
+            label: 'Date'
+        },
+        time: {
+            label: 'Time'
+        },
+        error: {
+            name: {
+                long: 'The task must contains less than 50 characters.'
+            },
+            description: {
+                long: 'The description must contains less than 100 characters.'
+            },
+            date: {
+                soon: 'The date must not be before today.'
+            },
+            time: {
+                missing: 'You must also choose a date'
+            }
+        }
     }
 };

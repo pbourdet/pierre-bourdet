@@ -5,6 +5,7 @@ import { useAuth } from '../AuthContext';
 
 const TodoContext = React.createContext();
 const TodoGetContext = React.createContext();
+const TodoCreateContext = React.createContext();
 
 export function useTodos () {
     return useContext(TodoContext);
@@ -12,6 +13,10 @@ export function useTodos () {
 
 export function useGetTodos () {
     return useContext(TodoGetContext);
+}
+
+export function useCreateTodo () {
+    return useContext(TodoCreateContext);
 }
 
 export default function TodoProvider ({ children }) {
@@ -35,10 +40,18 @@ export default function TodoProvider ({ children }) {
         setTodos(todos);
     }
 
+    async function createTodo (todo) {
+        const newTodos = [...todos, todo];
+
+        setTodos(newTodos);
+    }
+
     return (
         <TodoContext.Provider value={todos}>
             <TodoGetContext.Provider value={getTodos}>
-                {children}
+                <TodoCreateContext.Provider value={createTodo}>
+                    {children}
+                </TodoCreateContext.Provider>
             </TodoGetContext.Provider>
         </TodoContext.Provider>
     );

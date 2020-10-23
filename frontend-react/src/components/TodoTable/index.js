@@ -1,12 +1,17 @@
-import React from 'react';
-import { Button, Table } from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Collapse, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faPen, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
 import { useTodos } from '../../contexts/TodoContext';
+import TodoForm from '../TodoForm';
 
 function TodoTable () {
     const todos = useTodos();
+    const [open, setOpen] = useState(false);
+
+    const innerRef = useRef();
+    useEffect(() => innerRef.current && innerRef.current.focus(), [open]);
 
     if (!Object.keys(todos).length) {
         return (
@@ -15,34 +20,88 @@ function TodoTable () {
     }
 
     return (
-        <div className="m-lg-5">
-            <Table bordered size="md">
-                <thead>
-                    <tr>
-                        <th className="align-middle"><FormattedMessage id="todoTable.task"/></th>
-                        <th className="align-middle d-none d-sm-table-cell"><FormattedMessage id="todoTable.description"/></th>
-                        <th className="align-middle"><FormattedMessage id="todoTable.date"/></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {todos.map((todo, index) => (
-                        <tr key={index}>
-                            <td className="align-middle">{todo.name}</td>
-                            <td className="align-middle d-none d-sm-table-cell"><div>{todo.description}</div></td>
-                            <td className="w-25- align-middle">
-                                <div>{todo.date && <FormattedDate value={todo.date}/>}</div>
-                                <div>{todo.date && <FormattedTime value={todo.date}/>}</div>
-                            </td>
-                            <td className="w-25 align-middle">
-                                <Button className="mr-1" size="sm" variant="success"><FontAwesomeIcon icon={faCheck}/></Button>
-                                <Button className="mr-1" size="sm"><FontAwesomeIcon icon={faPen}/></Button>
-                                <Button className="mr-1" size="sm" variant="danger"><FontAwesomeIcon icon={faTrash}/></Button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </div>
+        <>
+            <div style={{ fontSize: '90%' }} className="m-3">
+                <Row>
+                    <Col xs={5} sm={2} className="p-3 border">
+                        <div className="d-table w-100 h-100">
+                            <div className="d-table-cell align-middle h6">
+                                <FormattedMessage id="todoTable.task"/>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col sm={5} className="p-3 border d-none d-sm-block">
+                        <div className="d-table w-100 h-100">
+                            <div className="d-table-cell align-middle h6">
+                                <FormattedMessage id="todoTable.description"/>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col xs={4} sm={3} className="d-flex p-3 border">
+                        <div className="d-table w-100 h-100">
+                            <div className="d-table-cell align-middle h6">
+                                <FormattedMessage id="todoTable.date"/>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col xs={3} sm={2} className="border-left border-bottom p-3">
+                        {open
+                            ? <Button variant="danger" onClick={() => setOpen(!open)} aria-controls="create-todo-form" aria-expanded={open}>
+                                <FontAwesomeIcon className="mr-1" icon={faTimes}/>
+                                <span className="d-none d-md-inline"><FormattedMessage id="todoTable.cancel"/></span>
+                            </Button>
+                            : <Button onClick={() => setOpen(!open)} aria-controls="create-todo-form" aria-expanded={open}>
+                                <FontAwesomeIcon className="mr-1" icon={faPlus}/>
+                                <span className="d-none d-md-inline"><FormattedMessage id="todoTable.add"/></span>
+                            </Button>
+                        }
+
+                    </Col>
+                </Row>
+                <Collapse in={open}>
+                    <div id="create-todo-form">
+                        <TodoForm todo={{}}/>
+                    </div>
+                </Collapse>
+                {todos.map((todo, index) => (
+                    <Row key={index}>
+                        <Col xs={5} sm={2} className="p-2 border">
+                            <div className="d-table w-100 h-100">
+                                <div className="d-table-cell align-middle">
+                                    {todo.name}
+                                </div>
+                            </div>
+                        </Col>
+                        <Col sm={5} className="p-2 border d-none d-sm-block">
+                            <div className="d-table w-100 h-100">
+                                <div className="d-table-cell align-middle">
+                                    {todo.description}
+                                </div>
+                            </div>
+                        </Col>
+                        <Col xs={4} sm={3} className="p-2 border">
+                            <div className="d-table w-100 h-100">
+                                <div className="d-table-cell align-middle">
+                                    <div>{todo.date && <FormattedDate value={todo.date}/>}</div>
+                                    <div>{todo.date && <FormattedTime value={todo.date}/>}</div>
+                                </div>
+                            </div>
+                        </Col>
+                        <Col xs={3} sm={2} className="p-2 border">
+                            <div className="d-table w-100 h-100">
+                                <div className="d-table-cell align-middle">
+                                    <div>
+                                        <Button className="mr-1 mt-1" size="sm" variant="success"><FontAwesomeIcon icon={faCheck}/></Button>
+                                        <Button className="mr-1 mt-1" size="sm"><FontAwesomeIcon icon={faPen}/></Button>
+                                        <Button className="mr-1 mt-1" size="sm" variant="danger"><FontAwesomeIcon icon={faTrash}/></Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                ))}
+            </div>
+        </>
     );
 }
 

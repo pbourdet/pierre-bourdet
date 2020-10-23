@@ -1,5 +1,4 @@
 import React from 'react';
-import '../App.css';
 import { useAuth } from '../../contexts/AuthContext/index';
 import { Redirect } from 'react-router-dom';
 

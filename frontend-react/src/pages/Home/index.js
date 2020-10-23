@@ -1,5 +1,4 @@
 import React from 'react';
-import '../App.css';
 import { FormattedMessage } from 'react-intl';
 import { Helmet } from 'react-helmet';
 
