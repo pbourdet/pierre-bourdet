@@ -1,23 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Collapse, Row, Col } from 'react-bootstrap';
+import { Button, Collapse, Row, Col, OverlayTrigger, Popover, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faPen, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
-import { useTodos } from '../../contexts/TodoContext';
+import { useDeleteTodo, useTodos } from '../../contexts/TodoContext';
 import TodoForm from '../TodoForm';
 
 function TodoTable () {
     const todos = useTodos();
     const [open, setOpen] = useState(false);
+    const [todoDeleted, setTodoDeleted] = useState(0);
+    const deleteTodo = useDeleteTodo();
 
     const innerRef = useRef();
     useEffect(() => innerRef.current && innerRef.current.focus(), [open]);
+
+    const handleDelete = async (todo) => {
+        setTodoDeleted(todo.id);
+        await deleteTodo(todo);
+    };
 
     if (!Object.keys(todos).length) {
         return (
             <>
                 <div className="mb-2"><FormattedMessage id="todos.noTodos"/></div>
-                <TodoForm todo={{}}/>
+                <TodoForm setOpen={setOpen} todo={{}}/>
             </>
         );
     }
@@ -96,7 +103,25 @@ function TodoTable () {
                                     <div>
                                         <Button className="mr-1 mt-1" size="sm" variant="success"><FontAwesomeIcon icon={faCheck}/></Button>
                                         <Button className="mr-1 mt-1" size="sm"><FontAwesomeIcon icon={faPen}/></Button>
-                                        <Button className="mr-1 mt-1" size="sm" variant="danger"><FontAwesomeIcon icon={faTrash}/></Button>
+                                        <OverlayTrigger
+                                            trigger="focus"
+                                            placement="left"
+                                            overlay={
+                                                <Popover>
+                                                    <Popover.Title as="h5">Confirm delete</Popover.Title>
+                                                    <Popover.Content>
+                                                        <Button block variant="danger" onClick={() => handleDelete(todo)}>Delete</Button>
+                                                    </Popover.Content>
+                                                </Popover>
+                                            }
+                                        >
+                                            {todoDeleted === todo.id
+                                                ? <Button disabled size="sm" variant="secondary">
+                                                    <Spinner size="sm" animation="border" variant="primary"/>
+                                                </Button>
+                                                : <Button className="mr-1 mt-1" size="sm" variant="danger"><FontAwesomeIcon icon={faTrash}/></Button>
+                                            }
+                                        </OverlayTrigger>
                                     </div>
                                 </div>
                             </div>

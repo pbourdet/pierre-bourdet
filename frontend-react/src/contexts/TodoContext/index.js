@@ -6,6 +6,7 @@ import { useAuth } from '../AuthContext';
 const TodoContext = React.createContext();
 const TodoGetContext = React.createContext();
 const TodoCreateContext = React.createContext();
+const TodoDeleteContext = React.createContext();
 
 export function useTodos () {
     return useContext(TodoContext);
@@ -17,6 +18,10 @@ export function useGetTodos () {
 
 export function useCreateTodo () {
     return useContext(TodoCreateContext);
+}
+
+export function useDeleteTodo () {
+    return useContext(TodoDeleteContext);
 }
 
 export default function TodoProvider ({ children }) {
@@ -65,11 +70,27 @@ export default function TodoProvider ({ children }) {
         setTodos(newTodos);
     }
 
+    async function deleteTodo (todo) {
+        await axios.delete('/todos/' + todo.id, {
+            headers: {
+                Authorization: 'Bearer ' + auth.token
+            }
+        })
+            .then(response => response.data)
+            .then(data => data);
+
+        const newTodos = todos.filter((td) => td.id !== todo.id);
+
+        setTodos(newTodos);
+    }
+
     return (
         <TodoContext.Provider value={todos}>
             <TodoGetContext.Provider value={getTodos}>
                 <TodoCreateContext.Provider value={createTodo}>
-                    {children}
+                    <TodoDeleteContext.Provider value={deleteTodo}>
+                        {children}
+                    </TodoDeleteContext.Provider>
                 </TodoCreateContext.Provider>
             </TodoGetContext.Provider>
         </TodoContext.Provider>
