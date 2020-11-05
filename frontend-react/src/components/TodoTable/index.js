@@ -15,7 +15,10 @@ function TodoTable () {
 
     if (!Object.keys(todos).length) {
         return (
-            <div><FormattedMessage id="todos.noTodos"/></div>
+            <>
+                <div className="mb-2"><FormattedMessage id="todos.noTodos"/></div>
+                <TodoForm todo={{}}/>
+            </>
         );
     }
 
@@ -60,21 +63,21 @@ function TodoTable () {
                 </Row>
                 <Collapse in={open}>
                     <div id="create-todo-form">
-                        <TodoForm todo={{}}/>
+                        <TodoForm setOpen={setOpen} todo={{}}/>
                     </div>
                 </Collapse>
                 {todos.map((todo, index) => (
                     <Row key={index}>
                         <Col xs={5} sm={2} className="p-2 border">
                             <div className="d-table w-100 h-100">
-                                <div className="d-table-cell align-middle">
+                                <div className="d-table-cell align-middle text-break">
                                     {todo.name}
                                 </div>
                             </div>
                         </Col>
                         <Col sm={5} className="p-2 border d-none d-sm-block">
                             <div className="d-table w-100 h-100">
-                                <div className="d-table-cell align-middle">
+                                <div className="d-table-cell align-middle text-break">
                                     {todo.description}
                                 </div>
                             </div>

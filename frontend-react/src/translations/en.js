@@ -19,6 +19,9 @@ export default {
             signup: 'Welcome {name} !',
             signin: 'Hello {name} !',
             logout: 'You are now logged out.'
+        },
+        todo: {
+            add: 'Todo {name} added !'
         }
     },
 

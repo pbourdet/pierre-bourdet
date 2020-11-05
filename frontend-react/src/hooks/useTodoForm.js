@@ -29,6 +29,16 @@ export default function useTodoForm (todo) {
         });
     };
 
+    const clearAll = () => {
+        setErrors({});
+        setCurrentTodo({
+            name: '',
+            description: '',
+            date: '',
+            time: ''
+        });
+    };
+
     const formatTime = (value) => {
         const hours = value.slice(0, 2);
         let minutes = Math.round(value.slice(3, 5) / 5) * 5;
@@ -39,5 +49,5 @@ export default function useTodoForm (todo) {
         return [hours, minutes].join(':');
     };
 
-    return { currentTodo, errors, handleChange };
+    return { currentTodo, errors, handleChange, clearAll };
 };

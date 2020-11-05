@@ -19,6 +19,9 @@ export default {
             signup: 'Bienvenue {name} !',
             signin: 'Bonjour {name} !',
             logout: 'Vous êtes déconnectés.'
+        },
+        todo: {
+            add: 'Todo {name} ajoutée !'
         }
     },
 
