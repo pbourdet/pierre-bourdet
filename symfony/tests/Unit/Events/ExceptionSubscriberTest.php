@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Events;
+namespace App\Tests\Unit\Events;
 
 use App\Events\ExceptionSubscriber;
 use PHPUnit\Framework\TestCase;
