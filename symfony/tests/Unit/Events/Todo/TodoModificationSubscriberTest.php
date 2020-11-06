@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Events\Todo;
+namespace App\Tests\Unit\Events\Todo;
 
 use App\Authorization\UserAuthorizationChecker;
 use App\Entity\Todo;

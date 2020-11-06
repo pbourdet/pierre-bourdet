@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Authorization;
+namespace App\Tests\Unit\Authorization;
 
 use App\Authorization\Exception\AuthenticationException;
 use App\Authorization\Exception\ResourceAccessException;
