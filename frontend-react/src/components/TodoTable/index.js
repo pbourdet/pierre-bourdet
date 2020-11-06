@@ -5,6 +5,7 @@ import { faCheck, faPen, faPlus, faTimes, faTrash } from '@fortawesome/free-soli
 import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
 import { useDeleteTodo, useTodos } from '../../contexts/TodoContext';
 import TodoForm from '../TodoForm';
+import { toast } from 'react-toastify';
 
 function TodoTable () {
     const todos = useTodos();
@@ -18,6 +19,8 @@ function TodoTable () {
     const handleDelete = async (todo) => {
         setTodoDeleted(todo.id);
         await deleteTodo(todo);
+
+        toast.success(<FormattedMessage id='toast.todo.delete' values={{ name: todo.name }}/>);
     };
 
     if (!Object.keys(todos).length) {
@@ -108,9 +111,11 @@ function TodoTable () {
                                             placement="left"
                                             overlay={
                                                 <Popover>
-                                                    <Popover.Title as="h5">Confirm delete</Popover.Title>
+                                                    <Popover.Title as="h5"><FormattedMessage id="todoTable.confirmDelete.title"/></Popover.Title>
                                                     <Popover.Content>
-                                                        <Button block variant="danger" onClick={() => handleDelete(todo)}>Delete</Button>
+                                                        <Button block variant="danger" onClick={() => handleDelete(todo)}>
+                                                            <FormattedMessage id="todoTable.confirmDelete.button"/>
+                                                        </Button>
                                                     </Popover.Content>
                                                 </Popover>
                                             }

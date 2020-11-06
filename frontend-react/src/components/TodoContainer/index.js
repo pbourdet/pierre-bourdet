@@ -12,8 +12,11 @@ function TodoContainer () {
 
     useEffect(() => {
         async function fetchData () {
-            await getTodos();
-            setLoading(false);
+            setLoading(true);
+            if (auth !== null) {
+                await getTodos();
+                setLoading(false);
+            }
         }
         fetchData();
     }, [auth]);

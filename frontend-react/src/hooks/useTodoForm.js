@@ -35,7 +35,8 @@ export default function useTodoForm (todo) {
             name: '',
             description: '',
             date: '',
-            time: ''
+            time: '',
+            isDone: false
         });
     };
 

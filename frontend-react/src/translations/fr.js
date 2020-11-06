@@ -21,7 +21,8 @@ export default {
             logout: 'Vous êtes déconnectés.'
         },
         todo: {
-            add: 'Todo {name} ajoutée !'
+            add: 'Todo {name} ajoutée !',
+            delete: 'Todo {name} supprimée !'
         }
     },
 
@@ -102,7 +103,11 @@ export default {
         description: 'Description',
         date: 'Date et heure',
         add: 'Ajouter',
-        cancel: 'Annuler'
+        cancel: 'Annuler',
+        confirmDelete: {
+            title: 'Confirmation',
+            button: 'Supprimer'
+        }
     },
 
     todoForm: {
