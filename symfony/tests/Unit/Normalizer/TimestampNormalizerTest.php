@@ -82,7 +82,7 @@ class TimestampNormalizerTest extends TestCase
                 'expected' => new \DateTime('2020-10-10'),
             ],
             'case int' => [
-                'data' => 1,
+                'data' => 1000,
                 'expected' => (new \DateTime())->setTimestamp(1),
             ],
         ];

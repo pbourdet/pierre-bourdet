@@ -19,6 +19,10 @@ export default {
             signup: 'Bienvenue {name} !',
             signin: 'Bonjour {name} !',
             logout: 'Vous êtes déconnectés.'
+        },
+        todo: {
+            add: 'Todo {name} ajoutée !',
+            delete: 'Todo {name} supprimée !'
         }
     },
 
@@ -90,11 +94,48 @@ export default {
 
     todos: {
         title: 'Todos',
-        info: 'Vos todos'
+        noTodos: 'Vous n\'avez aucune todo !',
+        loggedOut: 'Connectez-vous pour utiliser les todos.'
     },
 
     todoTable: {
         task: 'Tâche',
-        date: 'Date & Heure'
+        description: 'Description',
+        date: 'Date et heure',
+        add: 'Ajouter',
+        cancel: 'Annuler',
+        confirmDelete: {
+            title: 'Confirmation',
+            button: 'Supprimer'
+        }
+    },
+
+    todoForm: {
+        addTodo: 'Ajouter todo',
+        name: {
+            placeholder: 'Une tâche',
+            label: 'Tâche'
+        },
+        description: {
+            placeholder: 'Une description',
+            label: 'Description'
+        },
+        date: {
+            label: 'Date'
+        },
+        time: {
+            label: 'Heure'
+        },
+        error: {
+            name: {
+                long: 'La tâche ne doit pas excéder 50 caractères'
+            },
+            description: {
+                long: 'La description ne doit pas excéder 100 caractères'
+            },
+            date: {
+                soon: 'La date ne peut pas être antérieur à aujourd\'hui.'
+            }
+        }
     }
 };
