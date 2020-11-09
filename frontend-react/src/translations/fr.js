@@ -135,9 +135,6 @@ export default {
             },
             date: {
                 soon: 'La date ne peut pas être antérieur à aujourd\'hui.'
-            },
-            time: {
-                missing: 'Vous devez aussi choisir une date.'
             }
         }
     }

@@ -17,7 +17,7 @@ export default function validateTodoForm (todo) {
     }
 
     if (todo.id === undefined) {
-        if (new Date(todo.date + ' ' + todo.time).getTime() < (new Date()).setHours(0, 0, 0, 0)) {
+        if (new Date(todo.date).getTime() < (new Date()).setHours(0, 0, 0, 0)) {
             errors.date = <FormattedMessage id='todoForm.error.date.soon'/>;
         }
     }

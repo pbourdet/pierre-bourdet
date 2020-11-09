@@ -51,7 +51,7 @@ export default function TodoProvider ({ children }) {
         const payload = {
             name: todo.name,
             description: todo.description,
-            date: todo.date !== '' ? new Date(todo.date + ' ' + todo.time).getTime() / 1000 : null,
+            date: todo.date !== '' ? new Date(todo.date).getTime() : null,
             isDone: todo.isDone
         };
 
@@ -63,9 +63,9 @@ export default function TodoProvider ({ children }) {
             .then(response => response.data)
             .then(data => data);
 
-        payload.id = response.id;
+        todo.id = response.id;
 
-        const newTodos = [payload, ...todos];
+        const newTodos = [todo, ...todos];
 
         setTodos(newTodos);
     }

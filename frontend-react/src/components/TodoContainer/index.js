@@ -28,14 +28,14 @@ function TodoContainer () {
     }
 
     return (
-        <div className="m-lg-5">
+        <div className="m-lg-5 m-sm-1">
             {loading
                 ? <div className="mt-5">
                     <Spinner animation="grow" variant="success"/>
                     <Spinner animation="grow" variant="danger"/>
                     <Spinner animation="grow" variant="warning"/>
                 </div>
-                : (<TodoTable/>)
+                : <TodoTable/>
             }
         </div>
     );

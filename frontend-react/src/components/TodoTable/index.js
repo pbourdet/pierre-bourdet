@@ -27,7 +27,7 @@ function TodoTable () {
         return (
             <>
                 <div className="mb-2"><FormattedMessage id="todos.noTodos"/></div>
-                <TodoForm setOpen={setOpen} todo={{}}/>
+                <TodoForm setOpen={setOpen} todo={{}} isFirstTodo={true}/>
             </>
         );
     }
@@ -73,7 +73,7 @@ function TodoTable () {
                 </Row>
                 <Collapse in={open}>
                     <div id="create-todo-form">
-                        <TodoForm setOpen={setOpen} todo={{}}/>
+                        <TodoForm setOpen={setOpen} todo={{}} isFirstTodo={false}/>
                     </div>
                 </Collapse>
                 {todos.map((todo, index) => (
@@ -121,7 +121,7 @@ function TodoTable () {
                                             }
                                         >
                                             {todoDeleted === todo.id
-                                                ? <Button disabled size="sm" variant="secondary">
+                                                ? <Button className="mt-1" disabled size="sm" variant="secondary">
                                                     <Spinner size="sm" animation="border" variant="primary"/>
                                                 </Button>
                                                 : <Button className="mr-1 mt-1" size="sm" variant="danger"><FontAwesomeIcon icon={faTrash}/></Button>

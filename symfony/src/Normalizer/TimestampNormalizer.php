@@ -21,7 +21,7 @@ class TimestampNormalizer extends DateTimeNormalizer
     public function denormalize($data, $type, string $format = null, array $context = [])
     {
         if (is_int($data)) {
-            return (new \DateTime())->setTimestamp($data);
+            return (new \DateTime())->setTimestamp($data / 1000);
         }
 
         return parent::denormalize($data, $type, $format, $context);

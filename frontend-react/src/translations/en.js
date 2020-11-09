@@ -131,9 +131,6 @@ export default {
             },
             date: {
                 soon: 'The date must not be before today.'
-            },
-            time: {
-                missing: 'You must also choose a date'
             }
         }
     }
