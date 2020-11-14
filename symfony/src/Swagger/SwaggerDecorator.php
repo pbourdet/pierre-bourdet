@@ -41,6 +41,20 @@ final class SwaggerDecorator implements NormalizerInterface
             ],
         ];
 
+        $docs['components']['schemas']['RefreshedToken'] = [
+            'type' => 'object',
+            'properties' => [
+                'token' => [
+                    'type' => 'string',
+                    'readOnly' => true,
+                ],
+                'refreshToken' => [
+                    'type' => 'string',
+                    'readOnly' => true,
+                ],
+            ],
+        ];
+
         $docs['components']['schemas']['Credentials'] = [
             'type' => 'object',
             'properties' => [
@@ -51,6 +65,16 @@ final class SwaggerDecorator implements NormalizerInterface
                 'password' => [
                     'type' => 'string',
                     'example' => '123456',
+                ],
+            ],
+        ];
+
+        $docs['components']['schemas']['RefreshToken'] = [
+            'type' => 'object',
+            'properties' => [
+                'refreshToken' => [
+                    'type' => 'string',
+                    'example' => 'token',
                 ],
             ],
         ];
@@ -89,6 +113,40 @@ final class SwaggerDecorator implements NormalizerInterface
             ],
         ];
 
-        return array_merge_recursive($docs, $tokenDocumentation);
+        $refreshDocumentation = [
+            'paths' => [
+                '/token/refresh' => [
+                    'post' => [
+                        'tags' => ['Token'],
+                        'operationId' => 'postRefreshToken',
+                        'summary' => 'Get new JWT Token from refresh token.',
+                        'requestBody' => [
+                            'description' => 'Refresh JWT Token',
+                            'content' => [
+                                'application/json' => [
+                                    'schema' => [
+                                        '$ref' => '#/components/schemas/RefreshToken',
+                                    ],
+                                ],
+                            ],
+                        ],
+                        'responses' => [
+                            Response::HTTP_OK => [
+                                'description' => 'Get JWT token',
+                                'content' => [
+                                    'application/json' => [
+                                        'schema' => [
+                                            '$ref' => '#/components/schemas/RefreshedToken',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        return array_merge_recursive($docs, $tokenDocumentation, $refreshDocumentation);
     }
 }
