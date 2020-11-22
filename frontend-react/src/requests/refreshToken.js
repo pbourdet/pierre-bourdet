@@ -2,7 +2,7 @@ import axios from '../config/axios';
 import { addMinutes, addHours } from 'date-fns';
 
 export default async function refreshToken (auth, updateAuth) {
-    if (addMinutes((new Date()), 59).getTime() < auth.exp) {
+    if (addMinutes((new Date()), 1).getTime() < auth.exp) {
         return auth.token;
     }
 
