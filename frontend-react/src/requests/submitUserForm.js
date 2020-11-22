@@ -15,13 +15,12 @@ export async function signinSubmit (values) {
             return null;
         });
 
-    const accessToken = response.token;
-
-    if (accessToken === null) {
+    if (response === null) {
         return { auth: null, isError: true };
     }
 
-    console.log(response);
+    const accessToken = response.token;
+
     const user = await axios.get('/account/me', {
         headers: {
             Authorization: 'Bearer ' + accessToken

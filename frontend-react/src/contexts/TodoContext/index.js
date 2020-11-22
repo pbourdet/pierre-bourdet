@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from '../../config/axios';
-import { useAuth } from '../AuthContext';
+import { useAuth, useAuthUpdate } from '../AuthContext';
+import refreshToken from '../../requests/refreshToken';
 
 const TodoContext = React.createContext();
 const TodoGetContext = React.createContext();
@@ -27,12 +28,15 @@ export function useDeleteTodo () {
 export default function TodoProvider ({ children }) {
     const [todos, setTodos] = useState([]);
     const auth = useAuth();
+    const updateAuth = useAuthUpdate();
 
     async function getTodos () {
         if (auth === null) {
             setTodos([]);
             return;
         }
+
+        await refreshToken(auth, updateAuth);
 
         const todos = await axios.get('/todos', {
             headers: {
@@ -55,6 +59,8 @@ export default function TodoProvider ({ children }) {
             isDone: todo.isDone
         };
 
+        await refreshToken(auth, updateAuth);
+
         const response = await axios.post('/todos', JSON.stringify(payload), {
             headers: {
                 Authorization: 'Bearer ' + auth.token
@@ -71,6 +77,8 @@ export default function TodoProvider ({ children }) {
     }
 
     async function deleteTodo (todo) {
+        await refreshToken(auth, updateAuth);
+
         await axios.delete('/todos/' + todo.id, {
             headers: {
                 Authorization: 'Bearer ' + auth.token
