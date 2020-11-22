@@ -1,26 +1,29 @@
 import axios from '../config/axios';
+import { addHours } from 'date-fns';
 
 export async function signinSubmit (values) {
     const payload = {
         username: values.email,
         password: values.password
     };
-    const token = await axios.post('/login_check', JSON.stringify(payload))
+    const response = await axios.post('/login_check', JSON.stringify(payload))
         .then(response => {
-            return response.data.token;
+            return response.data;
         })
         .catch(error => {
             console.log(error);
             return null;
         });
 
-    if (token === null) {
+    if (response === null) {
         return { auth: null, isError: true };
     }
 
+    const accessToken = response.token;
+
     const user = await axios.get('/account/me', {
         headers: {
-            Authorization: 'Bearer ' + token
+            Authorization: 'Bearer ' + accessToken
         }
     })
         .then(response => {
@@ -28,7 +31,9 @@ export async function signinSubmit (values) {
         });
 
     const auth = {
-        token: token,
+        token: accessToken,
+        refreshToken: response.refreshToken,
+        exp: addHours((new Date()), 1).getTime(),
         user: user
     };
 
