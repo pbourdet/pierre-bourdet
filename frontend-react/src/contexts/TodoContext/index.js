@@ -8,6 +8,7 @@ const TodoContext = React.createContext();
 const TodoGetContext = React.createContext();
 const TodoCreateContext = React.createContext();
 const TodoDeleteContext = React.createContext();
+const TodoEditContext = React.createContext();
 
 export function useTodos () {
     return useContext(TodoContext);
@@ -23,6 +24,10 @@ export function useCreateTodo () {
 
 export function useDeleteTodo () {
     return useContext(TodoDeleteContext);
+}
+
+export function useEditTodo () {
+    return useContext(TodoEditContext);
 }
 
 export default function TodoProvider ({ children }) {
@@ -92,12 +97,18 @@ export default function TodoProvider ({ children }) {
         setTodos(newTodos);
     }
 
+    async function editTodo (todo) {
+        console.log(todo);
+    }
+
     return (
         <TodoContext.Provider value={todos}>
             <TodoGetContext.Provider value={getTodos}>
                 <TodoCreateContext.Provider value={createTodo}>
                     <TodoDeleteContext.Provider value={deleteTodo}>
-                        {children}
+                        <TodoEditContext.Provider value={editTodo}>
+                            {children}
+                        </TodoEditContext.Provider>
                     </TodoDeleteContext.Provider>
                 </TodoCreateContext.Provider>
             </TodoGetContext.Provider>

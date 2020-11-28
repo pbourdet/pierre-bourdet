@@ -22,6 +22,7 @@ export default {
         },
         todo: {
             add: 'Todo {name} added !',
+            edit: 'Todo {name} updated !',
             delete: 'Todo {name} deleted !'
         }
     },
@@ -108,6 +109,7 @@ export default {
 
     todoForm: {
         addTodo: 'Add todo',
+        editTodo: 'Edit todo',
         name: {
             placeholder: 'A task',
             label: 'Task'
