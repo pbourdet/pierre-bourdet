@@ -29,6 +29,7 @@
   ],
   "scripts": {
     "start": "env-cmd -e dev react-scripts start",
+    "start-linux": "env-cmd -e dev-linux react-scripts start",
     "build": "env-cmd -e prod react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

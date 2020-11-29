@@ -5,30 +5,34 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import {useCreateTodo, useEditTodo} from '../../contexts/TodoContext';
+import { useCreateTodo, useEditTodo } from '../../contexts/TodoContext';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
 
-function TodoForm ({ setOpen, todo, isFirstTodo, isEdit }) {
+function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
     const { currentTodo, errors, handleChange, clearAll } = useTodoForm(todo);
     const intl = useIntl();
     const createTodo = useCreateTodo();
     const editTodo = useEditTodo();
     const [loading, setLoading] = useState(false);
+    const isTouched = currentTodo !== todo;
+    const isFormValid = isTouched && currentTodo.name !== '' && Object.keys(errors).length === 0;
 
-    const isFormValid = currentTodo.name !== '' && Object.keys(errors).length === 0;
-    const initialDate = isEdit ? format(currentTodo.date, "yyyy-MM-dd'T'HH:mm") : '';
+    const initialDate = currentTodo.date ? format(currentTodo.date, "yyyy-MM-dd'T'HH:mm") : '';
+    const minDate = currentTodo.date
+        ? format(Math.min(currentTodo.date, new Date().getTime()), "yyyy-MM-dd'T'HH:mm")
+        : format(new Date().getTime(), "yyyy-MM-dd'T'HH:mm");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        console.log(isEdit);
         if (isEdit) {
             await editTodo(currentTodo);
             setLoading(false);
+            setTodoEdited(0);
+            clearAll();
             toast.success(<FormattedMessage id='toast.todo.edit' values={{ name: currentTodo.name }}/>);
-
         } else {
             await createTodo(currentTodo);
             if (!isFirstTodo) {
@@ -38,7 +42,6 @@ function TodoForm ({ setOpen, todo, isFirstTodo, isEdit }) {
                 toast.success(<FormattedMessage id='toast.todo.add' values={{ name: currentTodo.name }}/>);
             }
         }
-
     };
 
     return (
@@ -63,7 +66,7 @@ function TodoForm ({ setOpen, todo, isFirstTodo, isEdit }) {
                     <Form.Control
                         type="datetime-local" id="date" name="date" isInvalid={errors.date}
                         value={initialDate} onChange={handleChange}
-                        min={isEdit ? '' : format(new Date(), "yyyy-MM-dd'T'00:00")}
+                        min={minDate}
                     />
                     <Form.Control.Feedback type="invalid">{errors.date}</Form.Control.Feedback>
                 </Form.Group>
@@ -91,6 +94,7 @@ function TodoForm ({ setOpen, todo, isFirstTodo, isEdit }) {
 TodoForm.propTypes = {
     todo: PropTypes.object,
     setOpen: PropTypes.func,
+    setTodoEdited: PropTypes.func,
     isFirstTodo: PropTypes.bool,
     isEdit: PropTypes.bool
 };

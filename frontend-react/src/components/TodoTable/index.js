@@ -11,7 +11,7 @@ function TodoTable () {
     const todos = useTodos();
     const [open, setOpen] = useState(false);
     const [todoDeleted, setTodoDeleted] = useState(0);
-    const [todoEdit, setTodoEdit] = useState(0);
+    const [todoEdited, setTodoEdited] = useState(0);
     const deleteTodo = useDeleteTodo();
 
     const innerRef = useRef();
@@ -65,7 +65,7 @@ function TodoTable () {
                                 <span className="d-none d-md-inline"><FormattedMessage id="todoTable.cancel"/></span>
                             </Button>
                             : <Button onClick={() => setOpen(!open)} aria-controls="create-todo-form" aria-expanded={open}>
-                                <FontAwesomeIcon className="mr-1" icon={faPlus}/>
+                                <FontAwesomeIcon className="mr-md-1" icon={faPlus}/>
                                 <span className="d-none d-md-inline"><FormattedMessage id="todoTable.add"/></span>
                             </Button>
                         }
@@ -106,9 +106,9 @@ function TodoTable () {
                                     <div className="d-table-cell align-middle">
                                         <div>
                                             <Button className="mr-1 mt-1" size="sm" variant="success"><FontAwesomeIcon icon={faCheck}/></Button>
-                                            {todoEdit === todo.id
-                                                ? <Button onClick={() => setTodoEdit(0)} className="mr-1 mt-1" size="sm"><FontAwesomeIcon icon={faTimes}/></Button>
-                                                : <Button onClick={() => setTodoEdit(todo.id)} className="mr-1 mt-1" size="sm"><FontAwesomeIcon icon={faPen}/></Button>
+                                            {todoEdited === todo.id
+                                                ? <Button onClick={() => setTodoEdited(0)} className="mr-1 mt-1" size="sm"><FontAwesomeIcon icon={faTimes}/></Button>
+                                                : <Button onClick={() => setTodoEdited(todo.id)} className="mr-1 mt-1" size="sm"><FontAwesomeIcon icon={faPen}/></Button>
                                             }
                                             <OverlayTrigger
                                                 trigger="focus"
@@ -136,9 +136,9 @@ function TodoTable () {
                                 </div>
                             </Col>
                         </Row>
-                        <Collapse in={todoEdit === todo.id}>
+                        <Collapse in={todo.id === todoEdited} mountOnEnter={true} unmountOnExit={true}>
                             <div id="create-todo-form">
-                                <TodoForm setOpen={setOpen} todo={todo} isFirstTodo={false} isEdit={true}/>
+                                <TodoForm setOpen={setOpen} setTodoEdited={setTodoEdited} todo={todo} isFirstTodo={false} isEdit={true}/>
                             </div>
                         </Collapse>
                     </div>

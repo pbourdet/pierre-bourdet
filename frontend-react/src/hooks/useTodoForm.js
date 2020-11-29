@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import validateTodoForm from '../helpers/validateTodoForm';
-import { format } from 'date-fns';
 
 export default function useTodoForm (todo) {
-    const initialTodo = Object.keys(todo).length
-        ? todo
-        : {
-            name: '',
-            description: '',
-            date: '',
-            isDone: false
-        };
-    const [currentTodo, setCurrentTodo] = useState(initialTodo);
     const [errors, setErrors] = useState({});
+    const [currentTodo, setCurrentTodo] = useState({
+        name: '',
+        description: '',
+        date: '',
+        isDone: false
+    });
+
+    useEffect(() => {
+        Object.keys(todo).length && setCurrentTodo(todo);
+    }, [todo]);
 
     useEffect(() => {
         setErrors(validateTodoForm(currentTodo));
@@ -41,8 +41,9 @@ export default function useTodoForm (todo) {
 
     const formatDate = (value) => {
         const date = new Date(value);
+        date.setMinutes(Math.round(date.getMinutes() / 5) * 5);
 
-        return format(date.setMinutes(Math.round(date.getMinutes() / 5) * 5), "yyyy-MM-dd'T'HH:mm");
+        return date.getTime();
     };
 
     return { currentTodo, errors, handleChange, clearAll };
