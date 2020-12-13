@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import axios from '../../config/axios';
 import { useAuth, useAuthUpdate } from '../AuthContext';
 import refreshToken from '../../requests/refreshToken';
+import { addMinutes, subMinutes } from 'date-fns';
 
 const TodoContext = React.createContext();
 const TodoGetContext = React.createContext();
 const TodoCreateContext = React.createContext();
 const TodoDeleteContext = React.createContext();
+const TodoEditContext = React.createContext();
 
 export function useTodos () {
     return useContext(TodoContext);
@@ -25,6 +27,10 @@ export function useDeleteTodo () {
     return useContext(TodoDeleteContext);
 }
 
+export function useEditTodo () {
+    return useContext(TodoEditContext);
+}
+
 export default function TodoProvider ({ children }) {
     const [todos, setTodos] = useState([]);
     const auth = useAuth();
@@ -38,7 +44,7 @@ export default function TodoProvider ({ children }) {
 
         await refreshToken(auth, updateAuth);
 
-        const todos = await axios.get('/todos', {
+        const response = await axios.get('/todos', {
             headers: {
                 Authorization: 'Bearer ' + auth.token
             }
@@ -46,16 +52,26 @@ export default function TodoProvider ({ children }) {
             .then(response => response.data)
             .then(data => data);
 
-        todos.sort((td1, td2) => td2.id - td1.id);
+        response.sort((td1, td2) => td2.id - td1.id);
+        const todos = response.map(function (todo) {
+            todo.date = todo.date && subMinutes(todo.date, new Date().getTimezoneOffset()).getTime();
+
+            return todo;
+        });
 
         setTodos(todos);
     }
 
     async function createTodo (todo) {
+        const date = todo.date
+            ? addMinutes(todo.date, new Date().getTimezoneOffset()).getTime()
+            : null
+        ;
+
         const payload = {
             name: todo.name,
             description: todo.description,
-            date: todo.date !== '' ? new Date(todo.date).getTime() : null,
+            date: date,
             isDone: todo.isDone
         };
 
@@ -92,12 +108,43 @@ export default function TodoProvider ({ children }) {
         setTodos(newTodos);
     }
 
+    async function editTodo (editedTodo) {
+        const date = editedTodo.date
+            ? addMinutes(editedTodo.date, new Date().getTimezoneOffset()).getTime()
+            : null
+        ;
+
+        const payload = {
+            name: editedTodo.name,
+            description: editedTodo.description,
+            date: date,
+            isDone: editedTodo.isDone
+        };
+        await refreshToken(auth, updateAuth);
+
+        await axios.put('/todos/' + editedTodo.id, JSON.stringify(payload), {
+            headers: {
+                Authorization: 'Bearer ' + auth.token
+            }
+        })
+            .then(response => response.data)
+            .then(data => data);
+
+        const newTodos = todos.map(todo =>
+            todo.id === editedTodo.id ? editedTodo : todo
+        );
+
+        setTodos(newTodos);
+    }
+
     return (
         <TodoContext.Provider value={todos}>
             <TodoGetContext.Provider value={getTodos}>
                 <TodoCreateContext.Provider value={createTodo}>
                     <TodoDeleteContext.Provider value={deleteTodo}>
-                        {children}
+                        <TodoEditContext.Provider value={editTodo}>
+                            {children}
+                        </TodoEditContext.Provider>
                     </TodoDeleteContext.Provider>
                 </TodoCreateContext.Provider>
             </TodoGetContext.Provider>

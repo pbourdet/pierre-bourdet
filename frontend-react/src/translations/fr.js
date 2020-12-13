@@ -22,6 +22,7 @@ export default {
         },
         todo: {
             add: 'Todo {name} ajoutée !',
+            edit: 'Todo {name} mise à jour !',
             delete: 'Todo {name} supprimée !'
         }
     },
@@ -112,6 +113,7 @@ export default {
 
     todoForm: {
         addTodo: 'Ajouter todo',
+        editTodo: 'Modifier todo',
         name: {
             placeholder: 'Une tâche',
             label: 'Tâche'

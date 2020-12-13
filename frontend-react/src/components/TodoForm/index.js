@@ -5,31 +5,43 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { useCreateTodo } from '../../contexts/TodoContext';
+import { useCreateTodo, useEditTodo } from '../../contexts/TodoContext';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
 
-function TodoForm ({ setOpen, todo, isFirstTodo }) {
+function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
     const { currentTodo, errors, handleChange, clearAll } = useTodoForm(todo);
     const intl = useIntl();
     const createTodo = useCreateTodo();
+    const editTodo = useEditTodo();
     const [loading, setLoading] = useState(false);
+    const isTouched = currentTodo !== todo;
+    const isFormValid = isTouched && currentTodo.name !== '' && Object.keys(errors).length === 0;
 
-    const isFormValid = currentTodo.name !== '' && Object.keys(errors).length === 0;
+    const initialDate = currentTodo.date ? format(currentTodo.date, "yyyy-MM-dd'T'HH:mm") : '';
+    const minDate = currentTodo.date
+        ? format(Math.min(currentTodo.date, new Date().getTime()), "yyyy-MM-dd'T'HH:mm")
+        : format(new Date().getTime(), "yyyy-MM-dd'T'HH:mm");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        await createTodo(currentTodo);
-
-        if (!isFirstTodo) {
+        if (isEdit) {
+            await editTodo(currentTodo);
             setLoading(false);
-            setOpen(false);
+            setTodoEdited(0);
             clearAll();
+            toast.success(<FormattedMessage id='toast.todo.edit' values={{ name: currentTodo.name }}/>);
+        } else {
+            await createTodo(currentTodo);
+            if (!isFirstTodo) {
+                setLoading(false);
+                setOpen(false);
+                clearAll();
+                toast.success(<FormattedMessage id='toast.todo.add' values={{ name: currentTodo.name }}/>);
+            }
         }
-
-        toast.success(<FormattedMessage id='toast.todo.add' values={{ name: currentTodo.name }}/>);
     };
 
     return (
@@ -53,8 +65,8 @@ function TodoForm ({ setOpen, todo, isFirstTodo }) {
                     <Form.Label><FormattedMessage id="todoForm.date.label"/></Form.Label>
                     <Form.Control
                         type="datetime-local" id="date" name="date" isInvalid={errors.date}
-                        value={currentTodo.date} onChange={handleChange}
-                        min={format(new Date(), "yyyy-MM-dd'T'00:00")}
+                        value={initialDate} onChange={handleChange}
+                        min={minDate}
                     />
                     <Form.Control.Feedback type="invalid">{errors.date}</Form.Control.Feedback>
                 </Form.Group>
@@ -65,7 +77,10 @@ function TodoForm ({ setOpen, todo, isFirstTodo }) {
                                 ? <Spinner className="mb-3" animation="border" variant="primary"/>
                                 : <Button disabled={!isFormValid} className="mb-3" type="submit">
                                     <FontAwesomeIcon className="mr-2" icon={faCheck}/>
-                                    <FormattedMessage id="todoForm.addTodo"/>
+                                    {isEdit
+                                        ? <FormattedMessage id="todoForm.editTodo"/>
+                                        : <FormattedMessage id="todoForm.addTodo"/>
+                                    }
                                 </Button>
                             }
                         </div>
@@ -79,7 +94,9 @@ function TodoForm ({ setOpen, todo, isFirstTodo }) {
 TodoForm.propTypes = {
     todo: PropTypes.object,
     setOpen: PropTypes.func,
-    isFirstTodo: PropTypes.bool
+    setTodoEdited: PropTypes.func,
+    isFirstTodo: PropTypes.bool,
+    isEdit: PropTypes.bool
 };
 
 export default TodoForm;
