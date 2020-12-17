@@ -29,3 +29,6 @@ fullcheck:
 coverage:
 	make fixtures
 	./vendor/bin/simple-phpunit --coverage-html coverage
+
+cc:
+	php bin/console c:c
