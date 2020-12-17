@@ -32,5 +32,8 @@ services:
         arguments: ['@App\Swagger\SwaggerDecorator.inner']
         autoconfigure: false
 
+    App\DataPersister\User\UserCreatedDataPersister:
+        decorates: 'api_platform.doctrine.orm.data_persister'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
