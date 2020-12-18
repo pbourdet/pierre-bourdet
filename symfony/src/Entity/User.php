@@ -87,7 +87,7 @@ class User implements UserInterface
         $this->todos = new ArrayCollection();
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
