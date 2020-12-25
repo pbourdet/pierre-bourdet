@@ -1,3 +1,6 @@
+cc:
+	php bin/console c:c
+
 csfix:
 	./vendor/bin/php-cs-fixer fix --allow-risky=yes $(1)
 
