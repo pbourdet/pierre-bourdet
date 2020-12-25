@@ -35,7 +35,7 @@ class TimestampNormalizerTest extends TestCase
      */
     public function testSupportsNormalization($data, bool $expected): void
     {
-        $actual = $this->testedObject->supportsNormalization($data, null);
+        $actual = $this->testedObject->supportsNormalization($data);
 
         $this->assertEquals($actual, $expected);
     }
@@ -55,10 +55,12 @@ class TimestampNormalizerTest extends TestCase
         return [
             'case true' => [
                 'type' => \DateTime::class,
+                'data' => 1000,
                 'expected' => true,
             ],
             'case false' => [
-                'type' => 'string',
+                'type' => \DateTime::class,
+                'data' => 'aza',
                 'expected' => false,
             ],
         ];
@@ -67,9 +69,9 @@ class TimestampNormalizerTest extends TestCase
     /**
      * @dataProvider dataSupportsDenormalization
      */
-    public function testSupportDenormalization($type, bool $expected): void
+    public function testSupportDenormalization($type, $data, bool $expected): void
     {
-        $actual = $this->testedObject->supportsDenormalization('', $type, null);
+        $actual = $this->testedObject->supportsDenormalization($data, $type);
 
         $this->assertEquals($expected, $actual);
     }
@@ -77,10 +79,6 @@ class TimestampNormalizerTest extends TestCase
     public function dataDenormalize(): array
     {
         return [
-            'case string' => [
-                'data' => '2020-10-10',
-                'expected' => new \DateTime('2020-10-10'),
-            ],
             'case int' => [
                 'data' => 1000,
                 'expected' => (new \DateTime())->setTimestamp(1),
@@ -93,7 +91,7 @@ class TimestampNormalizerTest extends TestCase
      */
     public function testDenormalize($data, \DateTime $expected): void
     {
-        $actual = $this->testedObject->denormalize($data, 'json', null);
+        $actual = $this->testedObject->denormalize($data, 'json');
 
         $this->assertEquals($expected, $actual);
     }
