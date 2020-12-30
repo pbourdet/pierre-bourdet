@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext/index';
 import { Redirect } from 'react-router-dom';
+import UpdatePasswordForm from '../../components/UpdatePasswordForm';
 
 function Profile () {
     const auth = useAuth();
@@ -11,7 +12,8 @@ function Profile () {
 
     return (
         <div className="App">
-            Profile of {auth.user.nickname}
+            <div className="mb-2">Profile of {auth.user.nickname}</div>
+            <UpdatePasswordForm/>
         </div>
     );
 }
