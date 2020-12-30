@@ -55,3 +55,24 @@ export async function signupSubmit (values) {
             return false;
         });
 }
+
+export async function updatePasswordSubmit (values, auth) {
+    const payload = {
+        currentPassword: values.currentPassword,
+        newPassword: values.newPassword,
+        confirmPassword: values.confirmPassword
+    };
+
+    return await axios.post('/account/update-password', JSON.stringify(payload), {
+        headers: {
+            Authorization: 'Bearer ' + auth.token
+        }
+    })
+        .then(response => {
+            return response.status === 200;
+        })
+        .catch(error => {
+            console.log(error);
+            return false;
+        });
+}
