@@ -46,23 +46,23 @@ class UpdatePasswordDTO
     /**
      * @SecurityAssert\UserPassword()
      */
-    private string $previousPassword;
+    private string $currentPassword;
 
     /**
      * @Assert\Length(min="4")
      */
     private string $newPassword;
 
-    private string $confirmedPassword;
+    private string $confirmPassword;
 
-    public function getPreviousPassword(): string
+    public function getCurrentPassword(): string
     {
-        return $this->previousPassword;
+        return $this->currentPassword;
     }
 
-    public function setPreviousPassword(string $previousPassword): UpdatePasswordDTO
+    public function setCurrentPassword(string $currentPassword): UpdatePasswordDTO
     {
-        $this->previousPassword = $previousPassword;
+        $this->currentPassword = $currentPassword;
 
         return $this;
     }
@@ -79,14 +79,14 @@ class UpdatePasswordDTO
         return $this;
     }
 
-    public function getConfirmedPassword(): string
+    public function getConfirmPassword(): string
     {
-        return $this->confirmedPassword;
+        return $this->confirmPassword;
     }
 
-    public function setConfirmedPassword(string $confirmedPassword): UpdatePasswordDTO
+    public function setConfirmPassword(string $confirmPassword): UpdatePasswordDTO
     {
-        $this->confirmedPassword = $confirmedPassword;
+        $this->confirmPassword = $confirmPassword;
 
         return $this;
     }
@@ -94,8 +94,8 @@ class UpdatePasswordDTO
     /**
      * @Assert\IsTrue()
      */
-    public function isConfirmedPasswordEqualToNewPassword(): bool
+    public function isConfirmPasswordEqualToNewPassword(): bool
     {
-        return $this->newPassword === $this->confirmedPassword;
+        return $this->newPassword === $this->confirmPassword;
     }
 }
