@@ -121,10 +121,10 @@ jobs:
             - checkout
             - install
             - database
-            - phpunit
-            - jest
             - lint
             - phpstan
+            - phpunit
+            - jest
 
     deploy_prod:
         <<: *defaults
