@@ -1,7 +1,9 @@
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext/index';
 import { Redirect } from 'react-router-dom';
-import UpdatePasswordForm from '../../components/UpdatePasswordForm';
+import UpdatePasswordModal from '../../components/UpdatePasswordModal';
+import { Card, Col, Container, Row } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 
 function Profile () {
     const auth = useAuth();
@@ -12,8 +14,22 @@ function Profile () {
 
     return (
         <div className="App">
-            <div className="mb-2">Profile of {auth.user.nickname}</div>
-            <UpdatePasswordForm/>
+            <Container>
+                <Card className="m-2 p-3">
+                    <Card.Body>
+                        <Card.Title className="mb-4">
+                            <FormattedMessage id="profile.settings"/>
+                        </Card.Title>
+                        <Row>
+                            <Col sm={6}>
+                            </Col>
+                            <Col sm={6}>
+                                <UpdatePasswordModal/>
+                            </Col>
+                        </Row>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
     );
 }

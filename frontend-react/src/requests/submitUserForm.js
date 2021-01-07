@@ -21,21 +21,13 @@ export async function signinSubmit (values) {
 
     const accessToken = response.token;
 
-    const user = await axios.get('/account/me', {
-        headers: {
-            Authorization: 'Bearer ' + accessToken
-        }
-    })
-        .then(response => {
-            return response.data;
-        });
-
     const auth = {
         token: accessToken,
         refreshToken: response.refreshToken,
-        exp: addHours((new Date()), 1).getTime(),
-        user: user
+        exp: addHours((new Date()), 1).getTime()
     };
+
+    auth.user = await getMe(auth);
 
     return { auth, isError: false };
 }
@@ -74,5 +66,16 @@ export async function updatePasswordSubmit (values, auth) {
         .catch(error => {
             console.log(error);
             return false;
+        });
+}
+
+export async function getMe (auth) {
+    return await axios.get('/account/me', {
+        headers: {
+            Authorization: 'Bearer ' + auth.token
+        }
+    })
+        .then(response => {
+            return response.data;
         });
 }

@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 function SignupModal () {
     const [modal, setModal] = useState(false);
-    const { values, errors, touched, handleChange, handleSubmit, clearAll } = useUserFormValidation();
+    const { values, errors, touched, handleChange, clearAll } = useUserFormValidation();
     const [loading, setLoading] = useState(false);
     const [inError, setInError] = useState(false);
     const updateAuth = useAuthUpdate();
@@ -54,7 +54,7 @@ function SignupModal () {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={handleSubmit}>
+                    <Form>
                         {inputTypes.map((type, index) => (
                             <UserFormInput
                                 type={type}

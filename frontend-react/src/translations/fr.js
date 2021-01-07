@@ -102,6 +102,10 @@ export default {
         info: 'Site en construction...'
     },
 
+    profile: {
+        settings: 'Paramètres du compte'
+    },
+
     about: {
         title: 'A propos'
     },

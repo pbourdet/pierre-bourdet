@@ -101,6 +101,10 @@ export default {
         info: 'Site under construction...'
     },
 
+    profile: {
+        settings: 'Account\'s setttings'
+    },
+
     about: {
         title: 'About'
     },
