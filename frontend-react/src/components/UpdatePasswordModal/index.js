@@ -1,21 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Button, Form, Modal, Navbar, Spinner } from 'react-bootstrap';
-import { FormattedMessage } from 'react-intl';
+import React, { useState } from 'react';
+import { Alert, Button, Form, Modal, Spinner } from 'react-bootstrap';
 import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
-import { signupSubmit, signinSubmit } from '../../requests/submitUserForm';
-import { useAuthUpdate } from '../../contexts/AuthContext/index';
+import { FormattedMessage } from 'react-intl';
+import { updatePasswordSubmit } from '../../requests/submitUserForm';
+import { useAuth } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 
-function SignupModal () {
+function UpdatePasswordModal () {
+    const auth = useAuth();
     const [modal, setModal] = useState(false);
-    const { values, errors, touched, handleChange, clearAll } = useUserFormValidation();
+    const inputTypes = ['currentPassword', 'newPassword', 'confirmPassword'];
+    const { values, handleChange, errors, touched, clearAll } = useUserFormValidation();
     const [loading, setLoading] = useState(false);
     const [inError, setInError] = useState(false);
-    const updateAuth = useAuthUpdate();
+    const isFormValid = Object.keys(errors).length === 0 && Object.keys(touched).length === inputTypes.length;
 
-    const innerRef = useRef();
-    useEffect(() => innerRef.current && innerRef.current.focus(), [modal]);
+    const toggleModal = () => setModal(!modal);
 
     const handleCancel = () => {
         setLoading(false);
@@ -23,19 +24,14 @@ function SignupModal () {
         toggleModal();
     };
 
-    const inputTypes = ['email', 'nickname', 'password', 'confirmPassword'];
-    const isFormValid = Object.keys(errors).length === 0 && Object.keys(touched).length === inputTypes.length;
-
-    const toggleModal = () => setModal(!modal);
-
-    const handleSignupSubmit = async () => {
+    const handleSubmit = async (e) => {
         setLoading(true);
-        const isCreated = await signupSubmit(values);
+        const isUpdated = await updatePasswordSubmit(values, auth);
 
-        if (isCreated) {
-            const { auth } = await signinSubmit(values);
-            updateAuth(auth);
-            toast.success(<FormattedMessage id='toast.user.signup' values={{ name: auth.user.nickname }}/>);
+        if (isUpdated) {
+            setInError(false);
+            handleCancel();
+            toast.success(<FormattedMessage id='toast.user.updatePassword'/>);
         } else {
             setInError(true);
             setLoading(false);
@@ -44,13 +40,11 @@ function SignupModal () {
 
     return (
         <>
-            <Navbar.Text onClick={toggleModal} className="btn btn-link" as="span">
-                <FormattedMessage id="navbar.signup"/>
-            </Navbar.Text>
+            <Button variant="light" onClick={toggleModal}><FormattedMessage id="updatePassword.title"/></Button>
             <Modal size="md" show={modal} onHide={handleCancel}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <FormattedMessage id="signupModal.header"/>
+                        <FormattedMessage id="updatePassword.title"/>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -59,7 +53,7 @@ function SignupModal () {
                             <UserFormInput
                                 type={type}
                                 asterisk={true}
-                                innerRef={innerRef}
+                                innerRef={{}}
                                 values={values}
                                 errors={errors}
                                 touched={touched}
@@ -69,14 +63,14 @@ function SignupModal () {
                         ))}
                         {inError &&
                         <Alert variant="danger" onClose={() => setInError(false)} dismissible>
-                            <p><FormattedMessage id="signupModal.error"/></p>
+                            <p><FormattedMessage id="updatePassword.error"/></p>
                         </Alert>
                         }
                         <div className="d-flex justify-content-around mt-4">
                             {loading
                                 ? <Spinner animation="border" variant="primary"/>
-                                : <Button className="mr-4 ml-4" disabled={!isFormValid} variant="primary" type="submit" onClick={handleSignupSubmit} block>
-                                    <FormattedMessage id="signupModal.submitButton"/>
+                                : <Button className="mr-4 ml-4" disabled={!isFormValid} onClick={handleSubmit} variant="primary" type="submit" block>
+                                    <FormattedMessage id="updatePassword.submitButton"/>
                                 </Button>
                             }
                         </div>
@@ -87,4 +81,4 @@ function SignupModal () {
     );
 }
 
-export default SignupModal;
+export default UpdatePasswordModal;

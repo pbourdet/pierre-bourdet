@@ -16,7 +16,7 @@ class UpdatePasswordControllerTest extends AbstractEndPoint
     public function testUpdatePassword(): void
     {
         $payload = sprintf(
-            '{"previousPassword": "%s","newPassword": "%s","confirmedPassword": "%s"}',
+            '{"currentPassword": "%s","newPassword": "%s","confirmPassword": "%s"}',
             UserFixtures::DEFAULT_PASSWORD,
             UserFixtures::DEFAULT_PASSWORD,
             UserFixtures::DEFAULT_PASSWORD,
@@ -42,7 +42,7 @@ class UpdatePasswordControllerTest extends AbstractEndPoint
     public function testUpdatePasswordNotLoggedIn(): void
     {
         $payload = sprintf(
-            '{"previousPassword": "%s","newPassword": "%s","confirmedPassword": "%s"}',
+            '{"currentPassword": "%s","newPassword": "%s","confirmPassword": "%s"}',
             UserFixtures::DEFAULT_PASSWORD,
             UserFixtures::DEFAULT_PASSWORD,
             UserFixtures::DEFAULT_PASSWORD,
@@ -68,7 +68,7 @@ class UpdatePasswordControllerTest extends AbstractEndPoint
     public function testUpdatePasswordWithWrongPassword(): void
     {
         $payload = sprintf(
-            '{"previousPassword": "%s","newPassword": "%s","confirmedPassword": "%s"}',
+            '{"currentPassword": "%s","newPassword": "%s","confirmPassword": "%s"}',
             'password',
             UserFixtures::DEFAULT_PASSWORD,
             UserFixtures::DEFAULT_PASSWORD,
@@ -90,13 +90,13 @@ class UpdatePasswordControllerTest extends AbstractEndPoint
         $this->assertJson($content);
         $this->assertArrayHasKey('detail', $contentDecoded);
         $this->assertArrayHasKey('violations', $contentDecoded);
-        $this->assertEquals($contentDecoded['violations'][0]['propertyPath'], 'previousPassword');
+        $this->assertEquals($contentDecoded['violations'][0]['propertyPath'], 'currentPassword');
     }
 
     public function testUpdatePasswordWithDifferentPassword(): void
     {
         $payload = sprintf(
-            '{"previousPassword": "%s","newPassword": "%s","confirmedPassword": "%s"}',
+            '{"currentPassword": "%s","newPassword": "%s","confirmPassword": "%s"}',
             UserFixtures::DEFAULT_PASSWORD,
             UserFixtures::DEFAULT_PASSWORD,
             'password'
@@ -118,6 +118,6 @@ class UpdatePasswordControllerTest extends AbstractEndPoint
         $this->assertJson($content);
         $this->assertArrayHasKey('detail', $contentDecoded);
         $this->assertArrayHasKey('violations', $contentDecoded);
-        $this->assertEquals($contentDecoded['violations'][0]['propertyPath'], 'confirmedPasswordEqualToNewPassword');
+        $this->assertEquals($contentDecoded['violations'][0]['propertyPath'], 'confirmPasswordEqualToNewPassword');
     }
 }

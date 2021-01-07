@@ -16,14 +16,14 @@ class UpdatePasswordDTOTest extends TestCase
         $this->testedObject = new UpdatePasswordDTO();
     }
 
-    public function testGetPreviousPassword(): void
+    public function testGetCurrentPassword(): void
     {
         $previousPassword = 'zbreh';
 
-        $updatePasswordDTO = $this->testedObject->setPreviousPassword($previousPassword);
+        $updatePasswordDTO = $this->testedObject->setCurrentPassword($previousPassword);
 
         $this->assertInstanceOf(UpdatePasswordDTO::class, $updatePasswordDTO);
-        $this->assertEquals($previousPassword, $updatePasswordDTO->getPreviousPassword());
+        $this->assertEquals($previousPassword, $updatePasswordDTO->getCurrentPassword());
     }
 
     public function testGetNewPassword(): void
@@ -36,14 +36,14 @@ class UpdatePasswordDTOTest extends TestCase
         $this->assertEquals($newPassword, $updatePasswordDTO->getNewPassword());
     }
 
-    public function testGetConfirmedPassword(): void
+    public function testGetConfirmPassword(): void
     {
         $confirmedPassword = 'zbreh';
 
-        $updatePasswordDTO = $this->testedObject->setConfirmedPassword($confirmedPassword);
+        $updatePasswordDTO = $this->testedObject->setConfirmPassword($confirmedPassword);
 
         $this->assertInstanceOf(UpdatePasswordDTO::class, $updatePasswordDTO);
-        $this->assertEquals($confirmedPassword, $updatePasswordDTO->getConfirmedPassword());
+        $this->assertEquals($confirmedPassword, $updatePasswordDTO->getConfirmPassword());
     }
 
     public function dataIsConfirmedPasswordEqualToNewPassword(): array
@@ -51,12 +51,12 @@ class UpdatePasswordDTOTest extends TestCase
         return [
             'case true' => [
                 'newPassword' => '123456',
-                'confirmedPassword' => '123456',
+                'confirmPassword' => '123456',
                 'expected' => true,
             ],
             'case false' => [
                 'newPassword' => '123456',
-                'confirmedPassword' => '1234567',
+                'confirmPassword' => '1234567',
                 'expected' => false,
             ],
         ];
@@ -67,15 +67,15 @@ class UpdatePasswordDTOTest extends TestCase
      */
     public function testIsConfirmedPasswordEqualToNewPassword(
         string $newPassword,
-        string $confirmedPassword,
+        string $confirmPassword,
         bool $expected
     ): void {
         $this->testedObject
-            ->setConfirmedPassword($confirmedPassword)
+            ->setConfirmPassword($confirmPassword)
             ->setNewPassword($newPassword)
         ;
 
-        $actual = $this->testedObject->isConfirmedPasswordEqualToNewPassword();
+        $actual = $this->testedObject->isConfirmPasswordEqualToNewPassword();
 
         $this->assertEquals($expected, $actual);
     }

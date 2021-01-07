@@ -5,7 +5,9 @@ export default function useUserFormValidation () {
     const [values, setValues] = useState({
         email: '',
         nickname: '',
+        currentPassword: '',
         password: '',
+        newPassword: '',
         confirmPassword: ''
     });
     const [touched, setTouched] = useState({});
@@ -33,7 +35,9 @@ export default function useUserFormValidation () {
         setValues({
             email: '',
             nickname: '',
+            currentPassword: '',
             password: '',
+            newPassword: '',
             confirmPassword: ''
         });
     };

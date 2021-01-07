@@ -18,7 +18,8 @@ export default {
         user: {
             signup: 'Bienvenue {name} !',
             signin: 'Bonjour {name} !',
-            logout: 'Vous êtes déconnectés.'
+            logout: 'Vous êtes déconnectés.',
+            updatePassword: 'Mot de passe mis à jour !'
         },
         todo: {
             add: 'Todo {name} ajoutée !',
@@ -41,6 +42,12 @@ export default {
         error: 'Cette adresse email est déjà utilisée, essayez-en une autre.'
     },
 
+    updatePassword: {
+        title: 'Modifier votre mot de passe',
+        submitButton: 'Modifier mot de passe',
+        error: 'Mot de passe actuel erroné.'
+    },
+
     userForm: {
         email: {
             placeholder: 'Votre adresse email',
@@ -49,6 +56,14 @@ export default {
         password: {
             placeholder: 'Votre mot de passe',
             label: 'Mot de passe'
+        },
+        currentPassword: {
+            placeholder: 'Votre mot de passe actuel',
+            label: 'Mot de passe actuel'
+        },
+        newPassword: {
+            placeholder: 'Votre nouveau mot de passe',
+            label: 'Nouveau mot de passe'
         },
         confirmPassword: {
             placeholder: 'Confirmez votre mot de passe',
@@ -65,16 +80,18 @@ export default {
             },
             password: {
                 invalid: 'Le mot de passe doit contenir au moins un chiffre.',
+                short: 'Le mot de passe doit faire au moins 4 caractères de long.'
+            },
+            newPassword: {
+                invalid: 'Le mot de passe doit contenir au moins un chiffre.',
                 short: 'Le mot de passe doit faire au moins 4 caractères de long.',
-                empty: 'Vous devez indiquer un mot de passe.'
+                different: 'Le nouveau mot de passe doit être différent du précédent'
             },
             nickname: {
                 invalid: 'Le pseudo ne peut contenir que des chiffres et des lettres.',
-                short: 'Le pseudo doit faire au moins 3 caractères de long.',
-                empty: 'Vous devez indiquer un pseudo.'
+                short: 'Le pseudo doit faire au moins 3 caractères de long.'
             },
             confirmPassword: {
-                empty: 'Vous devez vérifier votre mot de passe.',
                 different: 'Les mots de passe ne correspondent pas.'
             }
         }
@@ -83,6 +100,10 @@ export default {
     homepage: {
         title: 'Page d\'accueil',
         info: 'Site en construction...'
+    },
+
+    profile: {
+        settings: 'Paramètres du compte'
     },
 
     about: {

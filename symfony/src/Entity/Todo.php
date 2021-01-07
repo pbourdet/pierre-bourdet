@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
+ *     formats={"json"},
  *     itemOperations={
  *         "update"={
  *             "method"="PUT",

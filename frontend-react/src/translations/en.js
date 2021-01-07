@@ -18,7 +18,8 @@ export default {
         user: {
             signup: 'Welcome {name} !',
             signin: 'Hello {name} !',
-            logout: 'You are now logged out.'
+            logout: 'You are now logged out.',
+            updatePassword: 'Password updated !'
         },
         todo: {
             add: 'Todo {name} added !',
@@ -41,6 +42,12 @@ export default {
         error: 'This address email is already taken, try another one.'
     },
 
+    updatePassword: {
+        title: 'Update your password',
+        submitButton: 'Update password',
+        error: 'Current password incorrect.'
+    },
+
     userForm: {
         email: {
             placeholder: 'Your email address',
@@ -50,9 +57,17 @@ export default {
             placeholder: 'Your password',
             label: 'Password'
         },
+        currentPassword: {
+            placeholder: 'Your current password',
+            label: 'Current password'
+        },
+        newPassword: {
+            placeholder: 'Your new password',
+            label: 'New password'
+        },
         confirmPassword: {
             placeholder: 'Confirm your password',
-            label: 'Password Confirmation'
+            label: 'Password confirmation'
         },
         nickname: {
             placeholder: 'Your nickname',
@@ -65,6 +80,11 @@ export default {
             password: {
                 invalid: 'The password must contains at least one number.',
                 short: 'The password must be at least 4 characters long.'
+            },
+            newPassword: {
+                invalid: 'The password must contains at least one number.',
+                short: 'The password must be at least 4 characters long.',
+                different: 'The new password must be different from the previous one.'
             },
             nickname: {
                 invalid: 'The nickname can only contain letters or digits.',
@@ -79,6 +99,10 @@ export default {
     homepage: {
         title: 'Homepage',
         info: 'Site under construction...'
+    },
+
+    profile: {
+        settings: 'Account\'s setttings'
     },
 
     about: {
