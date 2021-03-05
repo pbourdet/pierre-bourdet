@@ -13,24 +13,22 @@ function Profile () {
     }
 
     return (
-        <div className="App">
-            <Container>
-                <Card className="m-2 p-3">
-                    <Card.Body>
-                        <Card.Title className="mb-4">
-                            <FormattedMessage id="profile.settings"/>
-                        </Card.Title>
-                        <Row>
-                            <Col sm={6}>
-                            </Col>
-                            <Col sm={6}>
-                                <UpdatePasswordModal/>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                </Card>
-            </Container>
-        </div>
+        <Container>
+            <Card className="m-2 p-3 shadow">
+                <Card.Body>
+                    <Card.Title className="mb-4">
+                        <FormattedMessage id="profile.settings"/>
+                    </Card.Title>
+                    <Row>
+                        <Col sm={6}>
+                        </Col>
+                        <Col sm={6}>
+                            <UpdatePasswordModal/>
+                        </Col>
+                    </Row>
+                </Card.Body>
+            </Card>
+        </Container>
     );
 }
 

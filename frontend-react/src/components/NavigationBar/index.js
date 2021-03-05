@@ -19,7 +19,7 @@ function NavigationBar () {
     };
 
     return (
-        <div>
+        <div className="shadow-sm">
             <Navbar bg="light" expand="md">
                 <Container>
                     <LocaleSelector/>

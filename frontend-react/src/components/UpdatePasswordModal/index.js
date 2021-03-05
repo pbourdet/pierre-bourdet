@@ -24,7 +24,7 @@ function UpdatePasswordModal () {
         toggleModal();
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
         setLoading(true);
         const isUpdated = await updatePasswordSubmit(values, auth);
 
