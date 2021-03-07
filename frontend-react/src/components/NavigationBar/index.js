@@ -31,11 +31,6 @@ function NavigationBar () {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Link to="/about">
-                                <Nav.Link as="span">
-                                    <FormattedMessage id="navbar.about"/>
-                                </Nav.Link>
-                            </Link>
                             <Link to="/resume">
                                 <Nav.Link as="span">
                                     <FormattedMessage id="navbar.resume"/>
