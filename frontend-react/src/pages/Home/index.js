@@ -29,7 +29,7 @@ function Home () {
                                 values={{
                                     // eslint-disable-next-line react/display-name
                                     a: chunks => (
-                                        <a target="_blank" href={process.env.REACT_APP_API_URL} rel="noreferrer">
+                                        <a target="_blank" href={process.env.REACT_APP_API_URL} rel="noopener noreferrer">
                                             {chunks}
                                         </a>
                                     )
