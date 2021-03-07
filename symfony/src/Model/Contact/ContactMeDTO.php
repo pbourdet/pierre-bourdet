@@ -54,6 +54,9 @@ class ContactMeDTO
     private string $email = '';
 
     /** @Assert\NotBlank() */
+    private string $name = '';
+
+    /** @Assert\NotBlank() */
     private string $subject = '';
 
     /** @Assert\NotBlank() */
@@ -67,6 +70,16 @@ class ContactMeDTO
     public function setEmail(string $email): void
     {
         $this->email = $email;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     public function getSubject(): string
