@@ -43,6 +43,10 @@ export default function useTodoForm (todo) {
         const date = new Date(value);
         date.setMinutes(Math.round(date.getMinutes() / 5) * 5);
 
+        if (value === '') {
+            return null;
+        }
+
         return date.getTime();
     };
 

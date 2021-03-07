@@ -10,8 +10,8 @@ export default async function refreshToken (auth, updateAuth) {
         .then(response => {
             return response.data;
         })
-        .catch(error => {
-            console.log(error);
+        .catch(() => {
+            updateAuth(null);
         });
 
     auth.token = response.token;

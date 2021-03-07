@@ -3,7 +3,6 @@ import 'bootswatch/dist/litera/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css';
 import NavigationBar from '../components/NavigationBar';
-import About from './About';
 import Resume from './Resume';
 import Home from './Home';
 import Profile from './Profile';
@@ -28,7 +27,6 @@ function App () {
                         />
                         <Switch>
                             <Route path="/" exact component={Home}/>
-                            <Route path="/about" component={About}/>
                             <Route path="/resume" component={Resume}/>
                             <Route path="/me" component={Profile}/>
                             <Route path="/todo" component={Todos}/>
