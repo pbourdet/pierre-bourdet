@@ -14,18 +14,26 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UpdatePasswordController extends AbstractController
 {
-    public function __invoke(
-        UpdatePasswordDTO $data,
-        ValidatorInterface $validator,
-        UserPasswordEncoderInterface $encoder
-    ): JsonResponse {
-        if (count($errors = $validator->validate($data)) > 0) {
+    private ValidatorInterface $validator;
+
+    private UserPasswordEncoderInterface $encoder;
+
+    public function __construct(ValidatorInterface $validator, UserPasswordEncoderInterface $encoder)
+    {
+        $this->validator = $validator;
+        $this->encoder = $encoder;
+    }
+
+    public function __invoke(UpdatePasswordDTO $data): JsonResponse
+    {
+        if (count($errors = $this->validator->validate($data)) > 0) {
             return $this->json($errors, Response::HTTP_BAD_REQUEST);
         }
 
         /** @var User $user */
         $user = $this->getUser();
-        $user->setPassword($encoder->encodePassword($user, $data->getNewPassword()));
+
+        $user->setPassword($this->encoder->encodePassword($user, $data->getNewPassword()));
         $user->hasBeenUpdated();
 
         $em = $this->getDoctrine()->getManager();
