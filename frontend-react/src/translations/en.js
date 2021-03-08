@@ -102,7 +102,8 @@ export default {
             title: 'Welcome !',
             text1: 'This website has been developed as a training to create a React front-end application communicating with a Rest API. The API documentation can be <a>seen here</a>. ',
             text2: 'The API is consumed by a fully functional JWT authentication and a <a>Todo list</a>.',
-            text3: 'More details about the technical stack used in this application below.'
+            text3: 'The full codebase is available on <a>Github</a>',
+            text4: 'More details about the technical stack used in this application below.'
         },
         techCard: {
             misc: 'Development'
