@@ -25,6 +25,9 @@ export default {
             add: 'Todo {name} added !',
             edit: 'Todo {name} updated !',
             delete: 'Todo {name} deleted !'
+        },
+        contact: {
+            success: 'Your email was successfully sent !'
         }
     },
 
@@ -119,7 +122,101 @@ export default {
     },
 
     resume: {
-        title: 'Resume'
+        title: 'Resume',
+        header: {
+            title: 'Web developer'
+        },
+        contact: {
+            button: 'Contact me',
+            submit: 'Send',
+            modal: {
+                header: 'Contact me'
+            },
+            email: {
+                label: 'Email address',
+                placeholder: 'Your email',
+                error: 'This email is not valid'
+            },
+            name: {
+                label: 'Name',
+                placeholder: 'Your name'
+            },
+            subject: {
+                label: 'Object',
+                placeholder: 'Object of your message'
+            },
+            message: {
+                label: 'Message',
+                placeholder: 'Your message'
+            }
+        },
+        experience: {
+            title: 'Professional experiences',
+            ekwateur: {
+                date: 'January 2020 - Today',
+                title: 'Symfony back-end developer (Ekwateur)',
+                line1: 'In charge of the development of the customer area.',
+                line2: 'Web customer area : Symfony 3.4 / Mobile app API : Symfony 4.4.',
+                line3: 'Technical stack : Symfony 3/4, Rest API, PHPUnit, Doctrine, Twig.'
+            },
+            bnp: {
+                date: 'August 2019 - December 2019',
+                title: 'Billing Application Manager (HN Services)',
+                line1: 'On assignment at BNP Paribas.',
+                line2: 'Approval and deployment of the application\'s evolutions.'
+            },
+            nxs: {
+                date: 'June 2018 - June 2019',
+                title: 'Functional Tester for Electronic Banking (HN Services)',
+                line1: 'On assignment at Natixis Payments Solution.',
+                line2: 'Verification of the compliance of the delivered functionalities.',
+                line3: 'Analysis of tests and reporting of anomalies to the editors.'
+            },
+            pcs: {
+                date: 'September 2015 - May 2018',
+                title: 'Electronic payment Mainframe Analyst (HN Services)',
+                line1: 'On assignment at PARTECIS.',
+                line2: 'Production monitoring and maintenance of mainframe environments.',
+                line3: 'Technical support for clients (BNP, Natixis, CE) and project managers.'
+            }
+        },
+        education: {
+            title: 'Education & Training',
+            opcr: {
+                date: 'Summer 2019',
+                title: 'Web developer training (Openclassroom)',
+                line1: 'Courses followed : HTML5/CSS3, JavaScript, PHP, PHP Object Oriented, MVC Model, ' +
+                    'Git/Github, Bootstrap, React.js, Symfony 4.'
+            },
+            hni: {
+                date: 'July - August 2015',
+                title: 'Mainframe/COBOL Training (HN Institut)',
+                line1: 'E-learning courses on zOS, MVS, JCL, COBOL Programming, SQL, DB2.'
+            },
+            n7: {
+                date: 'September 2011 - September 2014',
+                title: 'Engineer degree (ENSEEIHT)',
+                line1: 'Electronic engineer degree.'
+            }
+        },
+        skills: {
+            title: 'Skills',
+            misc: 'Miscellaneous',
+            programming: {
+                title: 'Programming'
+            },
+            languages: {
+                title: 'Languages',
+                french: '- French : native',
+                english: '- English : fluent'
+            }
+        },
+        hobbies: {
+            title: 'Hobbies',
+            chess: 'Chess - ~1000 ELO rating on chess.com',
+            coding: 'Coding - developing this very website',
+            games: 'Video games'
+        }
     },
 
     todos: {

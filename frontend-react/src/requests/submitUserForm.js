@@ -63,8 +63,7 @@ export async function updatePasswordSubmit (values, auth) {
         .then(response => {
             return response.status === 200;
         })
-        .catch(error => {
-            console.log(error);
+        .catch(() => {
             return false;
         });
 }
