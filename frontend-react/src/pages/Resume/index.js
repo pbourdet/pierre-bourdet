@@ -86,13 +86,13 @@ function Resume () {
             </Section>
             <Section title={<FormattedMessage id="resume.skills.title"/>}>
                 <Row>
-                    <Col className="text-center h4">
+                    <Col className="text-center h5">
                         <FormattedMessage id="resume.skills.programming.title"/>
                     </Col>
                 </Row>
-                <Row className="text-center mt-4 mb-3 border-bottom">
+                <Row className="text-center mt-3 mb-3 border-bottom">
                     <Col sm={4} className="border-right">
-                        <div className="h5 mb-4">
+                        <div className="h5 font-weight-normal mb-4">
                             <FontAwesomeIcon className="mr-2" icon={faCode}/>
                             <span>Front-end</span>
                         </div>
@@ -105,7 +105,7 @@ function Resume () {
                         </div>
                     </Col>
                     <Col sm={4} className="border-right">
-                        <div className="h5 mb-4">
+                        <div className="h5 font-weight-normal mb-4">
                             <FontAwesomeIcon className="mr-2" icon={faServer}/>
                             <span>Back-end</span>
                         </div>
@@ -118,7 +118,7 @@ function Resume () {
                         </div>
                     </Col>
                     <Col sm={4}>
-                        <div className="h5 mb-4">
+                        <div className="h5 font-weight-normal mb-4">
                             <FontAwesomeIcon className="mr-2" icon={faCogs}/>
                             <span><FormattedMessage id="resume.skills.misc"/></span>
                         </div>
@@ -131,8 +131,8 @@ function Resume () {
                     </Col>
                 </Row>
                 <Row className="mt-4 mb-3">
-                    <Col sm={4}>
-                        <div className="text-center h5 mb-3">
+                    <Col sm={4} className="ml-3">
+                        <div className="text-center font-weight-normal h5 mb-3">
                             <FontAwesomeIcon className="mr-2" icon={faLanguage}/>
                             <span><FormattedMessage id="resume.skills.languages.title"/></span>
                         </div>
