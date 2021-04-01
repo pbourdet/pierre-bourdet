@@ -12,10 +12,10 @@ const Section = ({ title, children }) => {
     return (
         <Container className="text-justify mb-4">
             <Row className="justify-content-start mb-1">
-                <Col xs={9} className="text-center">
-                    <div className="h4 font-weight-normal mr-3">{title}</div>
+                <Col xs={{ span: 6, offset: 3 }} className="text-center">
+                    <div className="h4 mr-3">{title}</div>
                 </Col>
-                <Col className="d-flex">
+                <Col className="d-flex ml-1">
                     <div className="align-self-center">
                         <Button
                             variant="link"
