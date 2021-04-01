@@ -1,7 +1,7 @@
 **Installation**
 -
 (requires Vagrant & Virtualbox)
-- git clone https://github.com/ak3l/pierre-bourdet.git
+- git clone https://github.com/pbourdet/pierre-bourdet.git
 - cd homestead/
 - composer install
 - vagrant up
