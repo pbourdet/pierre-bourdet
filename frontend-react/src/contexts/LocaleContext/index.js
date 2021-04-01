@@ -15,9 +15,12 @@ export function useLocaleUpdate () {
 }
 
 export default function LocaleProvider ({ children }) {
-    const [locale, setLocale] = useState('en-GB');
+    const currentLocale = localStorage.getItem('locale') || 'en-GB';
+
+    const [locale, setLocale] = useState(currentLocale);
 
     function updateLocale (newLocale) {
+        localStorage.setItem('locale', newLocale);
         setLocale(newLocale);
     }
 

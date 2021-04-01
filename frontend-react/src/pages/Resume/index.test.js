@@ -4,7 +4,7 @@ import { mountWithIntl } from '../../helpers/intl-enzyme-test-helper';
 
 test('renders home page', () => {
     const wrapper = mountWithIntl(<Resume />);
-    const title = wrapper.find('h1').text();
+    const title = wrapper.find('div.h2').text();
 
-    expect(title).toBe('Resume');
+    expect(title).toBe('Pierre Bourdet');
 });

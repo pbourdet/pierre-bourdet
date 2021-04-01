@@ -49,8 +49,21 @@ function Home () {
                                 }}
                             />
                         </div>
+                        <div className="mb-3">
+                            <FormattedMessage
+                                id="homepage.introCard.text3"
+                                values={{
+                                    // eslint-disable-next-line react/display-name
+                                    a: chunks => (
+                                        <a target="_blank" href="https://github.com/pbourdet/pierre-bourdet" rel="noopener noreferrer">
+                                            {chunks}
+                                        </a>
+                                    )
+                                }}
+                            />
+                        </div>
                         <div>
-                            <FormattedMessage id="homepage.introCard.text3"/>
+                            <FormattedMessage id="homepage.introCard.text4"/>
                         </div>
                     </div>
                 </Card.Body>

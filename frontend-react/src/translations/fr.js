@@ -25,6 +25,9 @@ export default {
             add: 'Todo {name} ajoutée !',
             edit: 'Todo {name} mise à jour !',
             delete: 'Todo {name} supprimée !'
+        },
+        contact: {
+            success: 'Votre email a bien été envoyé !'
         }
     },
 
@@ -103,7 +106,8 @@ export default {
             title: 'Bienvenue !',
             text1: 'Ce site web a été développé comme un entraînement à la création d\'une application React communiquant avec une API Rest. La documentation de l\'API peut être <a>consultée ici</a>.',
             text2: 'L\'API est consommée par une authentification JWT ainsi qu\'une <a>Todo list</a>.',
-            text3: 'Plus de détails sur les technologies utilisées ci-dessous.'
+            text3: 'Tout le code est disponible sur <a>Github</a>',
+            text4: 'Plus de détails sur les technologies utilisées ci-dessous.'
         },
         techCard: {
             misc: 'Développement'
@@ -119,7 +123,101 @@ export default {
     },
 
     resume: {
-        title: 'CV'
+        title: 'CV',
+        header: {
+            title: 'Développeur web'
+        },
+        contact: {
+            button: 'Contactez-moi',
+            submit: 'Envoyer',
+            modal: {
+                header: 'Contactez-moi'
+            },
+            email: {
+                label: 'Adresse email',
+                placeholder: 'Votre email',
+                error: 'Cette adresse email n\'est pas valide'
+            },
+            name: {
+                label: 'Nom',
+                placeholder: 'Votre nom'
+            },
+            subject: {
+                label: 'Objet',
+                placeholder: 'Objet de votre message'
+            },
+            message: {
+                label: 'Message',
+                placeholder: 'Votre message'
+            }
+        },
+        experience: {
+            title: 'Expériences professionnelles',
+            ekwateur: {
+                date: 'Janvier 2020 - Aujourd\'hui',
+                title: 'Développeur back-end Symfony (Ekwateur)',
+                line1: 'En charge des développements de l\'espace client.',
+                line2: 'Espace client Web : Symfony 3.4 / API de l\'application mobile : Symfony 4.4.',
+                line3: 'Stack technique : Symfony 3/4, Rest API, PHPUnit, Doctrine, Twig.'
+            },
+            bnp: {
+                date: 'Août 2019 - Décembre 2019',
+                title: 'Responsable d\'application facturation (HN Services)',
+                line1: 'En prestation chez BNP Paribas.',
+                line2: 'Homologation et déploiement des évolutions de l\'application.'
+            },
+            nxs: {
+                date: 'Juin 2018 - Juin 2019',
+                title: 'Recetteur fonctionnel monétique (HN Services)',
+                line1: 'En prestation chez Natixis Payments Solution.',
+                line2: 'Vérification de la conformité des fonctionnalités livrées sur le SI.',
+                line3: 'Analyse des tests et remontées d\'anomalies aux éditeurs.'
+            },
+            pcs: {
+                date: 'Septembre 2015 - Mai 2018',
+                title: 'Analyse mainframe monétique (HN Services)',
+                line1: 'En Mission chez PARTECIS.',
+                line2: 'Suivi de production et maintien en condition opérationnelle des environnements mainframe.',
+                line3: 'Maîtrise d\'oeuvre des clients (BNP, Natixis, CE) et chefs de projet.'
+            }
+        },
+        education: {
+            title: 'Études & Formations',
+            opcr: {
+                date: 'Été 2019',
+                title: 'Formation de développeur Web (Openclassroom)',
+                line1: 'Cours suivis : HTML5/CSS3, JavaScript, PHP, PHP Orienté Objet, Modèle MVC, ' +
+                    'Git/Github, Bootstrap, React.js, Symfony 4.'
+            },
+            hni: {
+                date: 'Juillet - Août 2015',
+                title: 'Formation Mainframe/COBOL (HN Institut)',
+                line1: 'Apprentissage en e-learning de zOS, MVS, JCL, Programmation COBOL, SQL, DB2.'
+            },
+            n7: {
+                date: 'Septembre 2011 - Septembre 2014',
+                title: 'Diplôme d\'ingénieur (ENSEEIHT)',
+                line1: 'Formation d\'ingénieur en électronique.'
+            }
+        },
+        skills: {
+            title: 'Compétences',
+            misc: 'Autres',
+            programming: {
+                title: 'Programmation'
+            },
+            languages: {
+                title: 'Langues',
+                french: '- Français : langue maternelle',
+                english: '- Anglais : courant'
+            }
+        },
+        hobbies: {
+            title: 'Hobbies',
+            chess: 'Échecs - ELO de ~1000 sur chess.com',
+            coding: 'Code - développement de ce site',
+            games: 'Jeux vidéos'
+        }
     },
 
     todos: {

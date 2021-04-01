@@ -22,7 +22,6 @@ function UserFormInput ({ type, asterisk, innerRef, handleChange, values, errors
                     isInvalid={touched[type] && errors[type]} isValid={touched[type] && !errors[type]}
                     values={values[type]} type={htmlType} name={type} id={type} placeholder={intl.formatMessage({ id: `userForm.${type}.placeholder` })}
                 />
-
             }
             <Form.Control.Feedback type="invalid">{errors[type]}</Form.Control.Feedback>
         </Form.Group>
