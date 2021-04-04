@@ -12,7 +12,7 @@ test('french flag changes language to french', () => {
     const wrapper = mountWithIntl(<App/>);
 
     expect(wrapper.find('NavbarBrand').text()).toBe('Homepage');
-    wrapper.find('DropdownToggle').simulate('click');
+    wrapper.find('LocaleSelector').find('DropdownToggle').simulate('click');
     wrapper.find('LocaleSelector').find('#fr-FR-flag').simulate('click');
     expect(wrapper.find('NavbarBrand').text()).toBe('Accueil');
 });

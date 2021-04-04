@@ -3,7 +3,7 @@ import '../../pages/App.css';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import LocaleSelector from '../LocaleSelector';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import SigninModal from '../SigninModal';
 import SignupModal from '../SignupModal';
 import { useAuth, useAuthUpdate } from '../../contexts/AuthContext/index';
@@ -36,11 +36,15 @@ function NavigationBar () {
                                     <FormattedMessage id="navbar.resume"/>
                                 </Nav.Link>
                             </Link>
-                            <Link to="/todo">
-                                <Nav.Link as="span">
-                                    Todo
-                                </Nav.Link>
-                            </Link>
+                            <NavDropdown title="Apps" id="basic-nav-dropdown">
+                                <NavDropdown.Item>
+                                    <Link to="/todo">
+                                        <Nav.Link as="span">
+                                            Todo list
+                                        </Nav.Link>
+                                    </Link>
+                                </NavDropdown.Item>
+                            </NavDropdown>
                         </Nav>
                         {auth
                             ? <>

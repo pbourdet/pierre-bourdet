@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Collapse, Row, Col, OverlayTrigger, Popover, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faPen, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlus, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
 import { useDeleteTodo, useTodos } from '../../contexts/TodoContext';
 import TodoForm from '../TodoForm';
@@ -12,6 +12,7 @@ function TodoTable () {
     const [open, setOpen] = useState(false);
     const [todoDeleted, setTodoDeleted] = useState(0);
     const [todoEdited, setTodoEdited] = useState(0);
+    const [todoDetails, setTodoDetails] = useState(0);
     const deleteTodo = useDeleteTodo();
 
     const innerRef = useRef();
@@ -61,7 +62,7 @@ function TodoTable () {
                     <Col xs={3} sm={2} className="border-left border-bottom p-3">
                         {open
                             ? <Button variant="danger" onClick={() => setOpen(!open)} aria-controls="create-todo-form" aria-expanded={open}>
-                                <FontAwesomeIcon className="mr-1" icon={faTimes}/>
+                                <FontAwesomeIcon className="mr-md-1" icon={faTimes}/>
                                 <span className="d-none d-md-inline"><FormattedMessage id="todoTable.cancel"/></span>
                             </Button>
                             : <Button onClick={() => setOpen(!open)} aria-controls="create-todo-form" aria-expanded={open}>
@@ -83,6 +84,17 @@ function TodoTable () {
                                 <div className="d-table w-100 h-100">
                                     <div className="d-table-cell align-middle text-break">
                                         {todo.name}
+                                        <div className="small d-block d-sm-none mt-2">
+                                            {todoDetails === todo.id
+                                                ? <Button variant="link" onClick={() => setTodoDetails(0)} size="sm">
+                                                    <FormattedMessage id="todoTable.lessInfo"/>
+                                                </Button>
+                                                : <Button variant="link" onClick={() => setTodoDetails(todo.id)} size="sm">
+                                                    <FormattedMessage id="todoTable.moreInfo"/>
+                                                </Button>
+
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </Col>
@@ -105,7 +117,6 @@ function TodoTable () {
                                 <div className="d-table w-100 h-100">
                                     <div className="d-table-cell align-middle">
                                         <div>
-                                            <Button className="mr-1 mt-1" size="sm" variant="success"><FontAwesomeIcon icon={faCheck}/></Button>
                                             {todoEdited === todo.id
                                                 ? <Button onClick={() => setTodoEdited(0)} className="mr-1 mt-1" size="sm"><FontAwesomeIcon icon={faTimes}/></Button>
                                                 : <Button onClick={() => setTodoEdited(todo.id)} className="mr-1 mt-1" size="sm"><FontAwesomeIcon icon={faPen}/></Button>
@@ -136,6 +147,24 @@ function TodoTable () {
                                 </div>
                             </Col>
                         </Row>
+                        <Collapse in={todo.id === todoDetails}>
+                            <Row className="border pt-2 pb-2">
+                                <Col xs={5}>
+                                    <div className="d-table w-100 h-100">
+                                        <div className="d-table-cell align-middle h6">
+                                            <FormattedMessage id="todoTable.description"/> :
+                                        </div>
+                                    </div>
+                                </Col>
+                                <Col xs={7}>
+                                    <div className="d-table w-100 h-100">
+                                        <div className="d-table-cell align-middle text-break">
+                                            {todo.description}
+                                        </div>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Collapse>
                         <Collapse in={todo.id === todoEdited} mountOnEnter={true} unmountOnExit={true}>
                             <div id="create-todo-form">
                                 <TodoForm setOpen={setOpen} setTodoEdited={setTodoEdited} todo={todo} isFirstTodo={false} isEdit={true}/>

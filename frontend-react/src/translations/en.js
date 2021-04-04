@@ -234,7 +234,9 @@ export default {
         confirmDelete: {
             title: 'Confirmation',
             button: 'Delete'
-        }
+        },
+        moreInfo: 'More info',
+        lessInfo: 'Less info'
     },
 
     todoForm: {
