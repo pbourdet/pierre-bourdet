@@ -37,7 +37,7 @@ function NavigationBar () {
                                 </Nav.Link>
                             </Link>
                             <NavDropdown title="Apps" id="basic-nav-dropdown">
-                                <NavDropdown.Item>
+                                <NavDropdown.Item as="span">
                                     <Link to="/todo">
                                         <Nav.Link as="span">
                                             Todo list
