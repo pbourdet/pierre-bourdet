@@ -44,8 +44,6 @@ class UserAuthorizationCheckerTest extends TestCase
         $loggedInUser->method('getId')->willReturn(1);
 
         $this->testedObject->check($user);
-
-        $this->doesNotPerformAssertions();
     }
 
     public function testCheckNoLoggedInUser(): void
