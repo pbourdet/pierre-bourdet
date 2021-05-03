@@ -44,11 +44,7 @@ export default function TodoProvider ({ children }) {
 
         await refreshToken(auth, updateAuth);
 
-        const response = await axios.get('/todos', {
-            headers: {
-                Authorization: 'Bearer ' + auth.token
-            }
-        })
+        const response = await axios.get('/todos')
             .then(response => response.data)
             .then(data => data);
 
@@ -77,11 +73,7 @@ export default function TodoProvider ({ children }) {
 
         await refreshToken(auth, updateAuth);
 
-        const response = await axios.post('/todos', JSON.stringify(payload), {
-            headers: {
-                Authorization: 'Bearer ' + auth.token
-            }
-        })
+        const response = await axios.post('/todos', JSON.stringify(payload))
             .then(response => response.data)
             .then(data => data);
 
@@ -95,11 +87,7 @@ export default function TodoProvider ({ children }) {
     async function deleteTodo (todo) {
         await refreshToken(auth, updateAuth);
 
-        await axios.delete('/todos/' + todo.id, {
-            headers: {
-                Authorization: 'Bearer ' + auth.token
-            }
-        })
+        await axios.delete('/todos/' + todo.id)
             .then(response => response.data)
             .then(data => data);
 
@@ -122,11 +110,7 @@ export default function TodoProvider ({ children }) {
         };
         await refreshToken(auth, updateAuth);
 
-        await axios.put('/todos/' + editedTodo.id, JSON.stringify(payload), {
-            headers: {
-                Authorization: 'Bearer ' + auth.token
-            }
-        })
+        await axios.put('/todos/' + editedTodo.id, JSON.stringify(payload))
             .then(response => response.data)
             .then(data => data);
 
