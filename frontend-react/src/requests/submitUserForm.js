@@ -19,11 +19,7 @@ export async function signinSubmit (values) {
         return { auth: null, isError: true };
     }
 
-    const accessToken = response.token;
-
     const auth = {
-        token: accessToken,
-        refreshToken: response.refreshToken,
         exp: addHours((new Date()), 1).getTime()
     };
 
@@ -55,11 +51,7 @@ export async function updatePasswordSubmit (values, auth) {
         confirmPassword: values.confirmPassword
     };
 
-    return await axios.post('/account/update-password', JSON.stringify(payload), {
-        headers: {
-            Authorization: 'Bearer ' + auth.token
-        }
-    })
+    return await axios.post('/account/update-password', JSON.stringify(payload))
         .then(response => {
             return response.status === 200;
         })
@@ -68,12 +60,8 @@ export async function updatePasswordSubmit (values, auth) {
         });
 }
 
-export async function getMe (auth) {
-    return await axios.get('/account/me', {
-        headers: {
-            Authorization: 'Bearer ' + auth.token
-        }
-    })
+export async function getMe () {
+    return await axios.get('/account/me')
         .then(response => {
             return response.data;
         });
