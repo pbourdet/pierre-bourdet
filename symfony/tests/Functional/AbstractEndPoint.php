@@ -60,10 +60,6 @@ abstract class AbstractEndPoint extends WebTestCase
             sprintf(self::LOGIN_PAYLOAD, UserFixtures::DEFAULT_EMAIL, UserFixtures::DEFAULT_PASSWORD)
         );
 
-        $data = json_decode($client->getResponse()->getContent(), true);
-
-        $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
-
         return $client;
     }
 }
