@@ -18,8 +18,6 @@ export default async function refreshToken (auth, updateAuth) {
         return;
     }
 
-    auth.token = response.token;
-    auth.refreshToken = response.refreshToken;
     auth.exp = addHours((new Date()), 1).getTime();
 
     updateAuth(auth);

@@ -20,7 +20,6 @@ export async function signinSubmit (values) {
     }
 
     const auth = {
-        refreshToken: response.refreshToken,
         exp: addHours((new Date()), 1).getTime()
     };
 
