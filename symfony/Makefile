@@ -16,7 +16,7 @@ codecheck:
 	make yamlint
 
 fixtures:
-	php bin/console doctrine:query:sql "DELETE FROM homestead.todo;DELETE from homestead.user;ALTER TABLE homestead.user AUTO_INCREMENT=1;ALTER TABLE homestead.todo AUTO_INCREMENT=1;"
+	php bin/console dbal:run-sql "DELETE FROM homestead.todo;DELETE from homestead.user;ALTER TABLE homestead.user AUTO_INCREMENT=1;ALTER TABLE homestead.todo AUTO_INCREMENT=1;"
 	php bin/console doctrine:fixtures:load --no-interaction
 
 test:
