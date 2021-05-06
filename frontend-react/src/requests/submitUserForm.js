@@ -6,7 +6,7 @@ export async function signinSubmit (values) {
         username: values.email,
         password: values.password
     };
-    const response = await axios.post('/login_check', JSON.stringify(payload))
+    const response = await axios.post('/security/login', JSON.stringify(payload))
         .then(response => {
             return response.data;
         })
