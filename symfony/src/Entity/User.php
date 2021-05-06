@@ -82,13 +82,23 @@ class User implements UserInterface
      */
     private string $nickname;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $resetPasswordToken = null;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private ?\DateTimeInterface $resetPasswordExpirationDate = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->todos = new ArrayCollection();
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -201,5 +211,25 @@ class User implements UserInterface
         $this->nickname = $nickname;
 
         return $this;
+    }
+
+    public function getResetPasswordToken(): ?string
+    {
+        return $this->resetPasswordToken;
+    }
+
+    public function setResetPasswordToken(?string $resetPasswordToken): void
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
+    }
+
+    public function getResetPasswordExpirationDate(): ?\DateTimeInterface
+    {
+        return $this->resetPasswordExpirationDate;
+    }
+
+    public function setResetPasswordExpirationDate(?\DateTimeInterface $resetPasswordExpirationDate): void
+    {
+        $this->resetPasswordExpirationDate = $resetPasswordExpirationDate;
     }
 }
