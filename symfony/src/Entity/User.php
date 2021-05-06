@@ -232,4 +232,15 @@ class User implements UserInterface
     {
         $this->resetPasswordExpirationDate = $resetPasswordExpirationDate;
     }
+
+    public function isResetPasswordTokenExpired(): bool
+    {
+        return null !== $this->resetPasswordExpirationDate && $this->resetPasswordExpirationDate < new \DateTime();
+    }
+
+    public function eraseResetPasswordData(): void
+    {
+        $this->resetPasswordExpirationDate = null;
+        $this->resetPasswordToken = null;
+    }
 }
