@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     itemOperations={},
  *     collectionOperations={
  *          "updatePassword"={
- *              "path"="contact-me",
+ *              "path"="/public/contact-me",
  *              "controller"=ContactMeController::class,
  *              "input"=ContactMeDTO::class,
  *              "method"="POST",
