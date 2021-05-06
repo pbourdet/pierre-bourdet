@@ -31,30 +31,6 @@ final class SwaggerDecorator implements NormalizerInterface
 
         unset($docs['paths']['/todos/{id}']['get']);
 
-        $docs['components']['schemas']['Token'] = [
-            'type' => 'object',
-            'properties' => [
-                'token' => [
-                    'type' => 'string',
-                    'readOnly' => true,
-                ],
-            ],
-        ];
-
-        $docs['components']['schemas']['RefreshedToken'] = [
-            'type' => 'object',
-            'properties' => [
-                'token' => [
-                    'type' => 'string',
-                    'readOnly' => true,
-                ],
-                'refreshToken' => [
-                    'type' => 'string',
-                    'readOnly' => true,
-                ],
-            ],
-        ];
-
         $docs['components']['schemas']['Credentials'] = [
             'type' => 'object',
             'properties' => [
@@ -69,21 +45,11 @@ final class SwaggerDecorator implements NormalizerInterface
             ],
         ];
 
-        $docs['components']['schemas']['RefreshToken'] = [
-            'type' => 'object',
-            'properties' => [
-                'refreshToken' => [
-                    'type' => 'string',
-                    'example' => 'token',
-                ],
-            ],
-        ];
-
         $tokenDocumentation = [
             'paths' => [
-                '/login_check' => [
+                '/security/login' => [
                     'post' => [
-                        'tags' => ['Token'],
+                        'tags' => ['Security'],
                         'operationId' => 'postCredentialsItem',
                         'summary' => 'Get JWT token to login.',
                         'requestBody' => [
@@ -97,15 +63,11 @@ final class SwaggerDecorator implements NormalizerInterface
                             ],
                         ],
                         'responses' => [
-                            Response::HTTP_OK => [
-                                'description' => 'Get JWT token',
-                                'content' => [
-                                    'application/json' => [
-                                        'schema' => [
-                                            '$ref' => '#/components/schemas/Token',
-                                        ],
-                                    ],
-                                ],
+                            Response::HTTP_NO_CONTENT => [
+                                'description' => 'Authentication successful',
+                            ],
+                            Response::HTTP_UNAUTHORIZED => [
+                                'description' => 'Authentication failed',
                             ],
                         ],
                     ],
@@ -115,9 +77,9 @@ final class SwaggerDecorator implements NormalizerInterface
 
         $refreshDocumentation = [
             'paths' => [
-                '/token/refresh' => [
+                '/security/refresh-token' => [
                     'post' => [
-                        'tags' => ['Token'],
+                        'tags' => ['Security'],
                         'operationId' => 'postRefreshToken',
                         'summary' => 'Get new JWT Token from refresh token.',
                         'requestBody' => [
@@ -131,15 +93,11 @@ final class SwaggerDecorator implements NormalizerInterface
                             ],
                         ],
                         'responses' => [
-                            Response::HTTP_OK => [
-                                'description' => 'Get JWT token',
-                                'content' => [
-                                    'application/json' => [
-                                        'schema' => [
-                                            '$ref' => '#/components/schemas/RefreshedToken',
-                                        ],
-                                    ],
-                                ],
+                            Response::HTTP_NO_CONTENT => [
+                                'description' => 'Token successfully refreshed',
+                            ],
+                            Response::HTTP_UNAUTHORIZED => [
+                                'description' => 'Token could not be refreshed',
                             ],
                         ],
                     ],

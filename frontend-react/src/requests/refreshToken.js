@@ -6,7 +6,7 @@ export default async function refreshToken (auth, updateAuth) {
         return auth.token;
     }
 
-    const response = await axios.post('/token/refresh', JSON.stringify({ refreshToken: auth.refreshToken }))
+    const response = await axios.post('/security/refresh-token', JSON.stringify({ refreshToken: auth.refreshToken }))
         .then(response => {
             return response.data;
         })

@@ -58,7 +58,7 @@ function ContactMeModal () {
         setLoading(true);
         setInError(false);
 
-        const isMailSent = await axios.post('/contact-me', JSON.stringify(values))
+        const isMailSent = await axios.post('/public/contact-me', JSON.stringify(values))
             .then(response => {
                 return response.status === 200;
             })

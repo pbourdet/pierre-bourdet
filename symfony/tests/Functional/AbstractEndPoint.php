@@ -53,7 +53,7 @@ abstract class AbstractEndPoint extends WebTestCase
 
         $client->request(
             Request::METHOD_POST,
-            '/login_check',
+            '/security/login',
             [],
             [],
             self::SERVER_INFORMATIONS,

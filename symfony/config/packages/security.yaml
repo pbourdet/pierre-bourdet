@@ -15,15 +15,15 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         refresh:
-            pattern:  ^/token/refresh
+            pattern:  ^/security/refresh-token
             stateless: true
             anonymous: true
         login:
-            pattern:  ^/login
+            pattern:  ^/security/login
             stateless: true
             anonymous: true
             json_login:
-                check_path:               /login_check
+                check_path:               /security/login
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
         users:
@@ -61,8 +61,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/contact-me, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/security, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/users, roles: IS_AUTHENTICATED_FULLY, methods: [DELETE, GET] }
         - { path: ^/todos, roles: IS_AUTHENTICATED_FULLY, methods: [GET, POST, PUT, DELETE] }
         - { path: ^/account, roles: IS_AUTHENTICATED_FULLY, methods: [GET, POST, PUT, DELETE] }
