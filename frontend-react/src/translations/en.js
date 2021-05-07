@@ -28,6 +28,9 @@ export default {
         },
         contact: {
             success: 'Your email was successfully sent !'
+        },
+        reset: {
+            email: 'An email was sent to : {email}'
         }
     },
 
@@ -115,10 +118,6 @@ export default {
 
     profile: {
         settings: 'Account\'s setttings'
-    },
-
-    about: {
-        title: 'About'
     },
 
     resume: {
@@ -267,6 +266,16 @@ export default {
             date: {
                 soon: 'The date must not be before today.'
             }
+        }
+    },
+
+    reset: {
+        modal: {
+            open: 'Forgotten password',
+            header: 'Reset your password',
+            body: 'You will receive at the provided address an email containing a link allowing you to reset your password.',
+            error: 'An error was encountered when sending the email.',
+            submit: 'Send'
         }
     }
 };

@@ -8,6 +8,7 @@ import UserFormInput from '../Input/UserFormInput';
 import { signinSubmit } from '../../requests/submitUserForm';
 import { useAuthUpdate } from '../../contexts/AuthContext/index';
 import { toast } from 'react-toastify';
+import ResetPasswordEmailModal from '../ResetPasswordEmailModal';
 
 function SigninModal () {
     const [modal, setModal] = useState(false);
@@ -79,6 +80,9 @@ function SigninModal () {
                             ? <Spinner animation="border" variant="primary"/>
                             : <Button className="mr-4 ml-4" disabled={!isFormFilled} variant="primary" type="submit" onClick={handleSigninSubmit} block><FormattedMessage id="signinModal.submitButton"/></Button>
                         }
+                    </div>
+                    <div className="d-flex justify-content-around mt-2">
+                        <ResetPasswordEmailModal/>
                     </div>
                 </Modal.Body>
             </Modal>

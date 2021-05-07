@@ -28,6 +28,9 @@ export default {
         },
         contact: {
             success: 'Votre email a bien été envoyé !'
+        },
+        reset: {
+            email: 'Un mail a été envoyé à : {email}'
         }
     },
 
@@ -116,10 +119,6 @@ export default {
 
     profile: {
         settings: 'Paramètres du compte'
-    },
-
-    about: {
-        title: 'A propos'
     },
 
     resume: {
@@ -268,6 +267,16 @@ export default {
             date: {
                 soon: 'La date ne peut pas être antérieur à aujourd\'hui.'
             }
+        }
+    },
+
+    reset: {
+        modal: {
+            open: 'Mot de passe oublié',
+            header: 'Réinitialiser votre mot de passe',
+            body: 'Vous receverez à l\'adresse fournie un email contenant un lien vous permettant de réinitialiser votre mot de passe.',
+            error: 'Une erreur est survenue lors de l\'envoi du mail.',
+            submit: 'Envoyer'
         }
     }
 };
