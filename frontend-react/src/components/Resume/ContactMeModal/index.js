@@ -149,7 +149,7 @@ function ContactMeModal () {
                         </Form.Group>
                         {inError &&
                         <Alert variant="danger" onClose={() => setInError(false)} dismissible>
-                            <p><FormattedMessage id="signinModal.authError"/></p>
+                            <p><FormattedMessage id="contact.error"/></p>
                         </Alert>
                         }
                         <div className="d-flex justify-content-around mt-4">

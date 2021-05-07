@@ -129,6 +129,7 @@ export default {
         contact: {
             button: 'Contact me',
             submit: 'Send',
+            error: 'Something wrong happened when sending the email',
             modal: {
                 header: 'Contact me'
             },

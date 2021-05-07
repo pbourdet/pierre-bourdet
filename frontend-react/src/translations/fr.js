@@ -130,6 +130,7 @@ export default {
         contact: {
             button: 'Contactez-moi',
             submit: 'Envoyer',
+            error: 'Une erreur est survenue lors de l\'envoi du mail',
             modal: {
                 header: 'Contactez-moi'
             },
