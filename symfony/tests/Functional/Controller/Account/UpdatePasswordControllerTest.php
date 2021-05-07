@@ -90,7 +90,7 @@ class UpdatePasswordControllerTest extends AbstractEndPoint
         $this->assertJson($content);
         $this->assertArrayHasKey('detail', $contentDecoded);
         $this->assertArrayHasKey('violations', $contentDecoded);
-        $this->assertEquals($contentDecoded['violations'][0]['propertyPath'], 'currentPassword');
+        $this->assertEquals('currentPassword', $contentDecoded['violations'][0]['propertyPath']);
     }
 
     public function testUpdatePasswordWithDifferentPassword(): void
@@ -118,6 +118,6 @@ class UpdatePasswordControllerTest extends AbstractEndPoint
         $this->assertJson($content);
         $this->assertArrayHasKey('detail', $contentDecoded);
         $this->assertArrayHasKey('violations', $contentDecoded);
-        $this->assertEquals($contentDecoded['violations'][0]['propertyPath'], 'confirmPasswordEqualToNewPassword');
+        $this->assertEquals('confirmPasswordEqualToNewPassword', $contentDecoded['violations'][0]['propertyPath']);
     }
 }

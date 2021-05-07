@@ -85,11 +85,7 @@ final class SwaggerDecorator implements NormalizerInterface
                         'requestBody' => [
                             'description' => 'Refresh JWT Token',
                             'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => '#/components/schemas/RefreshToken',
-                                    ],
-                                ],
+                                'application/json' => [],
                             ],
                         ],
                         'responses' => [
