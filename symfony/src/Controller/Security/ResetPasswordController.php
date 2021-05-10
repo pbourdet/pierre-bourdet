@@ -56,6 +56,6 @@ class ResetPasswordController extends AbstractController
         $this->em->persist($user);
         $this->em->flush();
 
-        return $this->json(['message' => 'PASSWORD_RESET_SUCCESSFUL']);
+        return $this->json(['email' => $user->getEmail()]);
     }
 }
