@@ -30,7 +30,8 @@ export default {
             success: 'Your email was successfully sent !'
         },
         reset: {
-            email: 'An email was sent to : {email}'
+            email: 'An email was sent to : {email}',
+            success: 'Your password has been resetted !'
         }
     },
 
@@ -276,6 +277,11 @@ export default {
             body: 'You will receive at the provided address an email containing a link allowing you to reset your password.',
             error: 'An error was encountered when sending the email.',
             submit: 'Send'
+        },
+        page: {
+            title: 'Reset your password',
+            submit: 'Reset',
+            error: 'The link is invalid or expired.'
         }
     }
 };

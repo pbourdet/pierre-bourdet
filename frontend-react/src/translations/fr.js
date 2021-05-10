@@ -30,7 +30,8 @@ export default {
             success: 'Votre email a bien été envoyé !'
         },
         reset: {
-            email: 'Un mail a été envoyé à : {email}'
+            email: 'Un mail a été envoyé à : {email}',
+            success: 'Votre mot de passe a été réinitialisé !'
         }
     },
 
@@ -277,6 +278,11 @@ export default {
             body: 'Vous receverez à l\'adresse fournie un email contenant un lien vous permettant de réinitialiser votre mot de passe.',
             error: 'Une erreur est survenue lors de l\'envoi du mail.',
             submit: 'Envoyer'
+        },
+        page: {
+            title: 'Réinitialiser votre mot de passe',
+            submit: 'Réinitialiser',
+            error: 'Le lien n\'est pas valide ou expiré.'
         }
     }
 };
