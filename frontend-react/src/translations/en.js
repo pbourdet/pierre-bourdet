@@ -28,6 +28,10 @@ export default {
         },
         contact: {
             success: 'Your email was successfully sent !'
+        },
+        reset: {
+            email: 'An email was sent to : {email}',
+            success: 'Your password has been resetted !'
         }
     },
 
@@ -117,10 +121,6 @@ export default {
         settings: 'Account\'s setttings'
     },
 
-    about: {
-        title: 'About'
-    },
-
     resume: {
         title: 'Resume',
         header: {
@@ -129,6 +129,7 @@ export default {
         contact: {
             button: 'Contact me',
             submit: 'Send',
+            error: 'Something wrong happened when sending the email',
             modal: {
                 header: 'Contact me'
             },
@@ -266,6 +267,21 @@ export default {
             date: {
                 soon: 'The date must not be before today.'
             }
+        }
+    },
+
+    reset: {
+        modal: {
+            open: 'Forgotten password',
+            header: 'Reset your password',
+            body: 'You will receive at the provided address an email containing a link allowing you to reset your password.',
+            error: 'An error was encountered when sending the email.',
+            submit: 'Send'
+        },
+        page: {
+            title: 'Reset your password',
+            submit: 'Reset',
+            error: 'The link is invalid or expired.'
         }
     }
 };

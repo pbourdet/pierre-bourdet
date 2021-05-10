@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AuthProvider from '../contexts/AuthContext/index';
 import { ToastContainer } from 'react-toastify';
 import LocaleProvider from '../contexts/LocaleContext/index';
+import ResetPassword from './ResetPassword';
 
 function App () {
     return (
@@ -30,6 +31,7 @@ function App () {
                             <Route path="/resume" component={Resume}/>
                             <Route path="/me" component={Profile}/>
                             <Route path="/todo" component={Todos}/>
+                            <Route path="/reset-password/:token" component={ResetPassword}/>
                         </Switch>
                     </AuthProvider>
                 </div>

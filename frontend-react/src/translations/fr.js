@@ -28,6 +28,10 @@ export default {
         },
         contact: {
             success: 'Votre email a bien été envoyé !'
+        },
+        reset: {
+            email: 'Un mail a été envoyé à : {email}',
+            success: 'Votre mot de passe a été réinitialisé !'
         }
     },
 
@@ -118,10 +122,6 @@ export default {
         settings: 'Paramètres du compte'
     },
 
-    about: {
-        title: 'A propos'
-    },
-
     resume: {
         title: 'CV',
         header: {
@@ -130,6 +130,7 @@ export default {
         contact: {
             button: 'Contactez-moi',
             submit: 'Envoyer',
+            error: 'Une erreur est survenue lors de l\'envoi du mail',
             modal: {
                 header: 'Contactez-moi'
             },
@@ -267,6 +268,21 @@ export default {
             date: {
                 soon: 'La date ne peut pas être antérieur à aujourd\'hui.'
             }
+        }
+    },
+
+    reset: {
+        modal: {
+            open: 'Mot de passe oublié',
+            header: 'Réinitialiser votre mot de passe',
+            body: 'Vous receverez à l\'adresse fournie un email contenant un lien vous permettant de réinitialiser votre mot de passe.',
+            error: 'Une erreur est survenue lors de l\'envoi du mail.',
+            submit: 'Envoyer'
+        },
+        page: {
+            title: 'Réinitialiser votre mot de passe',
+            submit: 'Réinitialiser',
+            error: 'Le lien n\'est pas valide ou expiré.'
         }
     }
 };
