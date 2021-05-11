@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -41,7 +42,7 @@ class SendResetPasswordEmailController extends AbstractController
         $this->logger = $logger;
     }
 
-    public function __invoke(SendResetPasswordEmailDTO $data): JsonResponse
+    public function __invoke(SendResetPasswordEmailDTO $data, Request $request): JsonResponse
     {
         if (count($errors = $this->validator->validate($data)) > 0) {
             return $this->json($errors, Response::HTTP_BAD_REQUEST);
@@ -65,7 +66,7 @@ class SendResetPasswordEmailController extends AbstractController
         $this->em->flush();
 
         try {
-            $this->mailer->send($user, $token);
+            $this->mailer->send($user, $token, $request->getLocale());
         } catch (\Exception $exception) {
             $this->logger->error('Could not send reset password email', [
                 'message' => $exception->getMessage(),
