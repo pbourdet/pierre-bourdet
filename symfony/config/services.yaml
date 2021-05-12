@@ -15,6 +15,7 @@ services:
             $refreshTokenTtl: '%env(REFRESH_TOKEN_TTL)%'
             $frontendDomain: '%env(FRONTEND_DOMAIN)%'
             $contactEmail: '%env(CONTACT_EMAIL)%'
+            $contactName: '%env(CONTACT_NAME)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
