@@ -1,3 +1,7 @@
-hello: Bonjour
+title: Réinitialiser le mot de passe
+
 link: Vous pouvez réinitialiser votre mot de passe en cliquant sur le lien ci-dessous. Ce lien expire dans une heure.
-bye: A bientôt !
+
+button: Je réinitialise mon mot de passe
+
+ignore: Si vous n'êtes pas à l'origine de cette demande, merci de ne pas en tenir compte.

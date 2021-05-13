@@ -1,0 +1,83 @@
+{% trans_default_domain 'base-email' %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>{% block title %}{% endblock %}</title>
+        <style>
+            body {
+                font-family: Verdana, Geneva, sans-serif;
+                font-weight: 400;
+                background-color: #f5f5f5;
+            }
+
+            div {
+                max-width: 600px;
+                margin: auto;
+                background-color: #fff;
+                box-shadow: 0 10px 20px 0 rgba(0,0,0,0.5);
+                padding: 20px;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            p {
+                text-align: left;
+                margin: 10px;
+            }
+
+            h4 {
+                font-size: 25px;
+                margin: 20px;
+            }
+
+            a {
+                text-decoration: none
+            }
+
+            a:hover {
+                color: #4582ec;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+
+            hr {
+                margin-top: 20px;
+            }
+
+            small {
+                color: #65625f;
+                font-size: 10px;
+            }
+        </style>
+    </head>
+
+    <body align="center">
+        <div>
+            <table>
+                <tr>
+                    <td><h4>{{ 'hello' | trans }} {{ name }},</h4></td>
+                </tr>
+                <tr>
+                    <td>
+                        {% block content %}{% endblock %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>{{ 'bye' | trans }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><hr/></td>
+                </tr>
+                <tr>
+                    <td><small>{{ 'footer' | trans }}</small></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
