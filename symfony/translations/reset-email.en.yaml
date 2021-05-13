@@ -1,3 +1,7 @@
-hello: Hello
+title: Reset password
+
 link: You can reset your password by clicking the following link. It expires after 1 hour.
-bye: See you soon !
+
+button: Reset my password
+
+ignore: If you did not initiate this request, please disregard it.
