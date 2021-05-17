@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import 'bootswatch/dist/litera/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css';
 import NavigationBar from '../components/NavigationBar';
-import Resume from './Resume';
-import Home from './Home';
-import Profile from './Profile';
-import Todos from './Todos';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AuthProvider from '../contexts/AuthContext/index';
 import { ToastContainer } from 'react-toastify';
 import LocaleProvider from '../contexts/LocaleContext/index';
-import ResetPassword from './ResetPassword';
+import { Spinner } from 'react-bootstrap';
 
 function App () {
+    const Home = React.lazy(() => import('./Home/index'));
+    const Resume = React.lazy(() => import('./Resume/index'));
+    const Profile = React.lazy(() => import('./Profile/index'));
+    const Todos = React.lazy(() => import('./Todos/index'));
+    const ResetPassword = React.lazy(() => import('./ResetPassword/index'));
+
     return (
         <LocaleProvider>
             <Router>
@@ -26,13 +28,15 @@ function App () {
                             pauseOnFocusLoss={false}
                             pauseOnHover={false}
                         />
-                        <Switch>
-                            <Route path="/" exact component={Home}/>
-                            <Route path="/resume" component={Resume}/>
-                            <Route path="/me" component={Profile}/>
-                            <Route path="/todo" component={Todos}/>
-                            <Route path="/reset-password/:token" component={ResetPassword}/>
-                        </Switch>
+                        <Suspense fallback={<Spinner/>}>
+                            <Switch>
+                                <Route path="/" exact component={Home}/>
+                                <Route path="/resume" component={Resume}/>
+                                <Route path="/me" component={Profile}/>
+                                <Route path="/todo" component={Todos}/>
+                                <Route path="/reset-password/:token" component={ResetPassword}/>
+                            </Switch>
+                        </Suspense>
                     </AuthProvider>
                 </div>
             </Router>
