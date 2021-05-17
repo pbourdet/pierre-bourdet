@@ -33,14 +33,17 @@ function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
             setTodoEdited(0);
             clearAll();
             toast.success(<FormattedMessage id='toast.todo.edit' values={{ name: currentTodo.name }}/>);
-        } else {
-            await createTodo(currentTodo);
-            if (!isFirstTodo) {
-                setLoading(false);
-                setOpen(false);
-                clearAll();
-                toast.success(<FormattedMessage id='toast.todo.add' values={{ name: currentTodo.name }}/>);
-            }
+
+            return;
+        }
+
+        await createTodo(currentTodo);
+
+        if (!isFirstTodo) {
+            setLoading(false);
+            setOpen(false);
+            clearAll();
+            toast.success(<FormattedMessage id='toast.todo.add' values={{ name: currentTodo.name }}/>);
         }
     };
 
