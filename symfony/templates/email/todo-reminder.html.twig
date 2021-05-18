@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'todo-reminder' %}
+
+{% block title %}{{ 'title' | trans }}{% endblock %}
+
+{% block content %}
+    <p>{{ 'reminder' | trans }} : <b>{{ todo.name }}</b></p>
+    <p>Description : {{ todo.description }}</p>
+{% endblock %}
