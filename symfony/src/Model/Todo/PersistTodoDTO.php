@@ -15,7 +15,7 @@ class PersistTodoDTO
      *     groups={"update_todo", "create_todo"}
      * )
      */
-    private string $name;
+    private string $name = '';
 
     /**
      * @Assert\Length(
@@ -33,10 +33,16 @@ class PersistTodoDTO
      */
     private ?\DateTime $date = null;
 
+    /** @Assert\IsFalse(groups={"create_todo"}) */
+    private bool $isDone = false;
+
     /**
-     * @Assert\IsFalse(groups={"create_todo"})
+     * @Assert\LessThan(
+     *     propertyPath="date",
+     *     groups={"update_todo", "create_todo"}
+     * )
      */
-    private bool $isDone;
+    private ?\DateTimeInterface $reminder = null;
 
     public function getName(): string
     {
@@ -84,5 +90,15 @@ class PersistTodoDTO
         $this->isDone = $isDone;
 
         return $this;
+    }
+
+    public function getReminder(): ?\DateTimeInterface
+    {
+        return $this->reminder;
+    }
+
+    public function setReminder(?\DateTimeInterface $reminder): void
+    {
+        $this->reminder = $reminder;
     }
 }
