@@ -20,4 +20,16 @@ class TodoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Todo::class);
     }
+
+    /** @return Todo[] */
+    public function findNotDoneByReminderInterval(\DateTimeInterface $startDate, \DateTimeInterface $endDate): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.reminder >= :start')
+            ->andWhere('t.reminder < :end')
+            ->andWhere('t.isDone = false')
+            ->setParameters(['start' => $startDate, 'end' => $endDate])
+            ->getQuery()
+            ->getResult();
+    }
 }

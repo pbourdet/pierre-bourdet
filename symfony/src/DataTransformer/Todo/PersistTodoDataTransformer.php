@@ -46,6 +46,7 @@ class PersistTodoDataTransformer implements DataTransformerInterface
             $validationGroup = self::UPDATE_VALIDATION_GROUP;
             $todo = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE];
         }
+
         $this->validator->validate($object, ['groups' => $validationGroup]);
 
         $todo
@@ -53,6 +54,7 @@ class PersistTodoDataTransformer implements DataTransformerInterface
             ->setDate($object->getDate())
             ->setIsDone($object->isDone())
             ->setDescription($object->getDescription())
+            ->setReminder($object->getReminder())
         ;
 
         return $todo;
