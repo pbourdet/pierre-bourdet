@@ -74,6 +74,11 @@ class Todo
      */
     private UserInterface $user;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private ?\DateTimeInterface $reminder;
+
     public function getName(): string
     {
         return $this->name;
@@ -130,6 +135,18 @@ class Todo
     public function setUser(UserInterface $user): Todo
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getReminder(): ?\DateTimeInterface
+    {
+        return $this->reminder;
+    }
+
+    public function setReminder(?\DateTimeInterface $reminder): self
+    {
+        $this->reminder = $reminder;
 
         return $this;
     }
