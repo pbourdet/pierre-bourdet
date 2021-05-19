@@ -41,14 +41,12 @@ class TodosSendRemindersCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dateReference = (new \DateTimeImmutable())->format('Ymd-Hi');
+        $countEmails = $countErrors = 0;
         $this->logger->notice(sprintf('[%s] - Start of the todo reminder command', $dateReference));
 
-        $now = new \DateTimeImmutable();
-        $fiveMinutesAgo = new \DateTimeImmutable('-5 minutes');
-
-        $todos = $this->todoRepository->findNotDoneByReminderInterval($fiveMinutesAgo, $now);
-
-        $countEmails = $countErrors = 0;
+        $now = (new \DateTime('UTC'));
+        $now->setTime((int) $now->format('H'), (int) $now->format('i'));
+        $todos = $this->todoRepository->findNotDoneByReminder($now);
 
         foreach ($todos as $todo) {
             try {

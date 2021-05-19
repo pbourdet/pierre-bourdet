@@ -22,13 +22,12 @@ class TodoRepository extends ServiceEntityRepository
     }
 
     /** @return Todo[] */
-    public function findNotDoneByReminderInterval(\DateTimeInterface $startDate, \DateTimeInterface $endDate): array
+    public function findNotDoneByReminder(\DateTimeInterface $date): array
     {
         return $this->createQueryBuilder('t')
-            ->where('t.reminder >= :start')
-            ->andWhere('t.reminder < :end')
+            ->where('t.reminder = :date')
             ->andWhere('t.isDone = false')
-            ->setParameters(['start' => $startDate, 'end' => $endDate])
+            ->setParameter('date', $date)
             ->getQuery()
             ->getResult();
     }
