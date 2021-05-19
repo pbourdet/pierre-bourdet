@@ -4,31 +4,32 @@ declare(strict_types=1);
 
 namespace App\Controller\Contact;
 
-use App\Mailer\ContactMeMailer;
+use App\Message\EmailMessage;
 use App\Model\Contact\ContactMeDTO;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportException;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ContactMeController extends AbstractController
 {
     private ValidatorInterface $validator;
 
-    private ContactMeMailer $contactMailer;
+    private MessageBusInterface $bus;
 
-    private LoggerInterface $logger;
+    private string $personalEmail;
 
     public function __construct(
         ValidatorInterface $validator,
-        ContactMeMailer $contactMailer,
-        LoggerInterface $logger
+        MessageBusInterface $bus,
+        string $personalEmail
     ) {
         $this->validator = $validator;
-        $this->contactMailer = $contactMailer;
-        $this->logger = $logger;
+        $this->bus = $bus;
+        $this->personalEmail = $personalEmail;
     }
 
     public function __invoke(ContactMeDTO $data): JsonResponse
@@ -37,16 +38,15 @@ class ContactMeController extends AbstractController
             return $this->json($errors, Response::HTTP_BAD_REQUEST);
         }
 
-        try {
-            $this->contactMailer->sendContactEmail($data);
-        } catch (TransportException $exception) {
-            $this->logger->alert($exception->getMessage(), [
-                'dto' => $data,
-            ]);
+        $email = (new Email())
+            ->to($this->personalEmail)
+            ->from(new Address($data->getEmail(), $data->getName()))
+            ->subject($data->getSubject())
+            ->text($data->getMessage())
+        ;
 
-            return $this->json('Could not send email', Response::HTTP_BAD_GATEWAY);
-        }
+        $this->bus->dispatch(new EmailMessage($email));
 
-        return $this->json(null);
+        return $this->json(null, Response::HTTP_ACCEPTED);
     }
 }
