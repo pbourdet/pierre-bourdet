@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller\Contact;
 
+use App\Mailer\EmailFactory;
 use App\Message\EmailMessage;
 use App\Model\Contact\ContactMeDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ContactMeController extends AbstractController
@@ -20,16 +19,16 @@ class ContactMeController extends AbstractController
 
     private MessageBusInterface $bus;
 
-    private string $personalEmail;
+    private EmailFactory $emailFactory;
 
     public function __construct(
         ValidatorInterface $validator,
         MessageBusInterface $bus,
-        string $personalEmail
+        EmailFactory $emailFactory
     ) {
         $this->validator = $validator;
         $this->bus = $bus;
-        $this->personalEmail = $personalEmail;
+        $this->emailFactory = $emailFactory;
     }
 
     public function __invoke(ContactMeDTO $data): JsonResponse
@@ -38,13 +37,7 @@ class ContactMeController extends AbstractController
             return $this->json($errors, Response::HTTP_BAD_REQUEST);
         }
 
-        $email = (new Email())
-            ->to($this->personalEmail)
-            ->from(new Address($data->getEmail(), $data->getName()))
-            ->subject($data->getSubject())
-            ->text($data->getMessage())
-        ;
-
+        $email = $this->emailFactory->createForContactMe($data);
         $this->bus->dispatch(new EmailMessage($email));
 
         return $this->json(null, Response::HTTP_ACCEPTED);
