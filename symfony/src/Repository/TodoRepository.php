@@ -16,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TodoRepository extends ServiceEntityRepository
 {
+    use EntityManagerTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Todo::class);

@@ -27,6 +27,14 @@ only_master: &only_master
 commands:
     install:
         steps:
+            - run:
+                  name: Install AMQP PHP extension & starting RabbitMQ server
+                  command: |
+                      sudo apt-get update
+                      sudo apt-get install pkg-config librabbitmq-dev libssh-dev rabbitmq-server
+                      sudo printf "\n" | sudo pecl install amqp
+                      sudo docker-php-ext-enable amqp
+                      sudo service rabbitmq-server start
             - restore_cache:
                   key: dependencies-{{ checksum "symfony/composer.lock" }}-{{ checksum "symfony/symfony.lock" }}-{{ checksum "frontend-react/yarn.lock" }}
             - run:
