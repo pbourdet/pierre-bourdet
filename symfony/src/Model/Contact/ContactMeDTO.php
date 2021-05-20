@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                  "tags"={"Contact"},
  *                  "summary"="Sends me an email",
  *                  "responses"={
- *                      "200"={
+ *                      "202"={
  *                          "description"="Email successfully sent.",
  *                          "content"={
  *                              "application/json"={}
@@ -29,12 +29,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                      },
  *                      "400"={
  *                          "description"="Input data is not valid.",
- *                          "content"={
- *                              "application/json"={}
- *                          }
- *                      },
- *                      "502"={
- *                          "description"="Could not send email.",
  *                          "content"={
  *                              "application/json"={}
  *                          }
