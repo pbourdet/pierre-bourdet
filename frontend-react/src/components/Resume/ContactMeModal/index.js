@@ -59,12 +59,8 @@ function ContactMeModal () {
         setInError(false);
 
         const isMailSent = await axios.post('/public/contact-me', JSON.stringify(values))
-            .then(response => {
-                return response.status === 200;
-            })
-            .catch(() => {
-                return false;
-            });
+            .then(() => true)
+            .catch(() => false);
 
         setLoading(false);
 
@@ -149,7 +145,7 @@ function ContactMeModal () {
                         </Form.Group>
                         {inError &&
                         <Alert variant="danger" onClose={() => setInError(false)} dismissible>
-                            <p><FormattedMessage id="contact.error"/></p>
+                            <p><FormattedMessage id="resume.contact.error"/></p>
                         </Alert>
                         }
                         <div className="d-flex justify-content-around mt-4">
