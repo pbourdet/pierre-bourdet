@@ -8,7 +8,6 @@ use App\Mailer\EmailFactory;
 use App\Message\EmailMessage;
 use App\Model\Security\SendResetPasswordEmailDTO;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,8 +23,6 @@ class SendResetPasswordEmailController extends AbstractController
 
     private UserRepository $userRepository;
 
-    private EntityManagerInterface $em;
-
     private EmailFactory $emailFactory;
 
     private MessageBusInterface $bus;
@@ -35,14 +32,12 @@ class SendResetPasswordEmailController extends AbstractController
     public function __construct(
         ValidatorInterface $validator,
         UserRepository $userRepository,
-        EntityManagerInterface $em,
         MessageBusInterface $bus,
         EmailFactory $emailFactory,
         TranslatorInterface $translator
     ) {
         $this->validator = $validator;
         $this->userRepository = $userRepository;
-        $this->em = $em;
         $this->bus = $bus;
         $this->emailFactory = $emailFactory;
         $this->translator = $translator;
@@ -68,8 +63,7 @@ class SendResetPasswordEmailController extends AbstractController
         $user->setResetPasswordExpirationDate(new \DateTimeImmutable('+1 hours'));
         $user->hasBeenUpdated();
 
-        $this->em->persist($user);
-        $this->em->flush();
+        $this->userRepository->save($user);
 
         $email = $this->emailFactory->createForResetPassword(
             $user,

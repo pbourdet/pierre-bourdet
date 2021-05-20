@@ -16,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
+    use EntityManagerTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
