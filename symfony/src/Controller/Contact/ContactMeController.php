@@ -4,31 +4,31 @@ declare(strict_types=1);
 
 namespace App\Controller\Contact;
 
-use App\Mailer\EmailFactory;
-use App\Message\EmailMessage;
+use App\Mailer\ContactMeMailer;
 use App\Model\Contact\ContactMeDTO;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ContactMeController extends AbstractController
 {
     private ValidatorInterface $validator;
 
-    private MessageBusInterface $bus;
+    private ContactMeMailer $contactMailer;
 
-    private EmailFactory $emailFactory;
+    private LoggerInterface $logger;
 
     public function __construct(
         ValidatorInterface $validator,
-        MessageBusInterface $bus,
-        EmailFactory $emailFactory
+        ContactMeMailer $contactMailer,
+        LoggerInterface $logger
     ) {
         $this->validator = $validator;
-        $this->bus = $bus;
-        $this->emailFactory = $emailFactory;
+        $this->contactMailer = $contactMailer;
+        $this->logger = $logger;
     }
 
     public function __invoke(ContactMeDTO $data): JsonResponse
@@ -37,9 +37,16 @@ class ContactMeController extends AbstractController
             return $this->json($errors, Response::HTTP_BAD_REQUEST);
         }
 
-        $email = $this->emailFactory->createForContactMe($data);
-        $this->bus->dispatch(new EmailMessage($email));
+        try {
+            $this->contactMailer->sendContactEmail($data);
+        } catch (TransportException $exception) {
+            $this->logger->alert($exception->getMessage(), [
+                'dto' => $data,
+            ]);
 
-        return $this->json(null, Response::HTTP_ACCEPTED);
+            return $this->json('Could not send email', Response::HTTP_BAD_GATEWAY);
+        }
+
+        return $this->json(null);
     }
 }

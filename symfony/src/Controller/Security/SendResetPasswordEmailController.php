@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller\Security;
 
-use App\Mailer\EmailFactory;
-use App\Message\EmailMessage;
 use App\Model\Security\SendResetPasswordEmailDTO;
 use App\Repository\UserRepository;
+use App\Security\ResetPasswordMailer;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SendResetPasswordEmailController extends AbstractController
 {
@@ -26,26 +24,22 @@ class SendResetPasswordEmailController extends AbstractController
 
     private EntityManagerInterface $em;
 
-    private EmailFactory $emailFactory;
+    private ResetPasswordMailer $mailer;
 
-    private MessageBusInterface $bus;
-
-    private TranslatorInterface $translator;
+    private LoggerInterface $logger;
 
     public function __construct(
         ValidatorInterface $validator,
         UserRepository $userRepository,
         EntityManagerInterface $em,
-        MessageBusInterface $bus,
-        EmailFactory $emailFactory,
-        TranslatorInterface $translator
+        ResetPasswordMailer $mailer,
+        LoggerInterface $logger
     ) {
         $this->validator = $validator;
         $this->userRepository = $userRepository;
         $this->em = $em;
-        $this->bus = $bus;
-        $this->emailFactory = $emailFactory;
-        $this->translator = $translator;
+        $this->mailer = $mailer;
+        $this->logger = $logger;
     }
 
     public function __invoke(SendResetPasswordEmailDTO $data, Request $request): JsonResponse
@@ -71,13 +65,16 @@ class SendResetPasswordEmailController extends AbstractController
         $this->em->persist($user);
         $this->em->flush();
 
-        $email = $this->emailFactory->createForResetPassword(
-            $user,
-            $token,
-            $this->translator->trans('subject', [], 'reset-email')
-        );
+        try {
+            $this->mailer->send($user, $token, $request->getLocale());
+        } catch (\Exception $exception) {
+            $this->logger->error('Could not send reset password email', [
+                'message' => $exception->getMessage(),
+                'data' => $data,
+            ]);
 
-        $this->bus->dispatch(new EmailMessage($email, $request->getLocale()));
+            return $this->json(null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
         return $this->json(['message' => 'EMAIL_SENT']);
     }
