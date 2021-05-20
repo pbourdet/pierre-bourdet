@@ -4,31 +4,31 @@ declare(strict_types=1);
 
 namespace App\Controller\Contact;
 
-use App\Mailer\ContactMeMailer;
+use App\Mailer\EmailFactory;
+use App\Message\EmailMessage;
 use App\Model\Contact\ContactMeDTO;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ContactMeController extends AbstractController
 {
     private ValidatorInterface $validator;
 
-    private ContactMeMailer $contactMailer;
+    private MessageBusInterface $bus;
 
-    private LoggerInterface $logger;
+    private EmailFactory $emailFactory;
 
     public function __construct(
         ValidatorInterface $validator,
-        ContactMeMailer $contactMailer,
-        LoggerInterface $logger
+        MessageBusInterface $bus,
+        EmailFactory $emailFactory
     ) {
         $this->validator = $validator;
-        $this->contactMailer = $contactMailer;
-        $this->logger = $logger;
+        $this->bus = $bus;
+        $this->emailFactory = $emailFactory;
     }
 
     public function __invoke(ContactMeDTO $data): JsonResponse
@@ -37,16 +37,9 @@ class ContactMeController extends AbstractController
             return $this->json($errors, Response::HTTP_BAD_REQUEST);
         }
 
-        try {
-            $this->contactMailer->sendContactEmail($data);
-        } catch (TransportException $exception) {
-            $this->logger->alert($exception->getMessage(), [
-                'dto' => $data,
-            ]);
+        $email = $this->emailFactory->createForContactMe($data);
+        $this->bus->dispatch(new EmailMessage($email));
 
-            return $this->json('Could not send email', Response::HTTP_BAD_GATEWAY);
-        }
-
-        return $this->json(null);
+        return $this->json(null, Response::HTTP_ACCEPTED);
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Command;
 
-use App\Entity\User;
-use App\Mailer\TodoReminderMailer;
+use App\Mailer\EmailFactory;
+use App\Message\EmailMessage;
 use App\Repository\TodoRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Mailer\Exception\TransportException;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class TodosSendRemindersCommand extends Command
 {
@@ -20,17 +20,21 @@ class TodosSendRemindersCommand extends Command
 
     private LoggerInterface $logger;
 
-    private TodoReminderMailer $mailer;
+    private MessageBusInterface $bus;
+
+    private EmailFactory $emailFactory;
 
     public function __construct(
         TodoRepository $todoRepository,
-        TodoReminderMailer $mailer,
-        LoggerInterface $logger
+        MessageBusInterface $bus,
+        LoggerInterface $logger,
+        EmailFactory $emailFactory
     ) {
         parent::__construct();
         $this->todoRepository = $todoRepository;
-        $this->mailer = $mailer;
+        $this->bus = $bus;
         $this->logger = $logger;
+        $this->emailFactory = $emailFactory;
     }
 
     protected function configure(): void
@@ -41,7 +45,6 @@ class TodosSendRemindersCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dateReference = (new \DateTimeImmutable())->format('Ymd-Hi');
-        $countEmails = $countErrors = 0;
         $this->logger->notice(sprintf('[%s] - Start of the todo reminder command', $dateReference));
 
         $now = (new \DateTime('UTC'));
@@ -49,26 +52,12 @@ class TodosSendRemindersCommand extends Command
         $todos = $this->todoRepository->findNotDoneByReminder($now);
 
         foreach ($todos as $todo) {
-            try {
-                $this->mailer->send($todo);
-                ++$countEmails;
-            } catch (TransportException $exception) {
-                /** @var User $user */
-                $user = $todo->getUser();
-                ++$countErrors;
+            $email = $this->emailFactory->createForTodoReminder($todo);
 
-                $this->logger->error(sprintf(
-                    '[%s] - Could not send email for todo %s to user %s',
-                    $dateReference,
-                        $todo->getId(),
-                        $user->getEmail(),
-                    ),
-                    ['message' => $exception->getMessage()]
-                );
-            }
+            $this->bus->dispatch(new EmailMessage($email));
         }
 
-        $this->logger->notice(sprintf('[%s] - %s emails sent / %s errors', $dateReference, $countEmails, $countErrors));
+        $this->logger->notice(sprintf('[%s] - %s emails sent', $dateReference, count($todos)));
 
         return Command::SUCCESS;
     }

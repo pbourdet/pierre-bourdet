@@ -31,7 +31,7 @@ class ContactMeControllerTest extends AbstractEndPoint
             ''
         );
 
-        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_ACCEPTED, $response->getStatusCode());
     }
 
     public function testContactMeWithBadEmail(): void
