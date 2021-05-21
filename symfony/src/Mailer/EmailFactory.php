@@ -69,4 +69,18 @@ class EmailFactory
             ])
         ;
     }
+
+    public function createForUserSubscription(User $user, string $subject): TemplatedEmail
+    {
+        return (new TemplatedEmail())
+            ->to(new Address($user->getEmail(), $user->getUsername()))
+            ->from(new Address($this->contactEmail, $this->contactName))
+            ->subject($subject)
+            ->htmlTemplate('email/user-subscription.html.twig')
+            ->context([
+                'name' => $user->getNickname(),
+                'emailAddress' => $user->getEmail(),
+            ])
+        ;
+    }
 }

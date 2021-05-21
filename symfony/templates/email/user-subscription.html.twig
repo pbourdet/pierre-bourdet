@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'user-subscription-email' %}
+
+{% block title %}{{ 'title' | trans }}{% endblock %}
+
+{% block content %}
+    <p>{{ 'welcome' | trans }}</p>
+    <p>{{ 'login' | trans }} : <b>{{ emailAddress }}</b></p>
+{% endblock %}
