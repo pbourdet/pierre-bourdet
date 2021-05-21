@@ -6,6 +6,7 @@ import UserFormInput from '../Input/UserFormInput';
 import { signupSubmit, signinSubmit } from '../../requests/submitUserForm';
 import { useAuthUpdate } from '../../contexts/AuthContext/index';
 import { toast } from 'react-toastify';
+import { useLocale } from '../../contexts/LocaleContext';
 
 function SignupModal () {
     const [modal, setModal] = useState(false);
@@ -13,6 +14,7 @@ function SignupModal () {
     const [loading, setLoading] = useState(false);
     const [inError, setInError] = useState(false);
     const updateAuth = useAuthUpdate();
+    const locale = useLocale();
 
     const innerRef = useRef();
     useEffect(() => innerRef.current && innerRef.current.focus(), [modal]);
@@ -30,7 +32,7 @@ function SignupModal () {
 
     const handleSignupSubmit = async () => {
         setLoading(true);
-        const isCreated = await signupSubmit(values);
+        const isCreated = await signupSubmit(values, locale);
 
         if (isCreated) {
             const { auth } = await signinSubmit(values);
