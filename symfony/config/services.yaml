@@ -46,3 +46,6 @@ services:
                 method: onAuthenticationSuccess,
                 priority: -2
             }
+
+    App\DataPersister\User\UserCreatedDataPersister:
+        decorates: 'api_platform.doctrine.orm.data_persister'
