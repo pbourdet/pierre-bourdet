@@ -111,7 +111,7 @@ commands:
                   name: Run PHPStan
                   command: |
                       cd symfony/
-                      vendor/bin/phpstan analyse -l 8 src
+                      vendor/bin/phpstan analyse -l 8 src --memory-limit=-1
                       cd ..
 
     deploy:

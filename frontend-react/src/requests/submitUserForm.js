@@ -28,20 +28,20 @@ export async function signinSubmit (values) {
     return { auth, isError: false };
 }
 
-export async function signupSubmit (values) {
+export async function signupSubmit (values, locale) {
     const payload = {
         email: values.email,
         nickname: values.nickname,
         password: values.password
     };
-    return await axios.post('/users', JSON.stringify(payload))
-        .then(response => {
-            return response.status === 201;
-        })
-        .catch(error => {
-            console.log(error);
-            return false;
-        });
+
+    return await axios.post('/users', JSON.stringify(payload), {
+        headers: {
+            'Accept-Language': locale
+        }
+    })
+        .then(() => true)
+        .catch(() => false);
 }
 
 export async function updatePasswordSubmit (values, auth) {
