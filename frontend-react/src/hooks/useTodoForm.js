@@ -20,7 +20,7 @@ export default function useTodoForm (todo) {
 
     const handleChange = e => {
         let { name, value } = e.target;
-        if (name === 'date') {
+        if (['date', 'reminder'].includes(name)) {
             value = formatDate(value);
         }
         setCurrentTodo({

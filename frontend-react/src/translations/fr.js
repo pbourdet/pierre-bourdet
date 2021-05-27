@@ -256,8 +256,8 @@ export default {
         date: {
             label: 'Date'
         },
-        time: {
-            label: 'Heure'
+        reminder: {
+            label: 'Rappel'
         },
         error: {
             name: {
@@ -267,7 +267,11 @@ export default {
                 long: 'La description ne doit pas excéder 100 caractères'
             },
             date: {
-                soon: 'La date ne peut pas être antérieur à aujourd\'hui.'
+                soon: 'La date ne peut pas être dans le passé.'
+            },
+            reminder: {
+                late: 'Le rappel doit être avant la date.',
+                soon: 'Le rappel ne peut pas être dans le passé.'
             }
         }
     },
