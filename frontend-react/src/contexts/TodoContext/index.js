@@ -36,6 +36,10 @@ export default function TodoProvider ({ children }) {
     const auth = useAuth();
     const updateAuth = useAuthUpdate();
 
+    const fixDateOffset = (date) => {
+        return addMinutes(date, new Date().getTimezoneOffset()).getTime();
+    };
+
     async function getTodos () {
         if (auth === null) {
             setTodos([]);
@@ -51,6 +55,7 @@ export default function TodoProvider ({ children }) {
         response.sort((td1, td2) => td2.id - td1.id);
         const todos = response.map(function (todo) {
             todo.date = todo.date && subMinutes(todo.date, new Date().getTimezoneOffset()).getTime();
+            todo.reminder = todo.reminder && subMinutes(todo.reminder, new Date().getTimezoneOffset()).getTime();
 
             return todo;
         });
@@ -59,15 +64,14 @@ export default function TodoProvider ({ children }) {
     }
 
     async function createTodo (todo) {
-        const date = todo.date
-            ? addMinutes(todo.date, new Date().getTimezoneOffset()).getTime()
-            : null
-        ;
+        const date = todo.date ? fixDateOffset(todo.date) : null;
+        const reminder = todo.reminder ? fixDateOffset(todo.reminder) : null;
 
         const payload = {
             name: todo.name,
             description: todo.description,
             date: date,
+            reminder: reminder,
             isDone: todo.isDone
         };
 
@@ -97,15 +101,14 @@ export default function TodoProvider ({ children }) {
     }
 
     async function editTodo (editedTodo) {
-        const date = editedTodo.date
-            ? addMinutes(editedTodo.date, new Date().getTimezoneOffset()).getTime()
-            : null
-        ;
+        const date = editedTodo.date ? fixDateOffset(editedTodo.date) : null;
+        const reminder = editedTodo.reminder ? fixDateOffset(editedTodo.reminder) : null;
 
         const payload = {
             name: editedTodo.name,
             description: editedTodo.description,
             date: date,
+            reminder: reminder,
             isDone: editedTodo.isDone
         };
         await refreshToken(auth, updateAuth);

@@ -17,8 +17,18 @@ export default function validateTodoForm (todo) {
     }
 
     if (todo.id === undefined) {
-        if (new Date(todo.date).getTime() < (new Date()).setHours(0, 0, 0, 0)) {
+        if (new Date(todo.date).getTime() < new Date().getTime()) {
             errors.date = <FormattedMessage id='todoForm.error.date.soon'/>;
+        }
+    }
+
+    if (todo.date && todo.reminder) {
+        if (new Date(todo.date).getTime() <= new Date(todo.reminder).getTime()) {
+            errors.reminder = <FormattedMessage id='todoForm.error.reminder.late'/>;
+        }
+
+        if (new Date() > new Date(todo.reminder).getTime()) {
+            errors.reminder = <FormattedMessage id='todoForm.error.reminder.soon'/>;
         }
     }
 

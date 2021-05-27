@@ -5,5 +5,7 @@
 
 {% block content %}
     <p>{{ 'reminder' | trans }} : <b>{{ todo.name }}</b></p>
-    <p>Description : {{ todo.description }}</p>
+    {% if todo.description is not empty %}
+        <p>Description : {{ todo.description }}</p>
+    {% endif %}
 {% endblock %}

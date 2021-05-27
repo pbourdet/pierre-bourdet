@@ -45,17 +45,24 @@ function TodoTable () {
                             </div>
                         </div>
                     </Col>
-                    <Col sm={5} className="p-3 border d-none d-sm-block">
+                    <Col sm={4} className="p-3 border d-none d-sm-block">
                         <div className="d-table w-100 h-100">
                             <div className="d-table-cell align-middle h6">
                                 <FormattedMessage id="todoTable.description"/>
                             </div>
                         </div>
                     </Col>
-                    <Col xs={4} sm={3} className="d-flex p-3 border">
+                    <Col xs={4} sm={2} className="d-flex p-3 border">
                         <div className="d-table w-100 h-100">
                             <div className="d-table-cell align-middle h6">
                                 <FormattedMessage id="todoTable.date"/>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col xs={4} sm={2} className="p-3 border d-none d-sm-block">
+                        <div className="d-table w-100 h-100">
+                            <div className="d-table-cell align-middle h6">
+                                <FormattedMessage id="todoTable.reminder"/>
                             </div>
                         </div>
                     </Col>
@@ -98,18 +105,26 @@ function TodoTable () {
                                     </div>
                                 </div>
                             </Col>
-                            <Col sm={5} className="p-2 border d-none d-sm-block">
+                            <Col sm={4} className="p-2 border d-none d-sm-block">
                                 <div className="d-table w-100 h-100">
                                     <div className="d-table-cell align-middle text-break">
                                         {todo.description}
                                     </div>
                                 </div>
                             </Col>
-                            <Col xs={4} sm={3} className="p-2 border">
+                            <Col xs={4} sm={2} className="p-2 border">
                                 <div className="d-table w-100 h-100">
                                     <div className="d-table-cell align-middle">
                                         <div>{todo.date && <FormattedDate value={todo.date}/>}</div>
                                         <div>{todo.date && <FormattedTime value={todo.date}/>}</div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={4} sm={2} className="p-2 border d-none d-sm-block">
+                                <div className="d-table w-100 h-100">
+                                    <div className="d-table-cell align-middle">
+                                        <div>{todo.reminder && <FormattedDate value={todo.reminder}/>}</div>
+                                        <div>{todo.reminder && <FormattedTime value={todo.reminder}/>}</div>
                                     </div>
                                 </div>
                             </Col>
@@ -148,22 +163,41 @@ function TodoTable () {
                             </Col>
                         </Row>
                         <Collapse in={todo.id === todoDetails}>
-                            <Row className="border pt-2 pb-2">
-                                <Col xs={5}>
-                                    <div className="d-table w-100 h-100">
-                                        <div className="d-table-cell align-middle h6">
-                                            <FormattedMessage id="todoTable.description"/> :
+                            <div>
+                                <Row className="border pt-2 pb-2">
+                                    <Col xs={5}>
+                                        <div className="d-table w-100 h-100">
+                                            <div className="d-table-cell align-middle h6">
+                                                <FormattedMessage id="todoTable.description"/> :
+                                            </div>
                                         </div>
-                                    </div>
-                                </Col>
-                                <Col xs={7}>
-                                    <div className="d-table w-100 h-100">
-                                        <div className="d-table-cell align-middle text-break">
-                                            {todo.description}
+                                    </Col>
+                                    <Col xs={7}>
+                                        <div className="d-table w-100 h-100">
+                                            <div className="d-table-cell align-middle text-break">
+                                                {todo.description}
+                                            </div>
                                         </div>
-                                    </div>
-                                </Col>
-                            </Row>
+                                    </Col>
+                                </Row>
+                                <Row className="border pt-2 pb-2">
+                                    <Col xs={5}>
+                                        <div className="d-table w-100 h-100">
+                                            <div className="d-table-cell align-middle h6">
+                                                <FormattedMessage id="todoTable.reminder"/> :
+                                            </div>
+                                        </div>
+                                    </Col>
+                                    <Col xs={7}>
+                                        <div className="d-table w-100 h-100">
+                                            <div className="d-table-cell align-middle">
+                                                <div>{todo.reminder && <FormattedDate value={todo.reminder}/>}</div>
+                                                <div>{todo.reminder && <FormattedTime value={todo.reminder}/>}</div>
+                                            </div>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </div>
                         </Collapse>
                         <Collapse in={todo.id === todoEdited} mountOnEnter={true} unmountOnExit={true}>
                             <div id="create-todo-form">

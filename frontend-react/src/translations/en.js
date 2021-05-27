@@ -229,7 +229,8 @@ export default {
     todoTable: {
         task: 'Task',
         description: 'Description',
-        date: 'Date and time',
+        date: 'Date',
+        reminder: 'Reminder',
         add: 'Add',
         cancel: 'Cancel',
         confirmDelete: {
@@ -254,8 +255,8 @@ export default {
         date: {
             label: 'Date'
         },
-        time: {
-            label: 'Time'
+        reminder: {
+            label: 'Reminder'
         },
         error: {
             name: {
@@ -265,7 +266,11 @@ export default {
                 long: 'The description must contains less than 100 characters.'
             },
             date: {
-                soon: 'The date must not be before today.'
+                soon: 'The date must not be in the past.'
+            },
+            reminder: {
+                late: 'The reminder must be before the date.',
+                soon: 'The reminder cannot be in the past.'
             }
         }
     },
