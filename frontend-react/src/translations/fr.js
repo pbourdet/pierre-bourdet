@@ -230,7 +230,8 @@ export default {
     todoTable: {
         task: 'Tâche',
         description: 'Description',
-        date: 'Date et heure',
+        date: 'Date',
+        reminder: 'Rappel',
         add: 'Ajouter',
         cancel: 'Annuler',
         confirmDelete: {

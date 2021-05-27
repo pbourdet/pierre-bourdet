@@ -76,6 +76,7 @@ class Todo
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"get_todos", "persist_todo"})
      */
     private ?\DateTimeInterface $reminder;
 
