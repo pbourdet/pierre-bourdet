@@ -22,6 +22,7 @@ fixtures:
 test:
 	make fixtures
 	./vendor/bin/simple-phpunit
+	make fixtures
 
 fullcheck:
 	make csfix
