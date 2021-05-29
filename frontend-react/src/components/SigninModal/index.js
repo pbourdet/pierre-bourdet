@@ -33,15 +33,17 @@ function SigninModal () {
 
     const handleSigninSubmit = async () => {
         setLoading(true);
-        const { auth, isError } = await signinSubmit(values);
+        const { auth, user } = await signinSubmit(values);
+        setLoading(false);
 
-        if (isError) {
+        if (!auth.isAuthenticated) {
             setInError(true);
-            setLoading(false);
-        } else {
-            updateAuth(auth);
-            toast.success(<FormattedMessage id='toast.user.signin' values={{ name: auth.user.nickname }}/>);
+
+            return;
         }
+
+        updateAuth(auth);
+        toast.success(<FormattedMessage id='toast.user.signin' values={{ name: user.nickname }}/>);
     };
 
     return (

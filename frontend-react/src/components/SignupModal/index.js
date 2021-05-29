@@ -34,14 +34,17 @@ function SignupModal () {
         setLoading(true);
         const isCreated = await signupSubmit(values, locale);
 
-        if (isCreated) {
-            const { auth } = await signinSubmit(values);
-            updateAuth(auth);
-            toast.success(<FormattedMessage id='toast.user.signup' values={{ name: auth.user.nickname }}/>);
-        } else {
+        if (!isCreated) {
             setInError(true);
             setLoading(false);
+
+            return;
         }
+
+        const { auth, user } = await signinSubmit(values);
+        setLoading(false);
+        updateAuth(auth);
+        toast.success(<FormattedMessage id='toast.user.signup' values={{ name: user.nickname }}/>);
     };
 
     return (
