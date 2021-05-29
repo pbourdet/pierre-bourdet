@@ -27,11 +27,13 @@ class UserFixtures extends Fixture
     {
         $defaultUser = new User();
         $password = $this->encoder->encodePassword($defaultUser, self::DEFAULT_PASSWORD);
+        $languages = ['fr', 'en'];
 
         $defaultUser
             ->setPassword($password)
             ->setEmail(self::DEFAULT_EMAIL)
             ->setNickname(self::DEFAULT_NICKNAME)
+            ->setLanguage('en')
         ;
 
         $manager->persist($defaultUser);
@@ -47,6 +49,7 @@ class UserFixtures extends Fixture
                 ->setEmail($faker->email)
                 ->setPassword($password)
                 ->setNickname($faker->firstName)
+                ->setLanguage($languages[array_rand($languages)])
             ;
 
             $manager->persist($user);
