@@ -92,6 +92,11 @@ class User implements UserInterface
      */
     private ?\DateTimeInterface $resetPasswordExpirationDate = null;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $language;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -242,5 +247,17 @@ class User implements UserInterface
     {
         $this->resetPasswordExpirationDate = null;
         $this->resetPasswordToken = null;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): self
+    {
+        $this->language = $language;
+
+        return $this;
     }
 }
