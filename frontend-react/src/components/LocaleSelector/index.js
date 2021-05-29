@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import img from '../../assets/img';
 import { Dropdown } from 'react-bootstrap';
 import { useLocale, useLocaleUpdate } from '../../contexts/LocaleContext/index';
 import { FormattedMessage } from 'react-intl';
+import updateLanguage from '../../requests/updateLanguage';
 
 function LocaleSelector () {
     const locale = useLocale();
     const updateLocale = useLocaleUpdate();
     const supportedLocales = ['fr-FR', 'en-GB'];
     const localeChoiceList = supportedLocales.filter((value) => value !== locale);
+
+    useEffect(() => {
+        updateLanguage(locale);
+    }, [locale]);
 
     return (
         <Dropdown>

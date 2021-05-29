@@ -34,7 +34,8 @@ export async function signupSubmit (values, locale) {
     const payload = {
         email: values.email,
         nickname: values.nickname,
-        password: values.password
+        password: values.password,
+        language: locale
     };
 
     return await axios.post('/users', JSON.stringify(payload), {
