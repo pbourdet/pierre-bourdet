@@ -28,7 +28,7 @@ function TodoContainer () {
     }
 
     return (
-        <div className="m-lg-5 m-sm-1">
+        <div className="m-2 pt-3">
             {loading
                 ? <div className="mt-5">
                     <Spinner animation="grow" variant="success"/>

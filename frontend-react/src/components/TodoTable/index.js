@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {Button, Collapse, Row, Col, Container} from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Collapse, Row, Col, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faPlus, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage } from 'react-intl';
 import { useTodos } from '../../contexts/TodoContext';
 import TodoForm from '../TodoForm';
-import DeleteButton from "./DeleteButton";
-import DoneButton from "./DoneButton";
-import TodoDetails from "./TodoDetails";
+import DeleteButton from './DeleteButton';
+import DoneButton from './DoneButton';
+import TodoDetails from './TodoDetails';
 
 function TodoTable () {
     const todos = useTodos();
@@ -27,9 +27,9 @@ function TodoTable () {
         <>
             <Container className="shadow border rounded">
                 <Row className="justify-content-end p-2">
-                    <Button variant={open ? "danger" : "primary"} onClick={() => setOpen(!open)} aria-controls="create-todo-form" aria-expanded={open}>
+                    <Button variant={open ? 'danger' : 'primary'} onClick={() => setOpen(!open)} aria-controls="create-todo-form" aria-expanded={open}>
                         <FontAwesomeIcon className="mr-2" icon={open ? faTimes : faPlus}/>
-                        <FormattedMessage id={open ?"todoTable.cancel" : "todoTable.add"}/>
+                        <FormattedMessage id={open ? 'todoTable.cancel' : 'todoTable.add'}/>
                     </Button>
                 </Row>
                 <Collapse in={open}>
