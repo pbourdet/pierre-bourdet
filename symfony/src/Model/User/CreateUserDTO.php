@@ -27,6 +27,11 @@ final class CreateUserDTO
      */
     private string $password;
 
+    /**
+     * @Assert\Choice(callback={"App\Model\Enum\LanguageEnum", "getIsoLanguages"})
+     */
+    private string $language;
+
     public function getEmail(): string
     {
         return $this->email;
@@ -61,5 +66,15 @@ final class CreateUserDTO
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): void
+    {
+        $this->language = $language;
     }
 }

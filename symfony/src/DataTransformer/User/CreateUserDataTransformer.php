@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Symfony\Validator\Exception\ValidationException;
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Entity\User;
+use App\Model\Enum\LanguageEnum;
 use App\Model\User\CreateUserDTO;
 
 final class CreateUserDataTransformer implements DataTransformerInterface
@@ -32,6 +33,7 @@ final class CreateUserDataTransformer implements DataTransformerInterface
         $user
             ->setPassword($object->getPassword())
             ->setNickname($object->getNickname())
+            ->setLanguage(LanguageEnum::resolveLanguage($object->getLanguage()))
             ->setEmail($object->getEmail());
 
         return $user;

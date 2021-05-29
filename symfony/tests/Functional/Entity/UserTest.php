@@ -171,7 +171,13 @@ class UserTest extends AbstractEndPoint
         $faker = Factory::create();
         $email = $faker->email;
         $nickname = $faker->firstName;
+        $language = 'en-GB';
 
-        return sprintf('{"email":"%s","password":"123456","nickname":"%s"}', $email, $nickname);
+        return sprintf(
+            '{"email":"%s","password":"123456","nickname":"%s","language":"%s"}',
+            $email,
+            $nickname,
+            $language
+        );
     }
 }
