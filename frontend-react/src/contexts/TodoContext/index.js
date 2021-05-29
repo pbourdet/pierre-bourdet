@@ -52,7 +52,7 @@ export default function TodoProvider ({ children }) {
             .then(response => response.data)
             .then(data => data);
 
-        response.sort((td1, td2) => td2.id - td1.id);
+        response.sort((td1, td2) => td1.id - td2.id);
         const todos = response.map(function (todo) {
             todo.date = todo.date && subMinutes(todo.date, new Date().getTimezoneOffset()).getTime();
             todo.reminder = todo.reminder && subMinutes(todo.reminder, new Date().getTimezoneOffset()).getTime();
@@ -83,7 +83,7 @@ export default function TodoProvider ({ children }) {
 
         todo.id = response.id;
 
-        const newTodos = [todo, ...todos];
+        const newTodos = [...todos, todo];
 
         setTodos(newTodos);
     }

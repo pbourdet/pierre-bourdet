@@ -24,7 +24,9 @@ export default {
         todo: {
             add: 'Todo {name} added !',
             edit: 'Todo {name} updated !',
-            delete: 'Todo {name} deleted !'
+            delete: 'Todo {name} deleted !',
+            done: 'Todo {name} done !',
+            undone: 'Todo {name} to do.'
         },
         contact: {
             success: 'Your email was successfully sent !'
@@ -221,7 +223,7 @@ export default {
     },
 
     todos: {
-        title: 'Todos',
+        title: 'Todo list',
         noTodos: 'You have no todo !',
         loggedOut: 'Sign in to use the todo list.'
     },
@@ -231,7 +233,7 @@ export default {
         description: 'Description',
         date: 'Date',
         reminder: 'Reminder',
-        add: 'Add',
+        add: 'Add a todo',
         cancel: 'Cancel',
         confirmDelete: {
             title: 'Confirmation',
@@ -256,7 +258,7 @@ export default {
             label: 'Date'
         },
         reminder: {
-            label: 'Reminder'
+            label: 'Remind me'
         },
         error: {
             name: {

@@ -49,23 +49,23 @@ function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
     };
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form className="mt-2" onSubmit={handleSubmit}>
             <Form.Row>
-                <Form.Group className="mt-1" as={Col} md={5} lg={2}>
+                <Form.Group className="mt-1" as={Col} md={6} >
                     <Form.Label><FormattedMessage id="todoForm.name.label"/><span className="ml-1 text-danger">*</span></Form.Label>
                     <Form.Control
                         isInvalid={errors.name} onChange={handleChange} value={currentTodo.name}
                         id="name" name="name" type="text" placeholder={intl.formatMessage({ id: 'todoForm.name.placeholder' })}/>
                     <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group className="mt-1" as={Col} md={7} lg={4}>
+                <Form.Group className="mt-1" as={Col} md={6}>
                     <Form.Label><FormattedMessage id="todoForm.description.label"/></Form.Label>
                     <Form.Control
                         isInvalid={errors.description} onChange={handleChange} value={currentTodo.description}
                         id="description" name="description" placeholder={intl.formatMessage({ id: 'todoForm.description.placeholder' })}/>
                     <Form.Control.Feedback type="invalid">{errors.description}</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group className="mt-1" as={Col} sm={6} lg={2}>
+                <Form.Group className="mt-1" as={Col} sm={6}>
                     <Form.Label><FormattedMessage id="todoForm.date.label"/></Form.Label>
                     <Form.Control
                         type="datetime-local" id="date" name="date" isInvalid={errors.date}
@@ -74,7 +74,7 @@ function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
                     />
                     <Form.Control.Feedback type="invalid">{errors.date}</Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group className="mt-1" as={Col} sm={6} lg={2}>
+                <Form.Group className="mt-1" as={Col} sm={6}>
                     <Form.Label><FormattedMessage id="todoForm.reminder.label"/></Form.Label>
                     <Form.Control
                         type="datetime-local" id="reminder" name="reminder" isInvalid={errors.reminder}
@@ -84,21 +84,17 @@ function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
                     />
                     <Form.Control.Feedback type="invalid">{errors.reminder}</Form.Control.Feedback>
                 </Form.Group>
-                <Col>
-                    <div className="d-table w-100 h-100">
-                        <div className="m-2 d-table-cell align-middle">
-                            {loading
-                                ? <Spinner className="mt-3" animation="border" variant="primary"/>
-                                : <Button disabled={!isFormValid} className="mt-3" type="submit">
-                                    <FontAwesomeIcon className="mr-2" icon={faCheck}/>
-                                    {isEdit
-                                        ? <FormattedMessage id="todoForm.editTodo"/>
-                                        : <FormattedMessage id="todoForm.addTodo"/>
-                                    }
-                                </Button>
+                <Col className="mb-2">
+                    {loading
+                        ? <Spinner animation="border" variant="primary"/>
+                        : <Button disabled={!isFormValid} type="submit">
+                            <FontAwesomeIcon className="mr-2" icon={faCheck}/>
+                            {isEdit
+                                ? <FormattedMessage id="todoForm.editTodo"/>
+                                : <FormattedMessage id="todoForm.addTodo"/>
                             }
-                        </div>
-                    </div>
+                        </Button>
+                    }
                 </Col>
             </Form.Row>
         </Form>
