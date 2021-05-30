@@ -38,11 +38,11 @@ class TodoFixtures extends Fixture implements DependentFixtureInterface
                     : null;
 
                 $todo
-                    ->setName($faker->word)
-                    ->setDescription($faker->sentence)
+                    ->setName($faker->word())
+                    ->setDescription($faker->sentence())
                     ->setDate($dateTime)
                     ->setUser($user)
-                    ->setIsDone($faker->boolean)
+                    ->setIsDone($faker->boolean())
                     ->setReminder($reminder)
                 ;
 

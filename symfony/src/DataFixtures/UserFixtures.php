@@ -46,9 +46,9 @@ class UserFixtures extends Fixture
             $password = $this->encoder->encodePassword($user, self::DEFAULT_PASSWORD);
 
             $user
-                ->setEmail($faker->email)
+                ->setEmail($faker->email())
                 ->setPassword($password)
-                ->setNickname($faker->firstName)
+                ->setNickname($faker->firstName())
                 ->setLanguage($languages[array_rand($languages)])
             ;
 
