@@ -6,12 +6,12 @@ namespace App\Events\Todo;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Todo;
+use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class TodoCreationSubscriber implements EventSubscriberInterface
 {
@@ -35,7 +35,7 @@ class TodoCreationSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
 
         if ($todo instanceof Todo && Request::METHOD_POST === $method) {
-            /** @var UserInterface $user */
+            /** @var User $user */
             $user = $this->security->getUser();
             $todo->setUser($user);
         }

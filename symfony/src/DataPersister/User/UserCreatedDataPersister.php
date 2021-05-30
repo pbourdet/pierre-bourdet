@@ -8,15 +8,11 @@ use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
 use App\Entity\User;
 use App\Mailer\EmailFactory;
 use App\Message\EmailMessage;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class UserCreatedDataPersister implements ContextAwareDataPersisterInterface
 {
-    private RequestStack $requestStack;
-
     private EmailFactory $emailFactory;
 
     private MessageBusInterface $bus;
@@ -26,13 +22,11 @@ final class UserCreatedDataPersister implements ContextAwareDataPersisterInterfa
     private TranslatorInterface $translator;
 
     public function __construct(
-        RequestStack $requestStack,
         EmailFactory $emailFactory,
         MessageBusInterface $bus,
         ContextAwareDataPersisterInterface $decorator,
         TranslatorInterface $translator
     ) {
-        $this->requestStack = $requestStack;
         $this->emailFactory = $emailFactory;
         $this->bus = $bus;
         $this->decorator = $decorator;
@@ -56,11 +50,9 @@ final class UserCreatedDataPersister implements ContextAwareDataPersisterInterfa
         $result = $this->decorator->persist($data, $context);
 
         if ($data instanceof User && 'create' === $context['collection_operation_name']) {
-            /** @var Request $request */
-            $request = $this->requestStack->getCurrentRequest();
-            $locale = $request->getLocale();
+            $locale = $data->getLanguage();
 
-            $subject = $this->translator->trans('subject', [], 'user-subscription-email');
+            $subject = $this->translator->trans('subject', [], 'user-subscription-email', $locale);
             $email = $this->emailFactory->createForUserSubscription($data, $subject);
 
             $this->bus->dispatch(new EmailMessage($email, $locale));

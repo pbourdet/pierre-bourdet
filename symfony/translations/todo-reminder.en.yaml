@@ -1,3 +1,5 @@
 title: Todo reminder
 
+subject: 'Reminder for your todo : %name%'
+
 reminder: This is a reminder email for your todo

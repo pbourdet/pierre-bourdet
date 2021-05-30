@@ -53,15 +53,14 @@ class EmailFactory
         ;
     }
 
-    public function createForTodoReminder(Todo $todo): TemplatedEmail
+    public function createForTodoReminder(Todo $todo, string $subject): TemplatedEmail
     {
-        /** @var User $user */
         $user = $todo->getUser();
 
         return (new TemplatedEmail())
             ->to(new Address($user->getEmail(), $user->getUsername()))
             ->from(new Address($this->contactEmail, $this->contactName))
-            ->subject(sprintf('Reminder for your todo : %s', $todo->getName()))
+            ->subject($subject)
             ->htmlTemplate('email/todo-reminder.html.twig')
             ->context([
                 'name' => $user->getNickname(),

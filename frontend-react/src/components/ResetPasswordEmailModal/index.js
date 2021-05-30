@@ -5,7 +5,6 @@ import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
 import { toast } from 'react-toastify';
 import { resetPasswordEmail } from '../../requests/resetPassword';
-import { useLocale } from '../../contexts/LocaleContext';
 
 function ResetPasswordEmailModal () {
     const [modal, setModal] = useState(false);
@@ -13,7 +12,6 @@ function ResetPasswordEmailModal () {
     const [loading, setLoading] = useState(false);
     const [inError, setInError] = useState(false);
     const isFormValid = values.email !== '' && Object.keys(errors).length === 0;
-    const locale = useLocale();
 
     const innerRef = useRef();
     useEffect(() => innerRef.current && innerRef.current.focus(), [modal]);
@@ -29,7 +27,7 @@ function ResetPasswordEmailModal () {
         setLoading(true);
         setInError(false);
 
-        const isMailSent = await resetPasswordEmail(values.email, locale);
+        const isMailSent = await resetPasswordEmail(values.email);
         setLoading(false);
 
         if (!isMailSent) {
