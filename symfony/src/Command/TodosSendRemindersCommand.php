@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TodosSendRemindersCommand extends Command
 {
@@ -24,17 +25,21 @@ class TodosSendRemindersCommand extends Command
 
     private EmailFactory $emailFactory;
 
+    private TranslatorInterface $translator;
+
     public function __construct(
         TodoRepository $todoRepository,
         MessageBusInterface $bus,
         LoggerInterface $logger,
-        EmailFactory $emailFactory
+        EmailFactory $emailFactory,
+        TranslatorInterface $translator
     ) {
         parent::__construct();
         $this->todoRepository = $todoRepository;
         $this->bus = $bus;
         $this->logger = $logger;
         $this->emailFactory = $emailFactory;
+        $this->translator = $translator;
     }
 
     protected function configure(): void
@@ -52,9 +57,11 @@ class TodosSendRemindersCommand extends Command
         $todos = $this->todoRepository->findNotDoneByReminder($now);
 
         foreach ($todos as $todo) {
-            $email = $this->emailFactory->createForTodoReminder($todo);
+            $locale = $todo->getUser()->getLanguage();
+            $subject = $this->translator->trans('subject', ['%name%' => $todo->getName()], 'todo-reminder', $locale);
 
-            $this->bus->dispatch(new EmailMessage($email));
+            $email = $this->emailFactory->createForTodoReminder($todo, $subject);
+            $this->bus->dispatch(new EmailMessage($email, $locale));
         }
 
         $this->logger->notice(sprintf('[%s] - %s emails sent', $dateReference, count($todos)));
