@@ -10,7 +10,6 @@ use App\Model\Security\SendResetPasswordEmailDTO;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
@@ -43,7 +42,7 @@ class SendResetPasswordEmailController extends AbstractController
         $this->translator = $translator;
     }
 
-    public function __invoke(SendResetPasswordEmailDTO $data, Request $request): JsonResponse
+    public function __invoke(SendResetPasswordEmailDTO $data): JsonResponse
     {
         if (count($errors = $this->validator->validate($data)) > 0) {
             return $this->json($errors, Response::HTTP_BAD_REQUEST);
@@ -65,13 +64,14 @@ class SendResetPasswordEmailController extends AbstractController
 
         $this->userRepository->save($user);
 
+        $locale = $user->getLanguage();
         $email = $this->emailFactory->createForResetPassword(
             $user,
             $token,
-            $this->translator->trans('subject', [], 'reset-email')
+            $this->translator->trans('subject', [], 'reset-email', $locale)
         );
 
-        $this->bus->dispatch(new EmailMessage($email, $request->getLocale()));
+        $this->bus->dispatch(new EmailMessage($email, $locale));
 
         return $this->json(['message' => 'EMAIL_SENT']);
     }
