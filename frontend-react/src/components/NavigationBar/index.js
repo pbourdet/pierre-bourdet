@@ -15,6 +15,7 @@ function NavigationBar () {
 
     const logout = () => {
         updateAuth(null);
+        localStorage.removeItem('user');
         toast.info(<FormattedMessage id="toast.user.logout" />);
     };
 

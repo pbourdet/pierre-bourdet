@@ -1,11 +1,7 @@
 import axios from '../config/axios';
 
-export async function resetPasswordEmail (email, locale) {
-    return await axios.post('/security/reset-password-email', JSON.stringify({ email: email }), {
-        headers: {
-            'Accept-Language': locale
-        }
-    })
+export async function resetPasswordEmail (email) {
+    return await axios.post('/security/reset-password-email', JSON.stringify({ email: email }))
         .then(response => {
             return response.status === 200;
         })

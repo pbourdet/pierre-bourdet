@@ -38,11 +38,7 @@ export async function signupSubmit (values, locale) {
         language: locale
     };
 
-    return await axios.post('/users', JSON.stringify(payload), {
-        headers: {
-            'Accept-Language': locale
-        }
-    })
+    return await axios.post('/users', JSON.stringify(payload))
         .then(() => true)
         .catch(() => false);
 }
