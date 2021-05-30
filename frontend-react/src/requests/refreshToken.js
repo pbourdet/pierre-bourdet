@@ -3,24 +3,19 @@ import { addMinutes, addHours } from 'date-fns';
 
 export default async function refreshToken (auth, updateAuth) {
     if (addMinutes((new Date()), 1).getTime() < auth.exp) {
-        return auth.token;
+        return;
     }
 
-    const response = await axios.post('/security/refresh-token', {})
-        .then(response => {
-            return response.data;
-        })
-        .catch(() => {
-            updateAuth(null);
-        });
+    const isTokenRefreshed = await axios.post('/security/refresh-token', {})
+        .then(() => true)
+        .catch(() => false);
 
-    if (response === undefined) {
+    if (isTokenRefreshed === false) {
+        updateAuth(null);
+
         return;
     }
 
     auth.exp = addHours((new Date()), 1).getTime();
-
     updateAuth(auth);
-
-    return auth.token;
 };

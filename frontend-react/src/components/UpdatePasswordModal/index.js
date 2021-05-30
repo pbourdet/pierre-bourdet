@@ -4,11 +4,12 @@ import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
 import { FormattedMessage } from 'react-intl';
 import { updatePasswordSubmit } from '../../requests/submitUserForm';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 
 function UpdatePasswordModal () {
     const auth = useAuth();
+    const updateAuth = useAuthUpdate();
     const [modal, setModal] = useState(false);
     const inputTypes = ['currentPassword', 'newPassword', 'confirmPassword'];
     const { values, handleChange, errors, touched, clearAll } = useUserFormValidation();
@@ -26,7 +27,7 @@ function UpdatePasswordModal () {
 
     const handleSubmit = async () => {
         setLoading(true);
-        const isUpdated = await updatePasswordSubmit(values, auth);
+        const isUpdated = await updatePasswordSubmit(values, auth, updateAuth);
 
         if (isUpdated) {
             setInError(false);

@@ -43,14 +43,14 @@ export async function signupSubmit (values, locale) {
         .catch(() => false);
 }
 
-export async function updatePasswordSubmit (values, auth) {
+export async function updatePasswordSubmit (values, auth, updateAuth) {
     const payload = {
         currentPassword: values.currentPassword,
         newPassword: values.newPassword,
         confirmPassword: values.confirmPassword
     };
 
-    await refreshToken(auth, values);
+    await refreshToken(auth, updateAuth);
 
     return await axios.post('/account/update-password', JSON.stringify(payload))
         .then(response => {

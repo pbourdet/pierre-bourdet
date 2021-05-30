@@ -4,7 +4,8 @@ import { Dropdown } from 'react-bootstrap';
 import { useLocale, useLocaleUpdate } from '../../contexts/LocaleContext/index';
 import { FormattedMessage } from 'react-intl';
 import updateLanguage from '../../requests/updateLanguage';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
+import refreshToken from '../../requests/refreshToken';
 
 function LocaleSelector () {
     const locale = useLocale();
@@ -12,12 +13,18 @@ function LocaleSelector () {
     const supportedLocales = ['fr-FR', 'en-GB'];
     const localeChoiceList = supportedLocales.filter((value) => value !== locale);
     const auth = useAuth();
+    const updateAuth = useAuthUpdate();
 
     useEffect(() => {
-        if (auth !== null) {
-            updateLanguage(locale);
+        async function updateLanguageSelected () {
+            if (auth !== null) {
+                await refreshToken(auth, updateAuth);
+                updateLanguage(locale);
+            }
         }
-    }, [locale, auth]);
+
+        updateLanguageSelected();
+    }, [locale, auth, updateAuth]);
 
     return (
         <Dropdown>
