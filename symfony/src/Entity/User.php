@@ -249,7 +249,7 @@ class User implements UserInterface
         $this->resetPasswordToken = null;
     }
 
-    public function getLanguage(): ?string
+    public function getLanguage(): string
     {
         return $this->language;
     }

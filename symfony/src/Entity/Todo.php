@@ -8,7 +8,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Model\Todo\PersistTodoDTO;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -72,7 +71,7 @@ class Todo
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="todos")
      * @ORM\JoinColumn(nullable=false)
      */
-    private UserInterface $user;
+    private User $user;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -128,12 +127,12 @@ class Todo
         return $this;
     }
 
-    public function getUser(): UserInterface
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    public function setUser(UserInterface $user): Todo
+    public function setUser(User $user): Todo
     {
         $this->user = $user;
 
