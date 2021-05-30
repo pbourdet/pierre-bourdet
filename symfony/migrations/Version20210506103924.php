@@ -28,4 +28,9 @@ final class Version20210506103924 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE user DROP reset_password_token, DROP reset_password_expiration_date');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

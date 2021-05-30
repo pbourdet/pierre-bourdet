@@ -2,5 +2,7 @@ parameters:
 	level: 8
 	paths:
 		- src
+	excludes_analyse:
+		- src/DataFixtures
 	checkMissingIterableValueType: false
 	checkGenericClassInNonGenericObjectType: false
