@@ -30,4 +30,9 @@ final class Version20200913131749 extends AbstractMigration
         $this->addSql('ALTER TABLE todo CHANGE description description VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE user DROP nickname');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

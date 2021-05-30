@@ -28,4 +28,9 @@ final class Version20210517223849 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE todo DROP reminder');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }
