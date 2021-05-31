@@ -33,9 +33,16 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
-    App\Swagger\SwaggerDecorator:
-        decorates: 'api_platform.swagger.normalizer.documentation'
-        arguments: ['@App\Swagger\SwaggerDecorator.inner']
+    App\OpenApi\JwtDecorator:
+        decorates: 'api_platform.openapi.factory'
+        autoconfigure: false
+
+    App\OpenApi\RefreshTokenDecorator:
+        decorates: 'api_platform.openapi.factory'
+        autoconfigure: false
+
+    App\OpenApi\OpenApiDecorator:
+        decorates: 'api_platform.openapi.factory'
         autoconfigure: false
 
     App\Security\AuthenticationSuccessListener:
