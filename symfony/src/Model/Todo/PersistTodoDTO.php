@@ -8,40 +8,22 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class PersistTodoDTO
 {
-    /**
-     * @Assert\NotBlank(groups={"update_todo", "create_todo"})
-     * @Assert\Length(
-     *     max = 50,
-     *     groups={"update_todo", "create_todo"}
-     * )
-     */
+    #[
+        Assert\NotBlank(groups: ['update_todo', 'create_todo']),
+        Assert\Length(max: 50, groups: ['update_todo', 'create_todo'])
+    ]
     private string $name = '';
 
-    /**
-     * @Assert\Length(
-     *     max = 100,
-     *     groups={"update_todo", "create_todo"}
-     * )
-     */
+    #[Assert\Length(max: 100, groups: ['update_todo', 'create_todo'])]
     private ?string $description = null;
 
-    /**
-     * @Assert\GreaterThanOrEqual(
-     *     "today",
-     *     groups={"create_todo"}
-     * )
-     */
+    #[Assert\GreaterThanOrEqual(value: 'today', groups: ['create_todo'])]
     private ?\DateTime $date = null;
 
-    /** @Assert\IsFalse(groups={"create_todo"}) */
+    #[Assert\IsFalse(groups: ['create_todo'])]
     private bool $isDone = false;
 
-    /**
-     * @Assert\LessThan(
-     *     propertyPath="date",
-     *     groups={"update_todo", "create_todo"}
-     * )
-     */
+    #[Assert\LessThan(propertyPath: 'date', groups: ['update_todo', 'create_todo'])]
     private ?\DateTimeInterface $reminder = null;
 
     public function getName(): string

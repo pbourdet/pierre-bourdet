@@ -41,19 +41,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ContactMeDTO
 {
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
+    #[
+        Assert\Email,
+        Assert\NotBlank
+    ]
     private string $email = '';
 
-    /** @Assert\NotBlank() */
+    #[Assert\NotBlank]
     private string $name = '';
 
-    /** @Assert\NotBlank() */
+    #[Assert\NotBlank]
     private string $subject = '';
 
-    /** @Assert\NotBlank() */
+    #[Assert\NotBlank]
     private string $message = '';
 
     public function getEmail(): string

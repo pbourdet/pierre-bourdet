@@ -6,6 +6,7 @@ namespace App\Model\Account;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Account\UpdateLanguageController;
+use App\Model\Enum\LanguageEnum;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -42,6 +43,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class UpdateLanguageDTO
 {
-    /** @Assert\Choice(callback={"App\Model\Enum\LanguageEnum", "getIsoLanguages"}) */
+    #[Assert\Choice(callback: [LanguageEnum::class, 'getIsoLanguages'])]
     public string $language;
 }

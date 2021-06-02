@@ -50,18 +50,12 @@ class ResetPasswordDTO
 {
     public string $token = '';
 
-    /**
-     * @Assert\Length(min = 4)
-     * @Assert\Regex("/\d/")
-     * @Assert\NotBlank()
-     */
+    #[
+        Assert\Length(min: 4),
+        Assert\Regex(pattern: '/\d/')
+    ]
     public string $password = '';
 
+    #[Assert\EqualTo(propertyPath: 'password')]
     public string $confirmPassword = '';
-
-    /** @Assert\IsTrue() */
-    public function hasIdenticalPasswords(): bool
-    {
-        return $this->confirmPassword === $this->password;
-    }
 }
