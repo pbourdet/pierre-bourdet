@@ -16,8 +16,8 @@ trait Timestampable
     private \DateTimeInterface $createdAt;
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\IsNull()
      */
+    #[Assert\IsNull]
     private ?\DateTimeInterface $updatedAt;
 
     public function getCreatedAt(): \DateTimeInterface

@@ -118,6 +118,6 @@ class UpdatePasswordControllerTest extends AbstractEndPoint
         $this->assertJson($content);
         $this->assertArrayHasKey('detail', $contentDecoded);
         $this->assertArrayHasKey('violations', $contentDecoded);
-        $this->assertEquals('confirmPasswordEqualToNewPassword', $contentDecoded['violations'][0]['propertyPath']);
+        $this->assertEquals('confirmPassword', $contentDecoded['violations'][0]['propertyPath']);
     }
 }

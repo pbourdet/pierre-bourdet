@@ -4,32 +4,30 @@ declare(strict_types=1);
 
 namespace App\Model\User;
 
+use App\Model\Enum\LanguageEnum;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class CreateUserDTO
 {
-    /**
-     * @Assert\Email()
-     * @Assert\NotBlank()
-     */
+    #[
+        Assert\Email,
+        Assert\NotBlank
+    ]
     private string $email;
 
-    /**
-     * @Assert\Regex("/^[a-zA-Z0-9]{3,}$/")
-     * @Assert\NotBlank()
-     */
+    #[
+        Assert\Regex(pattern: '/^[a-zA-Z0-9]{3,}$/'),
+        Assert\NotBlank
+    ]
     private string $nickname;
 
-    /**
-     * @Assert\Length(min = 4)
-     * @Assert\Regex("/\d/")
-     * @Assert\NotBlank()
-     */
+    #[
+        Assert\Length(min: 4),
+        Assert\Regex(pattern: '/\d/')
+    ]
     private string $password;
 
-    /**
-     * @Assert\Choice(callback={"App\Model\Enum\LanguageEnum", "getIsoLanguages"})
-     */
+    #[Assert\Choice(callback: [LanguageEnum::class, 'getIsoLanguages'])]
     private string $language;
 
     public function getEmail(): string

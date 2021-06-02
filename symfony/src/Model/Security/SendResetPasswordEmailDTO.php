@@ -42,6 +42,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class SendResetPasswordEmailDTO
 {
-    /** @Assert\Email() */
+    #[Assert\Email]
     public string $email = '';
 }

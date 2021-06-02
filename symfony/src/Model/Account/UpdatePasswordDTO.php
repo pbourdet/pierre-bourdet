@@ -43,16 +43,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class UpdatePasswordDTO
 {
-    /**
-     * @SecurityAssert\UserPassword()
-     */
+    #[SecurityAssert\UserPassword]
     private string $currentPassword;
 
-    /**
-     * @Assert\Length(min="4")
-     */
+    #[Assert\Length(min: 4)]
     private string $newPassword;
 
+    #[Assert\EqualTo(propertyPath: 'newPassword')]
     private string $confirmPassword;
 
     public function getCurrentPassword(): string
@@ -89,13 +86,5 @@ class UpdatePasswordDTO
         $this->confirmPassword = $confirmPassword;
 
         return $this;
-    }
-
-    /**
-     * @Assert\IsTrue()
-     */
-    public function isConfirmPasswordEqualToNewPassword(): bool
-    {
-        return $this->newPassword === $this->confirmPassword;
     }
 }

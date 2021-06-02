@@ -45,38 +45,4 @@ class UpdatePasswordDTOTest extends TestCase
         $this->assertInstanceOf(UpdatePasswordDTO::class, $updatePasswordDTO);
         $this->assertEquals($confirmedPassword, $updatePasswordDTO->getConfirmPassword());
     }
-
-    public function dataIsConfirmedPasswordEqualToNewPassword(): array
-    {
-        return [
-            'case true' => [
-                'newPassword' => '123456',
-                'confirmPassword' => '123456',
-                'expected' => true,
-            ],
-            'case false' => [
-                'newPassword' => '123456',
-                'confirmPassword' => '1234567',
-                'expected' => false,
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataIsConfirmedPasswordEqualToNewPassword
-     */
-    public function testIsConfirmedPasswordEqualToNewPassword(
-        string $newPassword,
-        string $confirmPassword,
-        bool $expected
-    ): void {
-        $this->testedObject
-            ->setConfirmPassword($confirmPassword)
-            ->setNewPassword($newPassword)
-        ;
-
-        $actual = $this->testedObject->isConfirmPasswordEqualToNewPassword();
-
-        $this->assertEquals($expected, $actual);
-    }
 }
