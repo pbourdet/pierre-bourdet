@@ -13,11 +13,9 @@ use App\Model\User\CreateUserDTO;
 
 final class CreateUserDataTransformer implements DataTransformerInterface
 {
-    private ValidatorInterface $validator;
-
-    public function __construct(ValidatorInterface $validator)
-    {
-        $this->validator = $validator;
+    public function __construct(
+        private ValidatorInterface $validator
+    ) {
     }
 
     /**

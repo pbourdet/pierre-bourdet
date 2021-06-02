@@ -20,11 +20,9 @@ class TodoModificationSubscriber implements EventSubscriberInterface
         Request::METHOD_DELETE,
     ];
 
-    private UserAuthorizationChecker $userAuthorizationChecker;
-
-    public function __construct(UserAuthorizationChecker $userAuthorizationChecker)
-    {
-        $this->userAuthorizationChecker = $userAuthorizationChecker;
+    public function __construct(
+        private UserAuthorizationChecker $userAuthorizationChecker
+    ) {
     }
 
     public static function getSubscribedEvents(): array

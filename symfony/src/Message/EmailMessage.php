@@ -8,14 +8,10 @@ use Symfony\Component\Mime\Email;
 
 class EmailMessage
 {
-    private Email $email;
-
-    private ?string $locale;
-
-    public function __construct(Email $email, string $locale = null)
-    {
-        $this->email = $email;
-        $this->locale = $locale;
+    public function __construct(
+        private Email $email,
+        private ?string $locale = null
+    ) {
     }
 
     public function getEmail(): Email

@@ -11,11 +11,8 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RefreshTokenRequestListener implements EventSubscriberInterface
 {
-    public RouterInterface $router;
-
-    public function __construct(RouterInterface $router)
-    {
-        $this->router = $router;
+    public function __construct(private RouterInterface $router
+    ) {
     }
 
     public static function getSubscribedEvents(): array

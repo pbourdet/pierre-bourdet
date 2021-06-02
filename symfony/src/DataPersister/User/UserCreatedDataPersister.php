@@ -13,24 +13,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class UserCreatedDataPersister implements ContextAwareDataPersisterInterface
 {
-    private EmailFactory $emailFactory;
-
-    private MessageBusInterface $bus;
-
-    private ContextAwareDataPersisterInterface $decorator;
-
-    private TranslatorInterface $translator;
-
     public function __construct(
-        EmailFactory $emailFactory,
-        MessageBusInterface $bus,
-        ContextAwareDataPersisterInterface $decorator,
-        TranslatorInterface $translator
+        private EmailFactory $emailFactory,
+        private MessageBusInterface $bus,
+        private ContextAwareDataPersisterInterface $decorator,
+        private TranslatorInterface $translator
     ) {
-        $this->emailFactory = $emailFactory;
-        $this->bus = $bus;
-        $this->decorator = $decorator;
-        $this->translator = $translator;
     }
 
     /** @param mixed $data */

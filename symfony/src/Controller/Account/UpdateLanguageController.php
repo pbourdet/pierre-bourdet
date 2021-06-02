@@ -14,14 +14,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UpdateLanguageController extends AbstractController
 {
-    private ValidatorInterface $validator;
-
-    private UserRepository $userRepository;
-
-    public function __construct(ValidatorInterface $validator, UserRepository $userRepository)
-    {
-        $this->validator = $validator;
-        $this->userRepository = $userRepository;
+    public function __construct(
+        private ValidatorInterface $validator,
+        private UserRepository $userRepository
+    ) {
     }
 
     public function __invoke(UpdateLanguageDTO $data): JsonResponse

@@ -17,29 +17,14 @@ class TodosSendRemindersCommand extends Command
     protected static $defaultName = 'app:todos:send-reminders';
     protected static string $defaultDescription = 'Send todo reminder emails';
 
-    private TodoRepository $todoRepository;
-
-    private LoggerInterface $logger;
-
-    private MessageBusInterface $bus;
-
-    private EmailFactory $emailFactory;
-
-    private TranslatorInterface $translator;
-
     public function __construct(
-        TodoRepository $todoRepository,
-        MessageBusInterface $bus,
-        LoggerInterface $logger,
-        EmailFactory $emailFactory,
-        TranslatorInterface $translator
+        private TodoRepository $todoRepository,
+        private MessageBusInterface $bus,
+        private LoggerInterface $logger,
+        private EmailFactory $emailFactory,
+        private TranslatorInterface $translator
     ) {
         parent::__construct();
-        $this->todoRepository = $todoRepository;
-        $this->bus = $bus;
-        $this->logger = $logger;
-        $this->emailFactory = $emailFactory;
-        $this->translator = $translator;
     }
 
     protected function configure(): void

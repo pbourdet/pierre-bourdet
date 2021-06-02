@@ -14,20 +14,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ResetPasswordController extends AbstractController
 {
-    private ValidatorInterface $validator;
-
-    private UserPasswordEncoderInterface $encoder;
-
-    private UserRepository $userRepository;
-
     public function __construct(
-        ValidatorInterface $validator,
-        UserPasswordEncoderInterface $encoder,
-        UserRepository $userRepository
+        private ValidatorInterface $validator,
+        private UserPasswordEncoderInterface $encoder,
+        private UserRepository $userRepository
     ) {
-        $this->validator = $validator;
-        $this->encoder = $encoder;
-        $this->userRepository = $userRepository;
     }
 
     public function __invoke(ResetPasswordDTO $data): JsonResponse

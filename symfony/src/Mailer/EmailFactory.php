@@ -13,20 +13,12 @@ use Symfony\Component\Mime\Email;
 
 class EmailFactory
 {
-    private string $frontendDomain;
-
-    private string $contactEmail;
-
-    private string $contactName;
-
-    private string $personalEmail;
-
-    public function __construct(string $frontendDomain, string $contactEmail, string $contactName, string $personalEmail)
-    {
-        $this->frontendDomain = $frontendDomain;
-        $this->contactEmail = $contactEmail;
-        $this->contactName = $contactName;
-        $this->personalEmail = $personalEmail;
+    public function __construct(
+        private string $frontendDomain,
+        private string $contactEmail,
+        private string $contactName,
+        private string $personalEmail
+    ) {
     }
 
     public function createForContactMe(ContactMeDTO $dto): Email
