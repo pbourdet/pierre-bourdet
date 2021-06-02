@@ -12,11 +12,9 @@ use Symfony\Component\Security\Core\Security;
 
 class UserAuthorizationChecker
 {
-    private Security $security;
-
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
+    public function __construct(
+        private Security $security
+    ) {
     }
 
     public function check(User $resourceUser): void

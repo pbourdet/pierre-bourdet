@@ -17,11 +17,9 @@ class AuthenticationSuccessListener
 {
     private const REFRESH_TOKEN_COOKIE_NAME = 'REFRESH_TOKEN';
 
-    private string $refreshTokenTtl;
-
-    public function __construct(string $refreshTokenTtl)
-    {
-        $this->refreshTokenTtl = $refreshTokenTtl;
+    public function __construct(
+        private string $refreshTokenTtl
+    ) {
     }
 
     public function onAuthenticationSuccess(AuthenticationSuccessEvent $event): void

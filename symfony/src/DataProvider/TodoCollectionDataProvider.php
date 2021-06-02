@@ -13,11 +13,9 @@ use Symfony\Component\Security\Core\Security;
 
 final class TodoCollectionDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
 {
-    private Security $security;
-
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
+    public function __construct(
+        private Security $security
+    ) {
     }
 
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool

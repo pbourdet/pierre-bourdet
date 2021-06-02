@@ -15,20 +15,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ContactMeController extends AbstractController
 {
-    private ValidatorInterface $validator;
-
-    private MessageBusInterface $bus;
-
-    private EmailFactory $emailFactory;
-
     public function __construct(
-        ValidatorInterface $validator,
-        MessageBusInterface $bus,
-        EmailFactory $emailFactory
+        private ValidatorInterface $validator,
+        private MessageBusInterface $bus,
+        private EmailFactory $emailFactory
     ) {
-        $this->validator = $validator;
-        $this->bus = $bus;
-        $this->emailFactory = $emailFactory;
     }
 
     public function __invoke(ContactMeDTO $data): JsonResponse

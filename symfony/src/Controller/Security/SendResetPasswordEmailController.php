@@ -18,28 +18,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SendResetPasswordEmailController extends AbstractController
 {
-    private ValidatorInterface $validator;
-
-    private UserRepository $userRepository;
-
-    private EmailFactory $emailFactory;
-
-    private MessageBusInterface $bus;
-
-    private TranslatorInterface $translator;
-
     public function __construct(
-        ValidatorInterface $validator,
-        UserRepository $userRepository,
-        MessageBusInterface $bus,
-        EmailFactory $emailFactory,
-        TranslatorInterface $translator
+        private ValidatorInterface $validator,
+        private UserRepository $userRepository,
+        private MessageBusInterface $bus,
+        private EmailFactory $emailFactory,
+        private TranslatorInterface $translator
     ) {
-        $this->validator = $validator;
-        $this->userRepository = $userRepository;
-        $this->bus = $bus;
-        $this->emailFactory = $emailFactory;
-        $this->translator = $translator;
     }
 
     public function __invoke(SendResetPasswordEmailDTO $data): JsonResponse

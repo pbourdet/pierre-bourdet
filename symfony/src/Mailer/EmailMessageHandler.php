@@ -14,20 +14,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmailMessageHandler implements MessageHandlerInterface
 {
-    private MailerInterface $mailer;
-
-    private TranslatorInterface $translator;
-
-    private LoggerInterface $logger;
-
     public function __construct(
-        MailerInterface $mailer,
-        TranslatorInterface $translator,
-        LoggerInterface $logger
+        private MailerInterface $mailer,
+        private TranslatorInterface $translator,
+        private LoggerInterface $logger
     ) {
-        $this->mailer = $mailer;
-        $this->logger = $logger;
-        $this->translator = $translator;
     }
 
     public function __invoke(EmailMessage $emailMessage): void

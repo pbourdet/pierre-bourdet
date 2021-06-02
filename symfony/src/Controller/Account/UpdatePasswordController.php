@@ -14,14 +14,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UpdatePasswordController extends AbstractController
 {
-    private ValidatorInterface $validator;
-
-    private UserPasswordEncoderInterface $encoder;
-
-    public function __construct(ValidatorInterface $validator, UserPasswordEncoderInterface $encoder)
-    {
-        $this->validator = $validator;
-        $this->encoder = $encoder;
+    public function __construct(
+        private ValidatorInterface $validator,
+        private UserPasswordEncoderInterface $encoder
+    ) {
     }
 
     public function __invoke(UpdatePasswordDTO $data): JsonResponse
