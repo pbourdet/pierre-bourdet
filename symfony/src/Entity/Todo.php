@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Action\NotFoundAction;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Model\Todo\PersistTodoDTO;
 use App\Repository\TodoRepository;
@@ -11,34 +12,38 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     formats={"json"},
- *     itemOperations={
- *         "update"={
- *             "method"="PUT",
- *             "input"=PersistTodoDTO::class,
- *             "normalization_context"={"groups"={"persist_todo"}}
- *         },
- *         "delete",
- *         "get"={
- *             "controller"=NotFoundAction::class,
- *             "read"=false,
- *             "output"=false,
- *         },
- *     },
- *     collectionOperations={
- *         "get"={
- *             "normalization_context"={"groups"={"get_todos"}}
- *         },
- *         "create"={
- *             "method"="POST",
- *             "input"=PersistTodoDTO::class,
- *             "normalization_context"={"groups"={"persist_todo"}}
- *         },
- *     }
- * )
  * @ORM\Entity(repositoryClass=TodoRepository::class)
  */
+#[ApiResource(
+    collectionOperations: [
+        'get' => [
+            'normalization_context' => [
+                'groups' => ['get_todos'],
+            ],
+        ],
+        'post' => [
+            'input' => PersistTodoDTO::class,
+            'normalization_context' => [
+                'groups' => ['persist_todo'],
+            ],
+        ],
+    ],
+    itemOperations: [
+        'delete',
+        'put' => [
+            'input' => PersistTodoDTO::class,
+            'normalization_context' => [
+                'groups' => ['persist_todo'],
+            ],
+        ],
+        'get' => [
+            'controller' => NotFoundAction::class,
+            'read' => false,
+            'output' => false,
+        ],
+    ],
+    formats: ['json']
+)]
 class Todo
 {
     use ResourceId;

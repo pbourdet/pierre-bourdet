@@ -11,43 +11,65 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ApiResource(
- *     formats={"json"},
- *     itemOperations={
- *         "get"={
- *             "normalization_context"={"groups"={"get_user"}}
- *         },
- *         "get_me"={
- *             "method"="GET",
- *             "normalization_context"={"groups"={"get_me"}},
- *             "path"="/account/me",
- *             "controller"=GetMeController::class,
- *             "openapi_context"={
- *                 "tags"={"Account"},
- *                 "summary"="Retrieves current user resource.",
- *                 "parameters"={}
- *             },
- *             "read"=false
- *         },
- *         "delete"
- *     },
- *     collectionOperations={
- *         "get"={
- *             "normalization_context"={"groups"={"get_users"}}
- *         },
- *         "create"={
- *             "method"="POST",
- *             "input"=CreateUserDTO::class,
- *             "normalization_context"={"groups"={"get_user"}}
- *         }
- *     }
- * )
  */
+#[ApiResource(
+    collectionOperations: [
+        'get' => [
+            'normalization_context' => [
+                'groups' => ['get_users'],
+            ],
+        ],
+        'post' => [
+            'input' => CreateUserDTO::class,
+            'normalization_context' => [
+                'groups' => ['get_user'],
+            ],
+            'openapi_context' => [
+                'security' => [],
+            ],
+        ],
+    ],
+    itemOperations: [
+        'get' => [
+           'normalization_context' => [
+               'groups' => ['get_user'],
+           ],
+        ],
+        'delete',
+        'getMe' => [
+            'method' => Request::METHOD_GET,
+            'normalization_context' => [
+                'groups' => ['get_me'],
+            ],
+            'path' => GetMeController::PATH,
+            'identifiers' => [],
+            'controller' => GetMeController::class,
+            'read' => false,
+            'openapi_context' => [
+                'tags' => ['Account'],
+                'summary' => 'Retrieves current user resource.',
+                'description' => 'Retrieves current user resource.',
+                'parameters' => [],
+                'responses' => [
+                    Response::HTTP_UNAUTHORIZED => [
+                        'description' => 'Unauthenticated user',
+                        'content' => [
+                            'application/json' => [],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    formats: ['json'],
+)]
 class User implements UserInterface
 {
     use ResourceId;

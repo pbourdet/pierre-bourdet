@@ -65,6 +65,7 @@ final class JwtDecorator implements OpenApiFactoryInterface
                         ],
                     ]),
                 ),
+                security: [],
             ),
         );
 

@@ -14,6 +14,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ResetPasswordController extends AbstractController
 {
+    public const PATH = '/security/reset-password';
+
     public function __construct(
         private ValidatorInterface $validator,
         private UserPasswordEncoderInterface $encoder,

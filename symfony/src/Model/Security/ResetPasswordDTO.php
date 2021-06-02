@@ -6,46 +6,49 @@ namespace App\Model\Security;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Security\ResetPasswordController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ApiResource(
- *     itemOperations={},
- *     collectionOperations={
- *          "resetPassword"={
- *              "path"="/security/reset-password",
- *              "controller"=ResetPasswordController::class,
- *              "input"=ResetPasswordDTO::class,
- *              "output"=false,
- *              "method"="POST",
- *              "openapi_context"={
- *                  "tags"={"Security"},
- *                  "summary"="Reset the user's password.",
- *                  "responses"={
- *                      "200"={
- *                          "description"="Password successfully updated.",
- *                          "content"={
- *                              "application/json"={}
- *                          }
- *                      },
- *                      "400"={
- *                          "description"="Input data is not valid.",
- *                          "content"={
- *                              "application/json"={}
- *                          }
- *                      },
- *                      "401"={
- *                          "description"="Invalid reset token.",
- *                          "content"={
- *                              "application/json"={}
- *                          }
- *                      }
- *                  }
- *              }
- *          }
- *     }
- * )
- */
+#[ApiResource(
+    collectionOperations: [
+        'resetPassword' => [
+            'path' => ResetPasswordController::PATH,
+            'controller' => ResetPasswordController::class,
+            'input' => ResetPasswordDTO::class,
+            'output' => false,
+            'method' => Request::METHOD_POST,
+            'openapi_context' => [
+                'tags' => ['Security'],
+                'summary' => 'Reset the user\'s password.',
+                'description' => 'Reset the user\'s password.',
+                'security' => [],
+                'responses' => [
+                    Response::HTTP_OK => [
+                        'description' => 'Password successfully updated.',
+                        'content' => [
+                            'application/json' => [],
+                        ],
+                    ],
+                    Response::HTTP_BAD_REQUEST => [
+                        'description' => 'Input data is not valid.',
+                        'content' => [
+                            'application/json' => [],
+                        ],
+                    ],
+                    Response::HTTP_FORBIDDEN => [
+                        'description' => 'Invalid reset token.',
+                        'content' => [
+                            'application/json' => [],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    itemOperations: [],
+    formats: ['json']
+)]
 class ResetPasswordDTO
 {
     public string $token = '';

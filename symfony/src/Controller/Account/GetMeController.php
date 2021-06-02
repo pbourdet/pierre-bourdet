@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GetMeController extends AbstractController
 {
+    public const PATH = '/account/me';
+
     public function __invoke(): User
     {
         /** @var User $user */
