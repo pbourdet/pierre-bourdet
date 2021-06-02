@@ -14,6 +14,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UpdatePasswordController extends AbstractController
 {
+    public const PATH = '/account/update-password';
+
     public function __construct(
         private ValidatorInterface $validator,
         private UserPasswordEncoderInterface $encoder

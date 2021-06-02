@@ -18,6 +18,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SendResetPasswordEmailController extends AbstractController
 {
+    public const PATH = '/security/reset-password-email';
+
     public function __construct(
         private ValidatorInterface $validator,
         private UserRepository $userRepository,

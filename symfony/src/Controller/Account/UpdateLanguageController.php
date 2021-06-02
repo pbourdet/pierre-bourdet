@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UpdateLanguageController extends AbstractController
 {
+    public const PATH = '/account/update-language';
+
     public function __construct(
         private ValidatorInterface $validator,
         private UserRepository $userRepository
