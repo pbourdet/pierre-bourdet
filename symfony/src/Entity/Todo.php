@@ -9,67 +9,77 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Model\Todo\PersistTodoDTO;
 use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass=TodoRepository::class)
  */
-#[ApiResource(
-    collectionOperations: [
-        'get' => [
-            'normalization_context' => [
-                'groups' => ['get_todos'],
+#[
+    ApiResource(
+        collectionOperations: [
+            'get' => [
+                'normalization_context' => [
+                    'groups' => ['get_todos'],
+                ],
+            ],
+            'post' => [
+                'input' => PersistTodoDTO::class,
+                'normalization_context' => [
+                    'groups' => ['persist_todo'],
+                ],
             ],
         ],
-        'post' => [
-            'input' => PersistTodoDTO::class,
-            'normalization_context' => [
-                'groups' => ['persist_todo'],
+        itemOperations: [
+            'delete',
+            'put' => [
+                'input' => PersistTodoDTO::class,
+                'normalization_context' => [
+                    'groups' => ['persist_todo'],
+                ],
+            ],
+            'get' => [
+                'controller' => NotFoundAction::class,
+                'read' => false,
+                'output' => false,
             ],
         ],
-    ],
-    itemOperations: [
-        'delete',
-        'put' => [
-            'input' => PersistTodoDTO::class,
-            'normalization_context' => [
-                'groups' => ['persist_todo'],
-            ],
-        ],
-        'get' => [
-            'controller' => NotFoundAction::class,
-            'read' => false,
-            'output' => false,
-        ],
-    ],
-    formats: ['json']
-)]
+        formats: ['json']
+    )
+]
 class Todo
 {
     use ResourceId;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get_todos", "persist_todo"})
      */
+    #[
+        Serializer\Groups(groups: ['get_todos', 'persist_todo'])
+    ]
     private string $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"get_todos", "persist_todo"})
      */
+    #[
+        Serializer\Groups(groups: ['get_todos', 'persist_todo'])
+    ]
     private ?string $description;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"get_todos", "persist_todo"})
      */
+    #[
+        Serializer\Groups(groups: ['get_todos', 'persist_todo'])
+    ]
     private ?\DateTime $date;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"get_todos", "persist_todo"})
      */
+    #[
+        Serializer\Groups(groups: ['get_todos', 'persist_todo'])
+    ]
     private bool $isDone = false;
 
     /**
@@ -80,8 +90,10 @@ class Todo
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"get_todos", "persist_todo"})
      */
+    #[
+        Serializer\Groups(groups: ['get_todos', 'persist_todo'])
+    ]
     private ?\DateTimeInterface $reminder;
 
     public function getName(): string
