@@ -11,10 +11,8 @@ use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
-/**
- * @ORM\Entity(repositoryClass=TodoRepository::class)
- */
 #[
+    Orm\Entity(repositoryClass: TodoRepository::class),
     ApiResource(
         collectionOperations: [
             'get' => [
@@ -48,58 +46,46 @@ use Symfony\Component\Serializer\Annotation as Serializer;
 ]
 class Todo
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
     #[
+        ORM\Id,
+        ORM\GeneratedValue,
+        ORM\Column(type: 'integer'),
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
     private int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     #[
+        ORM\Column(type: 'string', length: 255),
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
     private string $name = '';
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     #[
+        ORM\Column(type: 'string', length: 255, nullable: true),
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
     private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
     #[
+        ORM\Column(type: 'datetime', nullable: true),
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
     private ?\DateTime $date = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
     #[
+        ORM\Column(type: 'boolean'),
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
     private bool $isDone = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="todos")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[
+        ORM\ManyToOne(targetEntity: User::class, inversedBy: 'todos'),
+        ORM\JoinColumn(nullable: false)
+    ]
     private User $user;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
     #[
+        ORM\Column(type: 'datetime', nullable: true),
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
     private ?\DateTimeInterface $reminder = null;
