@@ -16,10 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- */
 #[
+    ORM\Entity(repositoryClass: UserRepository::class),
     ApiResource(
         collectionOperations: [
             'get' => [
@@ -74,73 +72,52 @@ use Symfony\Component\Serializer\Annotation as Serializer;
 ]
 class User implements UserInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
     #[
+        ORM\Id,
+        ORM\GeneratedValue,
+        ORM\Column(type: 'integer'),
         Serializer\Groups(groups: ['get_users', 'get_user'])
     ]
     private int $id;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
     #[
+        ORM\Column(type: 'datetime'),
         Serializer\Groups(groups: ['get_me', 'get_user'])
     ]
     private \DateTimeInterface $createdAt;
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
     #[
+        ORM\Column(type: 'string', length: 180, unique: true),
         Serializer\Groups(groups: ['get_me'])
     ]
     private string $email = '';
 
-    /**
-     * @var string[]
-     * @ORM\Column(type="json")
-     */
+    /** @var string[] */
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     private string $password = '';
 
-    /**
-     * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="user", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Todo::class, orphanRemoval: true)]
     private Collection $todos;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     #[
+        ORM\Column(type: 'string', length: 255),
         Serializer\Groups(groups: ['get_me', 'get_user'])
     ]
     private string $nickname = '';
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $resetPasswordToken = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $resetPasswordExpirationDate = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private string $language = '';
 
     public function __construct()
