@@ -48,7 +48,15 @@ use Symfony\Component\Serializer\Annotation as Serializer;
 ]
 class Todo
 {
-    use ResourceId;
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    #[
+        Serializer\Groups(groups: ['get_todos', 'persist_todo'])
+    ]
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -56,7 +64,7 @@ class Todo
     #[
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
-    private string $name;
+    private string $name = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -64,7 +72,7 @@ class Todo
     #[
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
-    private ?string $description;
+    private ?string $description = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -72,7 +80,7 @@ class Todo
     #[
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
-    private ?\DateTime $date;
+    private ?\DateTime $date = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -94,7 +102,12 @@ class Todo
     #[
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
-    private ?\DateTimeInterface $reminder;
+    private ?\DateTimeInterface $reminder = null;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     public function getName(): string
     {

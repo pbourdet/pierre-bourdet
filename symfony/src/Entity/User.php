@@ -74,8 +74,27 @@ use Symfony\Component\Serializer\Annotation as Serializer;
 ]
 class User implements UserInterface
 {
-    use ResourceId;
-    use Timestampable;
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    #[
+        Serializer\Groups(groups: ['get_users', 'get_user'])
+    ]
+    private int $id;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    #[
+        Serializer\Groups(groups: ['get_me', 'get_user'])
+    ]
+    private \DateTimeInterface $createdAt;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private ?\DateTimeInterface $updatedAt = null;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -83,7 +102,7 @@ class User implements UserInterface
     #[
         Serializer\Groups(groups: ['get_me'])
     ]
-    private string $email;
+    private string $email = '';
 
     /**
      * @var string[]
@@ -94,7 +113,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string")
      */
-    private string $password;
+    private string $password = '';
 
     /**
      * @ORM\OneToMany(targetEntity=Todo::class, mappedBy="user", orphanRemoval=true)
@@ -107,7 +126,7 @@ class User implements UserInterface
     #[
         Serializer\Groups(groups: ['get_me', 'get_user'])
     ]
-    private string $nickname;
+    private string $nickname = '';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -122,12 +141,46 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $language;
+    private string $language = '';
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->todos = new ArrayCollection();
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getCreatedAt(): \DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function hasBeenUpdated(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getEmail(): string
