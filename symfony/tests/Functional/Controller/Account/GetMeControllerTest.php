@@ -26,10 +26,11 @@ class GetMeControllerTest extends AbstractEndPoint
 
         $content = $response->getContent();
         $contentDecoded = json_decode($content, true);
+        dump($contentDecoded);
 
         $this->assertEquals(UserFixtures::DEFAULT_EMAIL, $contentDecoded['email']);
         $this->assertEquals(UserFixtures::DEFAULT_NICKNAME, $contentDecoded['nickname']);
-        $this->assertCount(3, $contentDecoded);
+        $this->assertCount(4, $contentDecoded);
     }
 
     public function testGetMeNotLoggedIn(): void

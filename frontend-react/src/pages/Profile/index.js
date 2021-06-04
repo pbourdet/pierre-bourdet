@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import UpdatePasswordModal from '../../components/UpdatePasswordModal';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
+import DeleteUserButton from '../../components/DeleteUserButton';
 
 function Profile () {
     const auth = useAuth();
@@ -11,6 +12,8 @@ function Profile () {
     if (auth === null) {
         return <Redirect to="/"/>;
     }
+
+    const user = JSON.parse(localStorage.getItem('user'));
 
     return (
         <Container>
@@ -23,7 +26,12 @@ function Profile () {
                         <Col sm={6}>
                         </Col>
                         <Col sm={6}>
-                            <UpdatePasswordModal/>
+                            <div>
+                                <UpdatePasswordModal/>
+                            </div>
+                            <div>
+                                <DeleteUserButton user={user}/>
+                            </div>
                         </Col>
                     </Row>
                 </Card.Body>

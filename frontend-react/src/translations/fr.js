@@ -19,7 +19,11 @@ export default {
             signup: 'Bienvenue {name} !',
             signin: 'Bonjour {name} !',
             logout: 'Vous êtes déconnectés.',
-            updatePassword: 'Mot de passe mis à jour !'
+            updatePassword: 'Mot de passe mis à jour !',
+            delete: {
+                error: 'Une erreur est survenue lors de la suppression de votre compte.',
+                success: 'Votre compte a bien été supprimé.'
+            }
         },
         todo: {
             add: 'Todo {name} ajoutée !',
@@ -121,7 +125,14 @@ export default {
     },
 
     profile: {
-        settings: 'Paramètres du compte'
+        settings: 'Paramètres du compte',
+        user: {
+            delete: {
+                button: 'Supprimer votre compte',
+                title: 'Confirmation',
+                confirmation: 'Supprimer'
+            }
+        }
     },
 
     resume: {

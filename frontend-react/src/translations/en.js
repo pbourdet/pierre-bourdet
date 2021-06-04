@@ -120,7 +120,14 @@ export default {
     },
 
     profile: {
-        settings: 'Account\'s setttings'
+        settings: 'Account\'s setttings',
+        user: {
+            delete: {
+                button: 'Delete your account',
+                title: 'Confirmation',
+                confirmation: 'Delete'
+            }
+        }
     },
 
     resume: {

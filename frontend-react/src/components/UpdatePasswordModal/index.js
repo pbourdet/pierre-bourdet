@@ -41,7 +41,7 @@ function UpdatePasswordModal () {
 
     return (
         <>
-            <Button variant="light" onClick={toggleModal}><FormattedMessage id="updatePassword.title"/></Button>
+            <Button variant="primary" onClick={toggleModal}><FormattedMessage id="updatePassword.title"/></Button>
             <Modal size="md" show={modal} onHide={handleCancel}>
                 <Modal.Header closeButton>
                     <Modal.Title>

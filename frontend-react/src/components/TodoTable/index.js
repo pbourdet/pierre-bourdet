@@ -16,10 +16,10 @@ function TodoTable () {
 
     if (!Object.keys(todos).length) {
         return (
-            <>
+            <Container className="p-4 shadow border rounded">
                 <div className="mb-2"><FormattedMessage id="todos.noTodos"/></div>
                 <TodoForm setOpen={setOpen} todo={{}} isFirstTodo={true} isEdit={false}/>
-            </>
+            </Container>
         );
     }
 
