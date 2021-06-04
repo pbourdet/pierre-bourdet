@@ -19,7 +19,7 @@ export async function signinSubmit (values) {
     if (response === null) {
         auth.isAuthenticated = false;
 
-        return auth;
+        return { auth, user: null };
     }
 
     auth.exp = addHours((new Date()), 1).getTime();

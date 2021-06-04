@@ -76,7 +76,7 @@ class User implements UserInterface
         ORM\Id,
         ORM\GeneratedValue,
         ORM\Column(type: 'integer'),
-        Serializer\Groups(groups: ['get_users', 'get_user'])
+        Serializer\Groups(groups: ['get_users', 'get_user', 'get_me'])
     ]
     private int $id;
 
