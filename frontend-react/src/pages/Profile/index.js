@@ -16,27 +16,29 @@ function Profile () {
     const user = JSON.parse(localStorage.getItem('user'));
 
     return (
-        <Container>
-            <Card className="m-2 p-3 shadow">
-                <Card.Body>
-                    <Card.Title className="mb-4">
-                        <FormattedMessage id="profile.settings"/>
-                    </Card.Title>
-                    <Row>
-                        <Col sm={6}>
-                        </Col>
-                        <Col sm={6}>
-                            <div>
-                                <UpdatePasswordModal/>
-                            </div>
-                            <div>
-                                <DeleteUserButton user={user}/>
-                            </div>
-                        </Col>
-                    </Row>
-                </Card.Body>
-            </Card>
-        </Container>
+        <div className="page">
+            <Container>
+                <Card className="m-2 p-3 shadow">
+                    <Card.Body>
+                        <Card.Title className="mb-4">
+                            <FormattedMessage id="profile.settings"/>
+                        </Card.Title>
+                        <Row>
+                            <Col sm={6}>
+                            </Col>
+                            <Col sm={6}>
+                                <div>
+                                    <UpdatePasswordModal/>
+                                </div>
+                                <div>
+                                    <DeleteUserButton user={user}/>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Card.Body>
+                </Card>
+            </Container>
+        </div>
     );
 }
 

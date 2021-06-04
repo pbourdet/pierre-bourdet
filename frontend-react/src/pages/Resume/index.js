@@ -13,7 +13,7 @@ import TechnicalStackEntry from '../../components/TechnicalStackEntry';
 
 function Resume () {
     return (
-        <>
+        <div className="page">
             <FormattedMessage id="resume.title">
                 {title => <Helmet><title>{title}</title></Helmet>}
             </FormattedMessage>
@@ -168,7 +168,7 @@ function Resume () {
                 </div>
             </Section>
             <ContactMeModal/>
-        </>
+        </div>
     );
 }
 

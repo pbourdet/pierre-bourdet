@@ -8,7 +8,7 @@ import { faTasks } from '@fortawesome/free-solid-svg-icons';
 
 function Todos () {
     return (
-        <>
+        <div className="page">
             <TodoProvider>
                 <FormattedMessage id="todos.title">
                     {title => <Helmet><title>{title}</title></Helmet>}
@@ -19,7 +19,7 @@ function Todos () {
                 </h1>
                 <TodoContainer />
             </TodoProvider>
-        </>
+        </div>
     );
 }
 

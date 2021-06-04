@@ -21,7 +21,7 @@ function NavigationBar () {
 
     return (
         <div className="shadow-sm">
-            <Navbar bg="light" expand="md">
+            <Navbar collapseOnSelect bg="light" expand="md">
                 <Container>
                     <LocaleSelector/>
                     <Link to="/">
@@ -32,37 +32,33 @@ function NavigationBar () {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Link to="/resume">
-                                <Nav.Link as="span">
-                                    <FormattedMessage id="navbar.resume"/>
-                                </Nav.Link>
-                            </Link>
+                            <Nav.Link href="#" as={Link} to="/resume">
+                                <FormattedMessage id="navbar.resume"/>
+                            </Nav.Link>
                             <NavDropdown title="Apps" id="basic-nav-dropdown">
                                 <NavDropdown.Item as="span">
-                                    <Link to="/todo">
-                                        <Nav.Link as="span">
-                                            Todo list
-                                        </Nav.Link>
-                                    </Link>
+                                    <Nav.Link href="#" as={Link} to="/todo">
+                                        Todo list
+                                    </Nav.Link>
                                 </NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
-                        {auth
-                            ? <>
-                                <Link to="/me">
-                                    <Navbar.Text className="btn btn-link" as="span">
+                        <Nav>
+                            {auth
+                                ? <>
+                                    <Nav.Link href="#" as={Link} to="/me">
                                         <FormattedMessage id="navbar.profile"/>
-                                    </Navbar.Text>
-                                </Link>
-                                <Navbar.Text onClick={logout} className="btn btn-link" as="span">
-                                    <FormattedMessage id="navbar.logout"/>
-                                </Navbar.Text>
-                            </>
-                            : <>
-                                <SigninModal/>
-                                <SignupModal/>
-                            </>
-                        }
+                                    </Nav.Link>
+                                    <Nav.Link href="#" onClick={logout} className="btn btn-link" as="span">
+                                        <FormattedMessage id="navbar.logout"/>
+                                    </Nav.Link>
+                                </>
+                                : <>
+                                    <SigninModal/>
+                                    <SignupModal/>
+                                </>
+                            }
+                        </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

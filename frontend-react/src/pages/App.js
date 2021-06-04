@@ -8,6 +8,7 @@ import AuthProvider from '../contexts/AuthContext/index';
 import { ToastContainer } from 'react-toastify';
 import LocaleProvider from '../contexts/LocaleContext/index';
 import { Spinner } from 'react-bootstrap';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 function App () {
     const Home = React.lazy(() => import('./Home/index'));
@@ -28,14 +29,20 @@ function App () {
                             pauseOnFocusLoss={false}
                             pauseOnHover={false}
                         />
-                        <Suspense fallback={<Spinner/>}>
-                            <Switch>
-                                <Route path="/" exact component={Home}/>
-                                <Route path="/resume" component={Resume}/>
-                                <Route path="/me" component={Profile}/>
-                                <Route path="/todo" component={Todos}/>
-                                <Route path="/reset-password/:token" component={ResetPassword}/>
-                            </Switch>
+                        <Suspense fallback={<Spinner animation="border"/>}>
+                            <Route render={({ location }) => (
+                                <TransitionGroup>
+                                    <CSSTransition key={location.key} timeout={450} classNames='fade'>
+                                        <Switch location={location}>
+                                            <Route path="/" exact component={Home}/>
+                                            <Route path="/resume" component={Resume}/>
+                                            <Route path="/me" component={Profile}/>
+                                            <Route path="/todo" component={Todos}/>
+                                            <Route path="/reset-password/:token" component={ResetPassword}/>
+                                        </Switch>
+                                    </CSSTransition>
+                                </TransitionGroup>
+                            )}/>
                         </Suspense>
                     </AuthProvider>
                 </div>
