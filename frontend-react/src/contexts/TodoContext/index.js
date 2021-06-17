@@ -40,9 +40,16 @@ export default function TodoProvider ({ children }) {
         return addMinutes(date, new Date().getTimezoneOffset()).getTime();
     };
 
+    const updateLocalTodos = (todos) => {
+        localStorage.setItem('todos', JSON.stringify(todos));
+        setTodos(todos);
+    };
+
     async function getTodos () {
         if (auth === null) {
-            setTodos([]);
+            const todos = JSON.parse(localStorage.getItem('todos')) ?? [];
+            setTodos(todos);
+
             return;
         }
 
@@ -64,6 +71,13 @@ export default function TodoProvider ({ children }) {
     }
 
     async function createTodo (todo) {
+        if (auth === null) {
+            todo.id = Math.floor(Math.random() * Math.pow(10, 7));
+            updateLocalTodos([...todos, todo]);
+
+            return;
+        }
+
         const date = todo.date ? fixDateOffset(todo.date) : null;
         const reminder = todo.reminder ? fixDateOffset(todo.reminder) : null;
 
@@ -83,24 +97,38 @@ export default function TodoProvider ({ children }) {
 
         todo.id = response.id;
 
-        const newTodos = [...todos, todo];
-
-        setTodos(newTodos);
+        setTodos([...todos, todo]);
     }
 
     async function deleteTodo (todo) {
+        const newTodos = todos.filter((td) => td.id !== todo.id);
+
+        if (auth === null) {
+            updateLocalTodos(newTodos);
+
+            return;
+        }
+
         await refreshToken(auth, updateAuth);
 
         await axios.delete('/todos/' + todo.id)
             .then(response => response.data)
             .then(data => data);
 
-        const newTodos = todos.filter((td) => td.id !== todo.id);
-
         setTodos(newTodos);
     }
 
     async function editTodo (editedTodo) {
+        const newTodos = todos.map(todo =>
+            todo.id === editedTodo.id ? editedTodo : todo
+        );
+
+        if (auth === null) {
+            updateLocalTodos(newTodos);
+
+            return;
+        }
+
         const date = editedTodo.date ? fixDateOffset(editedTodo.date) : null;
         const reminder = editedTodo.reminder ? fixDateOffset(editedTodo.reminder) : null;
 
@@ -116,10 +144,6 @@ export default function TodoProvider ({ children }) {
         await axios.put('/todos/' + editedTodo.id, JSON.stringify(payload))
             .then(response => response.data)
             .then(data => data);
-
-        const newTodos = todos.map(todo =>
-            todo.id === editedTodo.id ? editedTodo : todo
-        );
 
         setTodos(newTodos);
     }
