@@ -237,7 +237,7 @@ export default {
     todos: {
         title: 'Todo liste',
         noTodos: 'Vous n\'avez aucune todo !',
-        loggedOut: 'Connectez-vous pour utiliser les todos.'
+        loggedOut: 'Vos todos ne seront sauvegardées que sur cet appareil. Connectez-vous pour accéder à vos todos n\'importe où !'
     },
 
     todoTable: {
@@ -270,7 +270,8 @@ export default {
             label: 'Date'
         },
         reminder: {
-            label: 'Rappel'
+            label: 'Rappel',
+            loggedOut: 'Vous devez être connecté pour utiliser le rappel !'
         },
         error: {
             name: {

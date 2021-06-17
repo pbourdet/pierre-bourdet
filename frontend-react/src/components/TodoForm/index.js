@@ -8,6 +8,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useCreateTodo, useEditTodo } from '../../contexts/TodoContext';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
+import { useAuth } from '../../contexts/AuthContext';
 
 function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
     const { currentTodo, errors, handleChange, clearAll } = useTodoForm(todo);
@@ -17,12 +18,17 @@ function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
     const [loading, setLoading] = useState(false);
     const isTouched = currentTodo !== todo;
     const isFormValid = isTouched && currentTodo.name !== '' && Object.keys(errors).length === 0;
+    const auth = useAuth();
 
     const initialDate = currentTodo.date ? format(currentTodo.date, "yyyy-MM-dd'T'HH:mm") : '';
     const initialReminder = currentTodo.reminder ? format(currentTodo.reminder, "yyyy-MM-dd'T'HH:mm") : '';
     const minDate = currentTodo.date
         ? format(Math.min(currentTodo.date, new Date().getTime()), "yyyy-MM-dd'T'HH:mm")
         : format(new Date().getTime(), "yyyy-MM-dd'T'HH:mm");
+
+    if (auth === null) {
+        currentTodo.reminder = '';
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -81,8 +87,14 @@ function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
                         value={initialReminder} onChange={handleChange}
                         min={format(new Date().getTime(), "yyyy-MM-dd'T'HH:mm")}
                         max={currentTodo.date && format(currentTodo.date, "yyyy-MM-dd'T'HH:mm")}
+                        disabled={auth === null}
                     />
                     <Form.Control.Feedback type="invalid">{errors.reminder}</Form.Control.Feedback>
+                    {auth === null &&
+                        <span className="text-info small">
+                            <FormattedMessage id="todoForm.reminder.loggedOut"/>
+                        </span>
+                    }
                 </Form.Group>
                 <Col className="mb-2">
                     {loading

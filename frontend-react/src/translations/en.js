@@ -232,7 +232,7 @@ export default {
     todos: {
         title: 'Todo list',
         noTodos: 'You have no todo !',
-        loggedOut: 'Sign in to use the todo list.'
+        loggedOut: 'Your todos will only be saved on this device. Log in to access your todos anywhere !'
     },
 
     todoTable: {
@@ -265,7 +265,8 @@ export default {
             label: 'Date'
         },
         reminder: {
-            label: 'Remind me'
+            label: 'Remind me',
+            loggedOut: 'You must be logged in to use the reminder !'
         },
         error: {
             name: {

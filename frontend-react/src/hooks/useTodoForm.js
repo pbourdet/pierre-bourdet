@@ -7,6 +7,7 @@ export default function useTodoForm (todo) {
         name: '',
         description: '',
         date: '',
+        reminder: '',
         isDone: false
     });
 
@@ -35,6 +36,7 @@ export default function useTodoForm (todo) {
             name: '',
             description: '',
             date: '',
+            reminder: '',
             isDone: false
         });
     };
