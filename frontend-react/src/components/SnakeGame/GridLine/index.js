@@ -3,10 +3,11 @@ import GridCell from '../GridCell';
 import { Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-function GridLine ({ rowNumber, gridWidth }) {
+function GridLine ({ row, gridWidth, foodCell }) {
     const cols = [];
-    for (let i = 0; i < gridWidth; i++) {
-        cols.push(<GridCell key={rowNumber + i}/>);
+
+    for (let col = 0; col < gridWidth; col++) {
+        cols.push(<GridCell isFood={row === foodCell.row && col === foodCell.col} key={row + '_' + col}/>);
     }
 
     return (
@@ -15,8 +16,9 @@ function GridLine ({ rowNumber, gridWidth }) {
 }
 
 GridLine.propTypes = {
-    rowNumber: PropTypes.number.isRequired,
-    gridWidth: PropTypes.number.isRequired
+    row: PropTypes.number.isRequired,
+    gridWidth: PropTypes.number.isRequired,
+    foodCell: PropTypes.object.isRequired
 };
 
 export default GridLine;

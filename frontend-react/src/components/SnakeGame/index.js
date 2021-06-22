@@ -5,8 +5,17 @@ function SnakeGame () {
     const gridSize = { rows: 10, cols: 20 };
     const grid = [];
 
-    for (let i = 0; i < gridSize.rows; i++) {
-        grid.push(<GridLine key={i} rowNumber={i} gridWidth={gridSize.cols}/>);
+    const getRandomCell = () => {
+        return {
+            row: Math.floor(Math.random() * gridSize.rows),
+            col: Math.floor(Math.random() * gridSize.cols)
+        };
+    };
+
+    const foodCell = getRandomCell();
+
+    for (let row = 0; row < gridSize.rows; row++) {
+        grid.push(<GridLine foodCell={foodCell} key={row} row={row} gridWidth={gridSize.cols}/>);
     }
 
     return (
