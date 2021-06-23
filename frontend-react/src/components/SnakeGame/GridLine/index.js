@@ -10,7 +10,7 @@ function GridLine ({ snake, row, gridWidth, foodCell }) {
         cols.push(
             <GridCell
                 isFood={row === foodCell.row && col === foodCell.col}
-                coordinates={{row: row, col: col}}
+                coordinates={{ row: row, col: col }}
                 snake={snake}
                 key={row + '_' + col}
             />

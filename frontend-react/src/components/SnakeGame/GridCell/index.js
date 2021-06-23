@@ -11,7 +11,7 @@ function GridCell ({ coordinates, snake, isFood }) {
         if (tail.row === coordinates.row && tail.col === coordinates.col) {
             isTail = true;
         }
-    })
+    });
 
     return (
         <div style={{ width: 35, height: 35 }} className="border">
