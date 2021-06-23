@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import GridLine from './GridLine';
 
 function SnakeGame () {
-    const [tickRate] = useState(1000);
+    const [tickRate] = useState(200);
     const [gridSize] = useState({ rows: 10, cols: 20 });
     const initialSnake = {
         head:
@@ -29,14 +29,74 @@ function SnakeGame () {
     }, [gridSize]);
     const [foodCell, setFoodCell] = useState(getRandomCell());
 
-    const gameTick = useCallback(() => {
+    const [direction, setDirection] = useState('right');
+    const [directionChanged, setDirectionChanged] = useState(false);
+
+    const handleKeyPress = (event) => {
+        const verticalDirections = ['up', 'down'];
+        const horizontalDirections = ['left', 'right'];
+
+        if (directionChanged === true) return;
+
+        switch (event.keyCode) {
+        case 37:
+            if (!horizontalDirections.includes(direction)) {
+                setDirection('left');
+            }
+
+            break;
+        case 38:
+            if (!verticalDirections.includes(direction)) {
+                setDirection('up');
+            }
+
+            break;
+        case 39:
+            if (!horizontalDirections.includes(direction)) {
+                setDirection('right');
+            }
+
+            break;
+        case 40:
+            if (!verticalDirections.includes(direction)) {
+                setDirection('down');
+            }
+
+            break;
+        default:
+            break;
+        }
+
+        setDirectionChanged(true);
+    };
+
+    const gameTick = () => {
         const newSnake = { ...snake };
         newSnake.tail.unshift({
             row: snake.head.row,
             col: snake.head.col
         });
 
-        newSnake.head.col++;
+        switch (direction) {
+        case 'left':
+            newSnake.head.col--;
+            break;
+
+        case 'right':
+            newSnake.head.col++;
+            break;
+
+        case 'up':
+            newSnake.head.row--;
+            break;
+
+        case 'down':
+            newSnake.head.row++;
+            break;
+
+        default:
+            break;
+        }
 
         if (newSnake.head.row === foodCell.row && newSnake.head.col === foodCell.col) {
             setFoodCell(getRandomCell());
@@ -44,8 +104,9 @@ function SnakeGame () {
             newSnake.tail.pop();
         }
 
+        setDirectionChanged(false);
         setSnake(newSnake);
-    }, [snake, foodCell, getRandomCell]);
+    };
 
     const grid = [];
     for (let row = 0; row < gridSize.rows; row++) {
@@ -53,15 +114,34 @@ function SnakeGame () {
     }
 
     useEffect(() => {
-        window.fnInterval = setInterval(() => {
-            gameTick();
-        }, tickRate);
+        document.addEventListener('keydown', handleKeyPress);
 
-        return () => clearInterval(window.fnInterval);
-    }, [tickRate, gameTick]);
+        return () => document.removeEventListener('keydown', handleKeyPress);
+    });
+
+    useInterval(gameTick, tickRate);
+
+    function useInterval (callback, delay) {
+        const savedCallback = useRef();
+
+        useEffect(() => {
+            savedCallback.current = callback;
+        }, [callback]);
+
+        useEffect(() => {
+            function tick () {
+                savedCallback.current();
+            }
+            if (delay !== null) {
+                const id = setInterval(tick, delay);
+                return () => clearInterval(id);
+            }
+        }, [delay]);
+    }
 
     return (
         <div className="d-table border m-auto">{grid}</div>
     );
 }
+
 export default SnakeGame;
