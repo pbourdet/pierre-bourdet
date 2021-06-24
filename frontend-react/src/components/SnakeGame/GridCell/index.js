@@ -7,7 +7,7 @@ function GridCell ({ coordinates, snake, isFood }) {
     const isHead = snake.head.row === coordinates.row && snake.head.col === coordinates.col;
 
     let isTail = false;
-    snake.tail.forEach(tail => {
+    snake.tails.forEach(tail => {
         if (tail.row === coordinates.row && tail.col === coordinates.col) {
             isTail = true;
         }

@@ -10,7 +10,7 @@ function SnakeGame () {
                 row: Math.floor(gridSize.rows / 2),
                 col: Math.floor(gridSize.cols / 5)
             },
-        tail: [{
+        tails: [{
             row: Math.floor(gridSize.rows / 2),
             col: Math.floor(gridSize.cols / 5) - 1
         },
@@ -21,13 +21,32 @@ function SnakeGame () {
     };
     const [snake, setSnake] = useState(initialSnake);
 
-    const getRandomCell = useCallback(() => {
-        return {
-            row: Math.floor(Math.random() * gridSize.rows),
-            col: Math.floor(Math.random() * gridSize.cols)
-        };
+    const getRandomEmptyCell = useCallback(() => {
+        let row = Math.floor(Math.random() * gridSize.rows)
+        let col = Math.floor(Math.random() * gridSize.cols)
+
+        while (isFoodOnSnake(row, col)) {
+            row = Math.floor(Math.random() * gridSize.rows)
+            col = Math.floor(Math.random() * gridSize.cols)
+        }
+
+        return { row: row, col: col };
     }, [gridSize]);
-    const [foodCell, setFoodCell] = useState(getRandomCell());
+
+    const isFoodOnSnake = (foodRow, foodCol) => {
+        if (snake.head.row === foodRow && snake.head.col === foodCol) {
+            return true;
+        }
+
+        for (let tail = 0; tail < snake.tails.length; tail++) {
+            if (snake.tails[tail].row === foodRow && snake.tails[tail].col === foodCol) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    const [foodCell, setFoodCell] = useState(getRandomEmptyCell());
 
     const [direction, setDirection] = useState('right');
     const [directionChanged, setDirectionChanged] = useState(false);
@@ -72,7 +91,7 @@ function SnakeGame () {
 
     const gameTick = () => {
         const newSnake = { ...snake };
-        newSnake.tail.unshift({
+        newSnake.tails.unshift({
             row: snake.head.row,
             col: snake.head.col
         });
@@ -99,9 +118,9 @@ function SnakeGame () {
         }
 
         if (newSnake.head.row === foodCell.row && newSnake.head.col === foodCell.col) {
-            setFoodCell(getRandomCell());
+            setFoodCell(getRandomEmptyCell());
         } else {
-            newSnake.tail.pop();
+            newSnake.tails.pop();
         }
 
         setDirectionChanged(false);
