@@ -298,5 +298,10 @@ export default {
             submit: 'Reset',
             error: 'The link is invalid or expired.'
         }
+    },
+
+    snake: {
+        gameOver: 'Game over !',
+        newGame: 'New game'
     }
 };

@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import GridLine from './GridLine';
+import GameOver from "./GameOver";
 
 function SnakeGame () {
     const [tickRate] = useState(200);
     const [gridSize] = useState({ rows: 10, cols: 20 });
+    const [gameOver, setGameOver] = useState(false);
     const initialSnake = {
         head:
             {
@@ -90,6 +92,10 @@ function SnakeGame () {
     };
 
     const gameTick = () => {
+        if (gameOver === true) {
+            return;
+        }
+
         const newSnake = { ...snake };
         newSnake.tails.unshift({
             row: snake.head.row,
@@ -117,15 +123,37 @@ function SnakeGame () {
             break;
         }
 
+        if (hasSnakeHitItself() === true) {
+            setGameOver(true);
+        }
+
         if (newSnake.head.row === foodCell.row && newSnake.head.col === foodCell.col) {
             setFoodCell(getRandomEmptyCell());
         } else {
             newSnake.tails.pop();
         }
 
-        setDirectionChanged(false);
         setSnake(newSnake);
+        setDirectionChanged(false);
     };
+
+    const hasSnakeHitItself = () => {
+        for (let tail = 0; tail < snake.tails.length; tail++) {
+            if (snake.head.row === snake.tails[tail].row && snake.head.col === snake.tails[tail].col) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    const resetGame = () => {
+        setSnake(initialSnake);
+        setFoodCell(getRandomEmptyCell())
+        setDirection('right')
+        setDirectionChanged(false)
+        setGameOver(false)
+    }
 
     const grid = [];
     for (let row = 0; row < gridSize.rows; row++) {
@@ -159,7 +187,12 @@ function SnakeGame () {
     }
 
     return (
-        <div className="d-table border m-auto">{grid}</div>
+        <div style={{width: gridSize.cols * 35, height: gridSize.rows * 35, outline: `1px solid #ddd`}} className="m-auto">
+            {gameOver
+                ? <GameOver resetGame={resetGame}/>
+                : grid
+            }
+        </div>
     );
 }
 

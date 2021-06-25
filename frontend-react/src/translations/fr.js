@@ -303,5 +303,10 @@ export default {
             submit: 'Réinitialiser',
             error: 'Le lien n\'est pas valide ou expiré.'
         }
+    },
+
+    snake: {
+        gameOver: 'Perdu !',
+        newGame: 'Nouvelle partie'
     }
 };
