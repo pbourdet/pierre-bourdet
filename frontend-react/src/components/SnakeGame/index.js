@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import GridLine from './GridLine';
-import GameOver from "./GameOver";
+import GameOver from './GameOver';
+import SpeedSelector from './SpeedSelector';
 
 function SnakeGame () {
-    const [tickRate] = useState(200);
+    const [speed, setSpeed] = useState(localStorage.getItem('snake-speed') || 10);
+    const [tickRate, setTickRate] = useState(1000 / speed);
     const [gridSize] = useState({ rows: 10, cols: 20 });
     const [gameOver, setGameOver] = useState(false);
     const initialSnake = {
@@ -24,12 +26,12 @@ function SnakeGame () {
     const [snake, setSnake] = useState(initialSnake);
 
     const getRandomEmptyCell = useCallback(() => {
-        let row = Math.floor(Math.random() * gridSize.rows)
-        let col = Math.floor(Math.random() * gridSize.cols)
+        let row = Math.floor(Math.random() * gridSize.rows);
+        let col = Math.floor(Math.random() * gridSize.cols);
 
         while (isFoodOnSnake(row, col)) {
-            row = Math.floor(Math.random() * gridSize.rows)
-            col = Math.floor(Math.random() * gridSize.cols)
+            row = Math.floor(Math.random() * gridSize.rows);
+            col = Math.floor(Math.random() * gridSize.cols);
         }
 
         return { row: row, col: col };
@@ -47,7 +49,7 @@ function SnakeGame () {
         }
 
         return false;
-    }
+    };
     const [foodCell, setFoodCell] = useState(getRandomEmptyCell());
 
     const [direction, setDirection] = useState('right');
@@ -145,15 +147,20 @@ function SnakeGame () {
         }
 
         return false;
-    }
+    };
 
-    const resetGame = () => {
+    const resetGame = (newSpeed = null) => {
         setSnake(initialSnake);
-        setFoodCell(getRandomEmptyCell())
-        setDirection('right')
-        setDirectionChanged(false)
-        setGameOver(false)
-    }
+        setFoodCell(getRandomEmptyCell());
+        setDirection('right');
+        setDirectionChanged(false);
+        setGameOver(false);
+
+        if (newSpeed !== null) {
+            setSpeed(newSpeed);
+            setTickRate(1000 / newSpeed);
+        }
+    };
 
     const grid = [];
     for (let row = 0; row < gridSize.rows; row++) {
@@ -187,11 +194,16 @@ function SnakeGame () {
     }
 
     return (
-        <div style={{width: gridSize.cols * 35, height: gridSize.rows * 35, outline: `1px solid #ddd`}} className="m-auto">
-            {gameOver
-                ? <GameOver resetGame={resetGame}/>
-                : grid
-            }
+        <div className="mt-3">
+            <div className="mb-3">
+                <SpeedSelector currentSpeed={speed} resetGame={resetGame}/>
+            </div>
+            <div style={{ width: gridSize.cols * 35, height: gridSize.rows * 35, outline: '1px solid #ddd' }} className="mt-3 m-auto">
+                {gameOver
+                    ? <GameOver resetGame={resetGame}/>
+                    : grid
+                }
+            </div>
         </div>
     );
 }

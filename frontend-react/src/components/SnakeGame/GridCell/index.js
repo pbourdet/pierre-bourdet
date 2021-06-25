@@ -14,7 +14,7 @@ function GridCell ({ coordinates, snake, isFood }) {
     });
 
     return (
-        <div style={{ width: 35, height: 35 }} className="border">
+        <div style={{ cursor: 'none', width: 35, height: 35 }} className="border">
             {isFood && <FontAwesomeIcon className="mt-2" icon={faAppleAlt}/>}
             {isHead && <FontAwesomeIcon className="mt-2" icon={faHorseHead}/>}
             {isTail && <FontAwesomeIcon className="mt-2" icon={faCircle}/>}

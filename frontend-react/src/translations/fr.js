@@ -307,6 +307,7 @@ export default {
 
     snake: {
         gameOver: 'Perdu !',
-        newGame: 'Nouvelle partie'
+        newGame: 'Nouvelle partie',
+        speed: 'Vitesse'
     }
 };

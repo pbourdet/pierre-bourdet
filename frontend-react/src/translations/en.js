@@ -302,6 +302,7 @@ export default {
 
     snake: {
         gameOver: 'Game over !',
-        newGame: 'New game'
+        newGame: 'New game',
+        speed: 'Speed'
     }
 };
