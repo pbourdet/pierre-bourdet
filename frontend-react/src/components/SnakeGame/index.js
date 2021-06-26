@@ -5,6 +5,7 @@ import SpeedSelector from './SpeedSelector';
 
 function SnakeGame () {
     const [speed, setSpeed] = useState(localStorage.getItem('snake-speed') || 10);
+    const [score, setScore] = useState(0);
     const [tickRate, setTickRate] = useState(1000 / speed);
     const [gridSize] = useState({ rows: 10, cols: 20 });
     const [gameOver, setGameOver] = useState(false);
@@ -131,6 +132,7 @@ function SnakeGame () {
 
         if (newSnake.head.row === foodCell.row && newSnake.head.col === foodCell.col) {
             setFoodCell(getRandomEmptyCell());
+            setScore(score => parseInt(score) + parseInt(speed));
         } else {
             newSnake.tails.pop();
         }
@@ -155,6 +157,7 @@ function SnakeGame () {
         setDirection('right');
         setDirectionChanged(false);
         setGameOver(false);
+        setScore(0);
 
         if (newSpeed !== null) {
             setSpeed(newSpeed);
@@ -195,12 +198,13 @@ function SnakeGame () {
 
     return (
         <div className="mt-3">
-            <div className="mb-3">
+            <div className="mb-3 d-flex justify-content-around">
                 <SpeedSelector currentSpeed={speed} resetGame={resetGame}/>
+                <div className="d-table"><div className="d-table-cell align-middle"><span className="font-weight-bold">Score</span> : {score}</div></div>
             </div>
             <div style={{ width: gridSize.cols * 35, height: gridSize.rows * 35, outline: '1px solid #ddd' }} className="mt-3 m-auto">
                 {gameOver
-                    ? <GameOver resetGame={resetGame}/>
+                    ? <GameOver score={score} resetGame={resetGame}/>
                     : grid
                 }
             </div>
