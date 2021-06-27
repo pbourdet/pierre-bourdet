@@ -120,6 +120,7 @@ export default {
     },
 
     profile: {
+        title: 'My profile',
         settings: 'Account\'s setttings',
         user: {
             delete: {

@@ -5,6 +5,7 @@ import UpdatePasswordModal from '../../components/UpdatePasswordModal';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import DeleteUserButton from '../../components/DeleteUserButton';
+import { Helmet } from 'react-helmet';
 
 function Profile () {
     const auth = useAuth();
@@ -17,6 +18,9 @@ function Profile () {
 
     return (
         <Container>
+            <FormattedMessage id="profile.title">
+                {title => <Helmet><title>{title}</title></Helmet>}
+            </FormattedMessage>
             <Card className="m-2 p-3 shadow">
                 <Card.Body>
                     <Card.Title className="mb-4">
