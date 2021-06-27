@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 function GridLine ({ snake, row, gridWidth, foodCell }) {
     const cols = [];
 
-    for (let col = 0; col < gridWidth; col++) {
+    for (let col = 1; col <= gridWidth; col++) {
         cols.push(
             <GridCell
                 isFood={row === foodCell.row && col === foodCell.col}

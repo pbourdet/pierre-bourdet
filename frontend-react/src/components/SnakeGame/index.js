@@ -1,60 +1,124 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import GridLine from './GridLine';
 import GameOver from './GameOver';
 import SpeedSelector from './SpeedSelector';
+import useInterval from '../../hooks/useInterval';
 
 function SnakeGame () {
-    const [speed, setSpeed] = useState(localStorage.getItem('snake-speed') || 10);
+    const [speed, setSpeed] = useState(Number(localStorage.getItem('snake-speed')) || 5);
     const [score, setScore] = useState(0);
     const [tickRate, setTickRate] = useState(1000 / speed);
     const [gridSize] = useState({ rows: 10, cols: 20 });
     const [gameOver, setGameOver] = useState(false);
-    const initialSnake = {
+    const [direction, setDirection] = useState('right');
+    const [directionChanged, setDirectionChanged] = useState(false);
+    const [foodCell, setFoodCell] = useState({ row: 5, col: 10 });
+    const [snake, setSnake] = useState({
         head:
             {
-                row: Math.floor(gridSize.rows / 2),
-                col: Math.floor(gridSize.cols / 5)
+                row: Math.ceil(gridSize.rows / 2),
+                col: Math.ceil(gridSize.cols / 5)
             },
-        tails: [{
-            row: Math.floor(gridSize.rows / 2),
-            col: Math.floor(gridSize.cols / 5) - 1
-        },
-        {
-            row: Math.floor(gridSize.rows / 2),
-            col: Math.floor(gridSize.cols / 5) - 2
-        }]
-    };
-    const [snake, setSnake] = useState(initialSnake);
+        tails: [
+            {
+                row: Math.ceil(gridSize.rows / 2),
+                col: Math.ceil(gridSize.cols / 5) - 1
+            }
+        ]
+    });
 
-    const getRandomEmptyCell = useCallback(() => {
-        let row = Math.floor(Math.random() * gridSize.rows);
-        let col = Math.floor(Math.random() * gridSize.cols);
+    function getRandomEmptyCell (newSnake) {
+        let row = Math.ceil(Math.random() * gridSize.rows);
+        let col = Math.ceil(Math.random() * gridSize.cols);
 
-        while (isFoodOnSnake(row, col)) {
-            row = Math.floor(Math.random() * gridSize.rows);
-            col = Math.floor(Math.random() * gridSize.cols);
+        while (isFoodOnSnake(newSnake, row, col)) {
+            row = Math.ceil(Math.random() * gridSize.rows);
+            col = Math.ceil(Math.random() * gridSize.cols);
         }
 
         return { row: row, col: col };
-    }, [gridSize]);
+    }
 
-    const isFoodOnSnake = (foodRow, foodCol) => {
-        if (snake.head.row === foodRow && snake.head.col === foodCol) {
+    function isFoodOnSnake (newSnake, foodRow, foodCol) {
+        if (newSnake.head.row === foodRow && newSnake.head.col === foodCol) {
             return true;
         }
 
-        for (let tail = 0; tail < snake.tails.length; tail++) {
-            if (snake.tails[tail].row === foodRow && snake.tails[tail].col === foodCol) {
+        for (let tail = 0; tail < newSnake.tails.length; tail++) {
+            if (newSnake.tails[tail].row === foodRow && newSnake.tails[tail].col === foodCol) {
                 return true;
             }
         }
 
         return false;
-    };
-    const [foodCell, setFoodCell] = useState(getRandomEmptyCell());
+    }
 
-    const [direction, setDirection] = useState('right');
-    const [directionChanged, setDirectionChanged] = useState(false);
+    function moveSnake () {
+        const newSnake = { ...snake };
+        let previousPart = newSnake.head;
+        newSnake.head = moveHead();
+
+        for (let tail = 0; tail < newSnake.tails.length; tail++) {
+            const tempPart = newSnake.tails[tail];
+            newSnake.tails[tail] = previousPart;
+            previousPart = tempPart;
+        }
+
+        return newSnake;
+    }
+
+    function moveHead () {
+        switch (direction) {
+        case 'left':
+            return moveHeadLeft();
+        case 'right':
+            return moveHeadRight();
+        case 'up':
+            return moveHeadUp();
+        case 'down':
+            return moveHeadDown();
+        default:
+            break;
+        }
+    }
+
+    function moveHeadLeft () {
+        return {
+            row: snake.head.row,
+            col: snake.head.col === 1 ? gridSize.cols : snake.head.col - 1
+        };
+    }
+
+    function moveHeadRight () {
+        return {
+            row: snake.head.row,
+            col: snake.head.col === gridSize.cols ? 1 : snake.head.col + 1
+        };
+    }
+
+    function moveHeadDown () {
+        return {
+            row: snake.head.row === gridSize.rows ? 1 : snake.head.row + 1,
+            col: snake.head.col
+        };
+    }
+
+    function moveHeadUp () {
+        return {
+            row: snake.head.row === 1 ? gridSize.rows : snake.head.row - 1,
+            col: snake.head.col
+        };
+    }
+
+    function eatApple (newSnake) {
+        if (newSnake.head.row !== foodCell.row || newSnake.head.col !== foodCell.col) return newSnake;
+
+        setFoodCell(getRandomEmptyCell(newSnake));
+        setScore(score => score + speed);
+        newSnake.tails.push({ row: newSnake.tails[0].row, col: newSnake.tails[0].col });
+
+        return newSnake;
+    }
 
     const handleKeyPress = (event) => {
         const verticalDirections = ['up', 'down'];
@@ -99,51 +163,19 @@ function SnakeGame () {
             return;
         }
 
-        const newSnake = { ...snake };
-        newSnake.tails.unshift({
-            row: snake.head.row,
-            col: snake.head.col
-        });
+        let newSnake = moveSnake();
 
-        switch (direction) {
-        case 'left':
-            newSnake.head.col--;
-            break;
+        if (hasSnakeHitItself(newSnake)) setGameOver(true);
 
-        case 'right':
-            newSnake.head.col++;
-            break;
-
-        case 'up':
-            newSnake.head.row--;
-            break;
-
-        case 'down':
-            newSnake.head.row++;
-            break;
-
-        default:
-            break;
-        }
-
-        if (hasSnakeHitItself() === true) {
-            setGameOver(true);
-        }
-
-        if (newSnake.head.row === foodCell.row && newSnake.head.col === foodCell.col) {
-            setFoodCell(getRandomEmptyCell());
-            setScore(score => parseInt(score) + parseInt(speed));
-        } else {
-            newSnake.tails.pop();
-        }
+        newSnake = eatApple(newSnake);
 
         setSnake(newSnake);
         setDirectionChanged(false);
     };
 
-    const hasSnakeHitItself = () => {
-        for (let tail = 0; tail < snake.tails.length; tail++) {
-            if (snake.head.row === snake.tails[tail].row && snake.head.col === snake.tails[tail].col) {
+    const hasSnakeHitItself = (newSnake) => {
+        for (let tail = 0; tail < newSnake.tails.length; tail++) {
+            if (newSnake.head.row === newSnake.tails[tail].row && newSnake.head.col === newSnake.tails[tail].col) {
                 return true;
             }
         }
@@ -151,9 +183,21 @@ function SnakeGame () {
         return false;
     };
 
-    const resetGame = (newSpeed = null) => {
-        setSnake(initialSnake);
-        setFoodCell(getRandomEmptyCell());
+    const initGame = useCallback((newSpeed = null) => {
+        setSnake({
+            head:
+                {
+                    row: Math.ceil(gridSize.rows / 2),
+                    col: Math.ceil(gridSize.cols / 5)
+                },
+            tails: [
+                {
+                    row: Math.ceil(gridSize.rows / 2),
+                    col: Math.ceil(gridSize.cols / 5) - 1
+                }
+            ]
+        });
+        setFoodCell({ row: 5, col: 10 });
         setDirection('right');
         setDirectionChanged(false);
         setGameOver(false);
@@ -163,12 +207,7 @@ function SnakeGame () {
             setSpeed(newSpeed);
             setTickRate(1000 / newSpeed);
         }
-    };
-
-    const grid = [];
-    for (let row = 0; row < gridSize.rows; row++) {
-        grid.push(<GridLine snake={snake} foodCell={foodCell} key={row} row={row} gridWidth={gridSize.cols}/>);
-    }
+    }, [gridSize]);
 
     useEffect(() => {
         document.addEventListener('keydown', handleKeyPress);
@@ -176,35 +215,30 @@ function SnakeGame () {
         return () => document.removeEventListener('keydown', handleKeyPress);
     });
 
+    useEffect(() => {
+        function initialize () {
+            initGame();
+        }
+
+        initialize();
+    }, [initGame]);
+
     useInterval(gameTick, tickRate);
 
-    function useInterval (callback, delay) {
-        const savedCallback = useRef();
-
-        useEffect(() => {
-            savedCallback.current = callback;
-        }, [callback]);
-
-        useEffect(() => {
-            function tick () {
-                savedCallback.current();
-            }
-            if (delay !== null) {
-                const id = setInterval(tick, delay);
-                return () => clearInterval(id);
-            }
-        }, [delay]);
+    const grid = [];
+    for (let row = 1; row <= gridSize.rows; row++) {
+        grid.push(<GridLine snake={snake} foodCell={foodCell} key={row} row={row} gridWidth={gridSize.cols}/>);
     }
 
     return (
         <div className="mt-3">
             <div className="mb-3 d-flex justify-content-around">
-                <SpeedSelector currentSpeed={speed} resetGame={resetGame}/>
+                <SpeedSelector currentSpeed={speed} initGame={initGame}/>
                 <div className="d-table"><div className="d-table-cell align-middle"><span className="font-weight-bold">Score</span> : {score}</div></div>
             </div>
             <div style={{ width: gridSize.cols * 35, height: gridSize.rows * 35, outline: '1px solid #ddd' }} className="mt-3 m-auto">
                 {gameOver
-                    ? <GameOver score={score} resetGame={resetGame}/>
+                    ? <GameOver score={score} initGame={initGame}/>
                     : grid
                 }
             </div>

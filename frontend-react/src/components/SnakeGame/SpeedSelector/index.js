@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Dropdown } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 
-function SpeedSelector ({ currentSpeed, resetGame }) {
-    const speeds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+function SpeedSelector ({ currentSpeed, initGame }) {
+    const speeds = Array.from({ length: 10 }, (_, index) => index + 1);
 
     const handleChange = (e, speed) => {
         e.currentTarget.blur();
         localStorage.setItem('snake-speed', speed);
-        resetGame(speed);
+        initGame(speed);
     };
 
     return (
@@ -29,7 +29,7 @@ function SpeedSelector ({ currentSpeed, resetGame }) {
 }
 
 SpeedSelector.propTypes = {
-    resetGame: PropTypes.func,
+    initGame: PropTypes.func,
     currentSpeed: PropTypes.number
 };
 

@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDizzy } from '@fortawesome/free-regular-svg-icons';
 
-function GameOver ({ resetGame, score }) {
+function GameOver ({ initGame, score }) {
     return (
         <div className="h-100 d-flex justify-content-around flex-column">
             <h2>
@@ -16,14 +16,14 @@ function GameOver ({ resetGame, score }) {
                 Score : {score}
             </h3>
             <div>
-                <Button onClick={() => resetGame()}><FormattedMessage id="snake.newGame"/></Button>
+                <Button onClick={() => initGame()}><FormattedMessage id="snake.newGame"/></Button>
             </div>
         </div>
     );
 }
 
 GameOver.propTypes = {
-    resetGame: PropTypes.func,
+    initGame: PropTypes.func,
     score: PropTypes.number
 };
 
