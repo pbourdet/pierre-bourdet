@@ -17,12 +17,14 @@ function SnakeGame () {
         head:
             {
                 row: Math.ceil(gridSize.rows / 2),
-                col: Math.ceil(gridSize.cols / 5)
+                col: Math.ceil(gridSize.cols / 5),
+                direction: 'right'
             },
         tails: [
             {
                 row: Math.ceil(gridSize.rows / 2),
-                col: Math.ceil(gridSize.cols / 5) - 1
+                col: Math.ceil(gridSize.cols / 5) - 1,
+                direction: 'right'
             }
         ]
     });
@@ -85,28 +87,32 @@ function SnakeGame () {
     function moveHeadLeft () {
         return {
             row: snake.head.row,
-            col: snake.head.col === 1 ? gridSize.cols : snake.head.col - 1
+            col: snake.head.col === 1 ? gridSize.cols : snake.head.col - 1,
+            direction: 'left'
         };
     }
 
     function moveHeadRight () {
         return {
             row: snake.head.row,
-            col: snake.head.col === gridSize.cols ? 1 : snake.head.col + 1
+            col: snake.head.col === gridSize.cols ? 1 : snake.head.col + 1,
+            direction: 'right'
         };
     }
 
     function moveHeadDown () {
         return {
             row: snake.head.row === gridSize.rows ? 1 : snake.head.row + 1,
-            col: snake.head.col
+            col: snake.head.col,
+            direction: 'down'
         };
     }
 
     function moveHeadUp () {
         return {
             row: snake.head.row === 1 ? gridSize.rows : snake.head.row - 1,
-            col: snake.head.col
+            col: snake.head.col,
+            direction: 'up'
         };
     }
 
@@ -115,7 +121,7 @@ function SnakeGame () {
 
         setFoodCell(getRandomEmptyCell(newSnake));
         setScore(score => score + speed);
-        newSnake.tails.push({ row: newSnake.tails[0].row, col: newSnake.tails[0].col });
+        newSnake.tails.push({ row: newSnake.tails[0].row, col: newSnake.tails[0].col, direction: direction });
 
         return newSnake;
     }
@@ -188,12 +194,14 @@ function SnakeGame () {
             head:
                 {
                     row: Math.ceil(gridSize.rows / 2),
-                    col: Math.ceil(gridSize.cols / 5)
+                    col: Math.ceil(gridSize.cols / 5),
+                    direction: 'right'
                 },
             tails: [
                 {
                     row: Math.ceil(gridSize.rows / 2),
-                    col: Math.ceil(gridSize.cols / 5) - 1
+                    col: Math.ceil(gridSize.cols / 5) - 1,
+                    direction: 'right'
                 }
             ]
         });
