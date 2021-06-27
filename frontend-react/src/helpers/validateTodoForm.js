@@ -16,7 +16,7 @@ export default function validateTodoForm (todo) {
         errors.time = <FormattedMessage id='todoForm.error.time.missing'/>;
     }
 
-    if (todo.id === undefined) {
+    if (todo.id === undefined && todo.date) {
         if (new Date(todo.date).getTime() < new Date().getTime()) {
             errors.date = <FormattedMessage id='todoForm.error.date.soon'/>;
         }
