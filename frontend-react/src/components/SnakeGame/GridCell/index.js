@@ -32,6 +32,8 @@ function GridCell ({ coordinates, snake, isFood }) {
             return <FontAwesomeIcon className="mt-2" icon={faChevronCircleUp}/>;
         case 'down':
             return <FontAwesomeIcon className="mt-2" icon={faChevronCircleDown}/>;
+        default:
+            break;
         }
     };
 

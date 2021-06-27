@@ -304,6 +304,7 @@ export default {
         gameOver: 'Game over !',
         newGame: 'New game',
         speed: 'Speed',
-        spacebar: 'Or press the spacebar'
+        spacebar: 'Or press the spacebar',
+        mobile: 'This game is not available on mobile.'
     }
 };

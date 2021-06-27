@@ -309,6 +309,7 @@ export default {
         gameOver: 'Perdu !',
         newGame: 'Nouvelle partie',
         speed: 'Vitesse',
-        spacebar: 'Ou appuyez sur la barre espace'
+        spacebar: 'Ou appuyez sur la barre espace',
+        mobile: 'Ce jeu n\'est pas disponible sur téléphone.'
     }
 };
