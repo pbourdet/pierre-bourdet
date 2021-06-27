@@ -15,6 +15,7 @@ function App () {
     const Profile = React.lazy(() => import('./Profile/index'));
     const Todos = React.lazy(() => import('./Todos/index'));
     const ResetPassword = React.lazy(() => import('./ResetPassword/index'));
+    const Snake = React.lazy(() => import('./Snake/index'));
 
     return (
         <LocaleProvider>
@@ -34,6 +35,7 @@ function App () {
                                 <Route path="/resume" component={Resume}/>
                                 <Route path="/me" component={Profile}/>
                                 <Route path="/todo" component={Todos}/>
+                                <Route path="/snake" component={Snake}/>
                                 <Route path="/reset-password/:token" component={ResetPassword}/>
                             </Switch>
                         </Suspense>

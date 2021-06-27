@@ -45,6 +45,11 @@ function NavigationBar () {
                                         </Nav.Link>
                                     </Link>
                                 </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/snake">
+                                    <Nav.Link as="span">
+                                        Snake
+                                    </Nav.Link>
+                                </NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                         {auth

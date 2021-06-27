@@ -303,5 +303,13 @@ export default {
             submit: 'Réinitialiser',
             error: 'Le lien n\'est pas valide ou expiré.'
         }
+    },
+
+    snake: {
+        gameOver: 'Perdu !',
+        newGame: 'Nouvelle partie',
+        speed: 'Vitesse',
+        spacebar: 'Ou appuyez sur la barre espace',
+        mobile: 'Ce jeu n\'est pas disponible sur téléphone.'
     }
 };

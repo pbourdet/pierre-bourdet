@@ -298,5 +298,13 @@ export default {
             submit: 'Reset',
             error: 'The link is invalid or expired.'
         }
+    },
+
+    snake: {
+        gameOver: 'Game over !',
+        newGame: 'New game',
+        speed: 'Speed',
+        spacebar: 'Or press the spacebar',
+        mobile: 'This game is not available on mobile.'
     }
 };
