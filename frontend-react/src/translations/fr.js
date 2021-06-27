@@ -125,6 +125,7 @@ export default {
     },
 
     profile: {
+        title: 'Mon profil',
         settings: 'Paramètres du compte',
         user: {
             delete: {
