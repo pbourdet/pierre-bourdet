@@ -16,7 +16,8 @@ function GameOver ({ initGame, score }) {
                 Score : {score}
             </h3>
             <div>
-                <Button onClick={() => initGame()}><FormattedMessage id="snake.newGame"/></Button>
+                <div><Button onClick={() => initGame()}><FormattedMessage id="snake.newGame"/></Button></div>
+                <div className="small"><FormattedMessage id="snake.spacebar"/></div>
             </div>
         </div>
     );

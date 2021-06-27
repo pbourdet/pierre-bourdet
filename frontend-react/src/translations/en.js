@@ -303,6 +303,7 @@ export default {
     snake: {
         gameOver: 'Game over !',
         newGame: 'New game',
-        speed: 'Speed'
+        speed: 'Speed',
+        spacebar: 'Or press the spacebar'
     }
 };

@@ -37,9 +37,11 @@ function GridCell ({ coordinates, snake, isFood }) {
 
     return (
         <div style={{ cursor: 'none', width: 35, height: 35 }}>
-            {isFood && <FontAwesomeIcon className="mt-2" icon={faAppleAlt}/>}
-            {isHead && <h5><FontAwesomeIcon className="mt-2" icon={faCircle}/></h5>}
-            {isTail && resolveTailIcon()}
+            <h5>
+                {isFood && <FontAwesomeIcon className="mt-2" icon={faAppleAlt}/>}
+                {isHead && <FontAwesomeIcon className="mt-2" icon={faCircle}/>}
+                {isTail && resolveTailIcon()}
+            </h5>
         </div>
     );
 }

@@ -308,6 +308,7 @@ export default {
     snake: {
         gameOver: 'Perdu !',
         newGame: 'Nouvelle partie',
-        speed: 'Vitesse'
+        speed: 'Vitesse',
+        spacebar: 'Ou appuyez sur la barre espace'
     }
 };

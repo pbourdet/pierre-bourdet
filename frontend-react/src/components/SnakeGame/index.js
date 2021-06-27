@@ -127,12 +127,20 @@ function SnakeGame () {
     }
 
     const handleKeyPress = (event) => {
+        const { keyCode } = event;
+
+        if (gameOver && keyCode === 32) {
+            initGame();
+
+            return;
+        }
+
         const verticalDirections = ['up', 'down'];
         const horizontalDirections = ['left', 'right'];
 
         if (directionChanged === true) return;
 
-        switch (event.keyCode) {
+        switch (keyCode) {
         case 37:
             if (!horizontalDirections.includes(direction)) {
                 setDirection('left');
