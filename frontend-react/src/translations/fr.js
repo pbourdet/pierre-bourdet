@@ -311,6 +311,13 @@ export default {
         newGame: 'Nouvelle partie',
         speed: 'Vitesse',
         spacebar: 'Ou appuyez sur la barre espace',
-        mobile: 'Ce jeu n\'est pas disponible sur téléphone.'
+        mobile: 'Ce jeu n\'est pas disponible sur téléphone.',
+        hof: {
+            highestScores: 'Meilleurs scores',
+            userScores: 'Vos meilleurs scores',
+            player: 'Joueur',
+            loggedOut: 'Connectez-vous pour enregistrer et consulter vos meilleures parties !',
+            noGames: 'Vous n\'avez pas de partie enregistrée.'
+        }
     }
 };

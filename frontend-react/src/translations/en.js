@@ -306,6 +306,13 @@ export default {
         newGame: 'New game',
         speed: 'Speed',
         spacebar: 'Or press the spacebar',
-        mobile: 'This game is not available on mobile.'
+        mobile: 'This game is not available on mobile.',
+        hof: {
+            highestScores: 'Highest scores',
+            userScores: 'Your best scores',
+            player: 'Player',
+            loggedOut: 'Sign in to save and view your best games !',
+            noGames: 'You have no saved games.'
+        }
     }
 };
