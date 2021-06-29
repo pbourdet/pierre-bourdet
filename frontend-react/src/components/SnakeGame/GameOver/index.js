@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDizzy } from '@fortawesome/free-regular-svg-icons';
+import SaveGameButton from '../SaveGameButton';
 
 function GameOver ({ initGame, score }) {
     return (
@@ -16,7 +17,12 @@ function GameOver ({ initGame, score }) {
                 Score : {score}
             </h3>
             <div>
-                <div><Button onClick={() => initGame()}><FormattedMessage id="snake.newGame"/></Button></div>
+                <SaveGameButton score={score}/>
+            </div>
+            <div>
+                <div>
+                    <Button onClick={() => initGame()}><FormattedMessage id="snake.newGame"/></Button>
+                </div>
                 <div className="small"><FormattedMessage id="snake.spacebar"/></div>
             </div>
         </div>
