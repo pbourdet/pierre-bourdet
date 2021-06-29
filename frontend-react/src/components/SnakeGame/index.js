@@ -239,12 +239,13 @@ function SnakeGame () {
         initialize();
     }, [initGame]);
 
-    useInterval(gameTick, tickRate);
-
     const grid = [];
     for (let row = 1; row <= gridSize.rows; row++) {
         grid.push(<GridLine snake={snake} foodCell={foodCell} key={row} row={row} gridWidth={gridSize.cols}/>);
     }
+
+    const delay = gameOver ? null : tickRate;
+    useInterval(gameTick, delay);
 
     return (
         <div className="mt-3">
