@@ -34,6 +34,10 @@ export default {
         reset: {
             email: 'An email was sent to : {email}',
             success: 'Your password has been resetted !'
+        },
+        snake: {
+            save: 'Your game has been saved ! Score : {score}',
+            error: 'An error occurred while saving your game :(.'
         }
     },
 
@@ -307,6 +311,11 @@ export default {
         speed: 'Speed',
         spacebar: 'Or press the spacebar',
         mobile: 'This game is not available on mobile.',
+        save: {
+            button: 'Save game',
+            loggedOut: 'You must be logged in to save your game.',
+            saved: 'Your game is saved already :).'
+        },
         hof: {
             highestScores: 'Highest scores',
             userScores: 'Your best scores',

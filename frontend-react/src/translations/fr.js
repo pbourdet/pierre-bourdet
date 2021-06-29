@@ -38,6 +38,10 @@ export default {
         reset: {
             email: 'Un mail a été envoyé à : {email}',
             success: 'Votre mot de passe a été réinitialisé !'
+        },
+        snake: {
+            save: 'Votre partie a été enregistrée ! Score : {score}',
+            error: 'Une erreur est survenue lors de la sauvegarde de votre partie :(.'
         }
     },
 
@@ -312,6 +316,11 @@ export default {
         speed: 'Vitesse',
         spacebar: 'Ou appuyez sur la barre espace',
         mobile: 'Ce jeu n\'est pas disponible sur téléphone.',
+        save: {
+            button: 'Enregistrer la partie',
+            loggedOut: 'Vous devez être connecté pour sauvegarder votre partie.',
+            saved: 'Votre partie est déjà enregistrée :).'
+        },
         hof: {
             highestScores: 'Meilleurs scores',
             userScores: 'Vos meilleurs scores',
