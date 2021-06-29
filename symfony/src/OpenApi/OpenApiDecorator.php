@@ -34,6 +34,10 @@ final class OpenApiDecorator implements OpenApiFactoryInterface
                 $pathItem = $pathItem->withGet(null);
             }
 
+            if ('/games/snake/{id}' === $path) {
+                $pathItem = $pathItem->withGet(null);
+            }
+
             if (in_array($path, [
                 UpdatePasswordController::PATH,
                 ResetPasswordController::PATH,

@@ -46,6 +46,7 @@ class RefreshTokenDecorator implements OpenApiFactoryInterface
                         'application/json' => [],
                     ]),
                 ),
+                security: [],
             ),
         );
 

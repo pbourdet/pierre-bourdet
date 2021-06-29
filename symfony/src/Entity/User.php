@@ -107,7 +107,7 @@ class User implements UserInterface
 
     #[
         ORM\Column(type: 'string', length: 255),
-        Serializer\Groups(groups: ['get_me', 'get_user'])
+        Serializer\Groups(groups: ['get_me', 'get_user', Game::READ_COLLECTION_TOP_GROUP])
     ]
     private string $nickname = '';
 
@@ -120,10 +120,14 @@ class User implements UserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private string $language = '';
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Game::class, orphanRemoval: true)]
+    private Collection $games;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->todos = new ArrayCollection();
+        $this->games = new ArrayCollection();
     }
 
     public function getId(): int
@@ -314,6 +318,30 @@ class User implements UserInterface
     public function setLanguage(string $language): self
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    public function getGames(): Collection
+    {
+        return $this->games;
+    }
+
+    public function addGame(Game $game): self
+    {
+        if (!$this->games->contains($game)) {
+            $this->games[] = $game;
+            $game->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Game $game): self
+    {
+        if ($this->games->contains($game)) {
+            $this->games->removeElement($game);
+        }
 
         return $this;
     }
