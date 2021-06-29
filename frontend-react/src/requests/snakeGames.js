@@ -11,3 +11,9 @@ export async function getUserSnakeGames () {
         .then(response => response.data)
         .catch(() => null);
 }
+
+export async function saveSnakeGame (score) {
+    return await axios.post('/games/snake', JSON.stringify({ score: score }))
+        .then(() => true)
+        .catch(() => false);
+}
