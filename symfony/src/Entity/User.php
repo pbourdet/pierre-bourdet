@@ -107,7 +107,7 @@ class User implements UserInterface
 
     #[
         ORM\Column(type: 'string', length: 255),
-        Serializer\Groups(groups: ['get_me', 'get_user'])
+        Serializer\Groups(groups: ['get_me', 'get_user', Game::READ_COLLECTION_TOP_GROUP])
     ]
     private string $nickname = '';
 
