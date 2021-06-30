@@ -27,7 +27,7 @@ function HallOfFame () {
             setUserGames(userGames);
             setUserGamesLoading(false);
         })();
-    }, [auth]);
+    }, [auth, updateAuth]);
 
     useEffect(() => {
         (async () => {

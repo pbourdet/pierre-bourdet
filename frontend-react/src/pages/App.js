@@ -29,7 +29,7 @@ function App () {
                             pauseOnFocusLoss={false}
                             pauseOnHover={false}
                         />
-                        <Suspense fallback={<Spinner/>}>
+                        <Suspense fallback={<Spinner animation="border"/>}>
                             <Switch>
                                 <Route path="/" exact component={Home}/>
                                 <Route path="/resume" component={Resume}/>
