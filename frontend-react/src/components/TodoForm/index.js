@@ -33,26 +33,34 @@ function TodoForm ({ todos, setTodos, setOpen, setTodoEdited, todo, isFirstTodo,
         e.preventDefault();
         setLoading(true);
 
-        if (isEdit) {
-            const newTodos = await editTodo(currentTodo, todos, auth, updateAuth);
-            setTodos(newTodos);
-            setLoading(false);
-            setTodoEdited(0);
-            clearAll();
-            toast.success(<FormattedMessage id='toast.todo.edit' values={{ name: currentTodo.name }}/>);
+        const newTodos = isEdit
+            ? await editTodo(currentTodo, todos, auth, updateAuth)
+            : await createTodo(currentTodo, todos, auth, updateAuth);
+        setLoading(false);
+
+        if (newTodos === todos) {
+            toast.error(<FormattedMessage id='toast.error'/>);
 
             return;
         }
 
-        const newTodos = await createTodo(currentTodo, todos, auth, updateAuth);
-
         setTodos(newTodos);
 
+        isEdit ? handleEdit(newTodos) : handleCreate(newTodos);
+    };
+
+    const handleEdit = () => {
+        setTodoEdited(0);
+        clearAll();
+        toast.success(<FormattedMessage id='toast.todo.edit' values={{ name: currentTodo.name }}/>);
+    };
+
+    const handleCreate = () => {
+        setOpen(false);
+        toast.success(<FormattedMessage id='toast.todo.add' values={{ name: currentTodo.name }}/>);
+
         if (!isFirstTodo) {
-            setLoading(false);
-            setOpen(false);
             clearAll();
-            toast.success(<FormattedMessage id='toast.todo.add' values={{ name: currentTodo.name }}/>);
         }
     };
 
