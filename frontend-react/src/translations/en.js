@@ -15,6 +15,7 @@ export default {
     },
 
     toast: {
+        error: 'An error occurred during processing :(. Try again later.',
         user: {
             signup: 'Welcome {name} !',
             signin: 'Hello {name} !',

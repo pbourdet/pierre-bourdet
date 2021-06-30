@@ -46,7 +46,7 @@ function TodoTable ({ todos, setTodos }) {
                                     <Button onClick={() => setTodoEdited(todoEdited === todo.id ? 0 : todo.id)} className="rounded-circle mr-2" size="sm">
                                         <FontAwesomeIcon icon={todoEdited === todo.id ? faTimes : faPen}/>
                                     </Button>
-                                    <DeleteButton todo={todo}/>
+                                    <DeleteButton todos={todos} setTodos={setTodos} todo={todo}/>
                                 </div>
                             </Col>
                         </Row>

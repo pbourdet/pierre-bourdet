@@ -23,8 +23,30 @@ export async function getTodos (auth, updateAuth) {
     });
 }
 
+export async function deleteTodos (todo, todos, auth, updateAuth) {
+    const newTodos = todos.filter((td) => td.id !== todo.id);
+
+    if (auth === null) {
+        return updateLocalTodos(newTodos);
+    }
+
+    await refreshToken(auth, updateAuth);
+
+    const isDeleted = await axios.delete('/todos/' + todo.id)
+        .then(() => true)
+        .catch(() => false);
+
+    return isDeleted ? newTodos : todos;
+}
+
 function fixDateOffset (date, addHours = true) {
     return addHours === true
         ? addMinutes(date, new Date().getTimezoneOffset()).getTime()
         : subMinutes(date, new Date().getTimezoneOffset()).getTime();
+}
+
+function updateLocalTodos (todos) {
+    localStorage.setItem('todos', JSON.stringify(todos));
+
+    return todos;
 }
