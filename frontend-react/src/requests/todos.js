@@ -39,6 +39,35 @@ export async function deleteTodos (todo, todos, auth, updateAuth) {
     return isDeleted ? newTodos : todos;
 }
 
+export async function editTodo (editedTodo, todos, auth, updateAuth) {
+    const newTodos = todos.map(todo =>
+        todo.id === editedTodo.id ? editedTodo : todo
+    );
+
+    if (auth === null) {
+        return updateLocalTodos(newTodos);
+    }
+
+    const date = editedTodo.date ? fixDateOffset(editedTodo.date) : null;
+    const reminder = editedTodo.reminder ? fixDateOffset(editedTodo.reminder) : null;
+
+    const payload = {
+        name: editedTodo.name,
+        description: editedTodo.description,
+        date: date,
+        reminder: reminder,
+        isDone: editedTodo.isDone
+    };
+
+    await refreshToken(auth, updateAuth);
+
+    const isEdited = await axios.put('/todos/' + editedTodo.id, JSON.stringify(payload))
+        .then(() => true)
+        .catch(() => false);
+
+    return isEdited ? newTodos : todos;
+}
+
 function fixDateOffset (date, addHours = true) {
     return addHours === true
         ? addMinutes(date, new Date().getTimezoneOffset()).getTime()

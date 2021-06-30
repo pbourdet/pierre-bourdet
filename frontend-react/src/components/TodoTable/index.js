@@ -17,7 +17,7 @@ function TodoTable ({ todos, setTodos }) {
         return (
             <div className="p-4">
                 <div className="mb-2"><FormattedMessage id="todos.noTodos"/></div>
-                <TodoForm setOpen={setOpen} todo={{}} isFirstTodo={true} isEdit={false}/>
+                <TodoForm todos={todos} setTodos={setTodos} setOpen={setOpen} todo={{}} isFirstTodo={true} isEdit={false}/>
             </div>
         );
     }
@@ -32,7 +32,7 @@ function TodoTable ({ todos, setTodos }) {
             </Row>
             <Collapse in={open}>
                 <div id="create-todo-form">
-                    <TodoForm setOpen={setOpen} todo={{}} isFirstTodo={false} isEdit={false}/>
+                    <TodoForm todos={todos} setTodos={setTodos} setOpen={setOpen} todo={{}} isFirstTodo={false} isEdit={false}/>
                 </div>
             </Collapse>
             <div className="border-top">
@@ -52,7 +52,7 @@ function TodoTable ({ todos, setTodos }) {
                         </Row>
                         <Collapse in={todo.id === todoEdited} mountOnEnter={true} unmountOnExit={true}>
                             <div id="edit-todo-form">
-                                <TodoForm setOpen={setOpen} setTodoEdited={setTodoEdited} todo={todo} isFirstTodo={false} isEdit={true}/>
+                                <TodoForm todos={todos} setTodos={setTodos} setOpen={setOpen} setTodoEdited={setTodoEdited} todo={todo} isFirstTodo={false} isEdit={true}/>
                             </div>
                         </Collapse>
                     </div>
@@ -67,10 +67,16 @@ TodoTable.propTypes = {
     todos: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.number,
-            date: PropTypes.number,
+            date: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.number
+            ]),
             name: PropTypes.string,
             description: PropTypes.string,
-            reminder: PropTypes.number
+            reminder: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.number
+            ])
         })
     ).isRequired
 };

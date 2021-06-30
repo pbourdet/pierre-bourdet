@@ -46,28 +46,6 @@ export default function TodoProvider ({ children }) {
     };
 
     async function getTodos () {
-        if (auth === null) {
-            const todos = JSON.parse(localStorage.getItem('todos')) ?? [];
-            setTodos(todos);
-
-            return;
-        }
-
-        await refreshToken(auth, updateAuth);
-
-        const response = await axios.get('/todos')
-            .then(response => response.data)
-            .then(data => data);
-
-        response.sort((td1, td2) => td1.id - td2.id);
-        const todos = response.map(function (todo) {
-            todo.date = todo.date && subMinutes(todo.date, new Date().getTimezoneOffset()).getTime();
-            todo.reminder = todo.reminder && subMinutes(todo.reminder, new Date().getTimezoneOffset()).getTime();
-
-            return todo;
-        });
-
-        setTodos(todos);
     }
 
     async function createTodo (todo) {
@@ -101,51 +79,9 @@ export default function TodoProvider ({ children }) {
     }
 
     async function deleteTodo (todo) {
-        const newTodos = todos.filter((td) => td.id !== todo.id);
-
-        if (auth === null) {
-            updateLocalTodos(newTodos);
-
-            return;
-        }
-
-        await refreshToken(auth, updateAuth);
-
-        await axios.delete('/todos/' + todo.id)
-            .then(response => response.data)
-            .then(data => data);
-
-        setTodos(newTodos);
     }
 
     async function editTodo (editedTodo) {
-        const newTodos = todos.map(todo =>
-            todo.id === editedTodo.id ? editedTodo : todo
-        );
-
-        if (auth === null) {
-            updateLocalTodos(newTodos);
-
-            return;
-        }
-
-        const date = editedTodo.date ? fixDateOffset(editedTodo.date) : null;
-        const reminder = editedTodo.reminder ? fixDateOffset(editedTodo.reminder) : null;
-
-        const payload = {
-            name: editedTodo.name,
-            description: editedTodo.description,
-            date: date,
-            reminder: reminder,
-            isDone: editedTodo.isDone
-        };
-        await refreshToken(auth, updateAuth);
-
-        await axios.put('/todos/' + editedTodo.id, JSON.stringify(payload))
-            .then(response => response.data)
-            .then(data => data);
-
-        setTodos(newTodos);
     }
 
     return (
