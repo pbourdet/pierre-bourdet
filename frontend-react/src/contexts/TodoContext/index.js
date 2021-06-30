@@ -1,9 +1,5 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from '../../config/axios';
-import { useAuth, useAuthUpdate } from '../AuthContext';
-import refreshToken from '../../requests/refreshToken';
-import { addMinutes, subMinutes } from 'date-fns';
 
 const TodoContext = React.createContext();
 const TodoGetContext = React.createContext();
@@ -32,50 +28,12 @@ export function useEditTodo () {
 }
 
 export default function TodoProvider ({ children }) {
-    const [todos, setTodos] = useState([]);
-    const auth = useAuth();
-    const updateAuth = useAuthUpdate();
-
-    const fixDateOffset = (date) => {
-        return addMinutes(date, new Date().getTimezoneOffset()).getTime();
-    };
-
-    const updateLocalTodos = (todos) => {
-        localStorage.setItem('todos', JSON.stringify(todos));
-        setTodos(todos);
-    };
+    const [todos] = useState([]);
 
     async function getTodos () {
     }
 
     async function createTodo (todo) {
-        if (auth === null) {
-            todo.id = Math.floor(Math.random() * Math.pow(10, 7));
-            updateLocalTodos([...todos, todo]);
-
-            return;
-        }
-
-        const date = todo.date ? fixDateOffset(todo.date) : null;
-        const reminder = todo.reminder ? fixDateOffset(todo.reminder) : null;
-
-        const payload = {
-            name: todo.name,
-            description: todo.description,
-            date: date,
-            reminder: reminder,
-            isDone: todo.isDone
-        };
-
-        await refreshToken(auth, updateAuth);
-
-        const response = await axios.post('/todos', JSON.stringify(payload))
-            .then(response => response.data)
-            .then(data => data);
-
-        todo.id = response.id;
-
-        setTodos([...todos, todo]);
     }
 
     async function deleteTodo (todo) {

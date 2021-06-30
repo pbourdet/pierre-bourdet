@@ -68,6 +68,37 @@ export async function editTodo (editedTodo, todos, auth, updateAuth) {
     return isEdited ? newTodos : todos;
 }
 
+export async function createTodo (todo, todos, auth, updateAuth) {
+    if (auth === null) {
+        todo.id = Math.floor(Math.random() * Math.pow(10, 7));
+
+        return updateLocalTodos([...todos, todo]);
+    }
+
+    const date = todo.date ? fixDateOffset(todo.date) : null;
+    const reminder = todo.reminder ? fixDateOffset(todo.reminder) : null;
+
+    const payload = {
+        name: todo.name,
+        description: todo.description,
+        date: date,
+        reminder: reminder,
+        isDone: todo.isDone
+    };
+
+    await refreshToken(auth, updateAuth);
+
+    const newTodo = await axios.post('/todos', JSON.stringify(payload))
+        .then(response => response.data)
+        .catch(() => null);
+
+    if (newTodo === null) return todos;
+
+    todo.id = newTodo.id;
+
+    return [...todos, todo];
+}
+
 function fixDateOffset (date, addHours = true) {
     return addHours === true
         ? addMinutes(date, new Date().getTimezoneOffset()).getTime()

@@ -5,16 +5,14 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { useCreateTodo } from '../../contexts/TodoContext';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
 import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
-import { editTodo } from '../../requests/todos';
+import { createTodo, editTodo } from '../../requests/todos';
 
 function TodoForm ({ todos, setTodos, setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
     const { currentTodo, errors, handleChange, clearAll } = useTodoForm(todo);
     const intl = useIntl();
-    const createTodo = useCreateTodo();
     const [loading, setLoading] = useState(false);
     const isTouched = currentTodo !== todo;
     const isFormValid = isTouched && currentTodo.name !== '' && Object.keys(errors).length === 0;
@@ -46,7 +44,9 @@ function TodoForm ({ todos, setTodos, setOpen, setTodoEdited, todo, isFirstTodo,
             return;
         }
 
-        await createTodo(currentTodo);
+        const newTodos = await createTodo(currentTodo, todos, auth, updateAuth);
+
+        setTodos(newTodos);
 
         if (!isFirstTodo) {
             setLoading(false);
