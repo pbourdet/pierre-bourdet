@@ -14,7 +14,6 @@ function TodoContainer () {
 
     useEffect(() => {
         (async () => {
-            setLoading(true);
             const currentTodos = await getTodos(auth, updateAuth);
             setLoading(false);
             setTodos(currentTodos);

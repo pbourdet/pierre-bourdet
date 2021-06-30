@@ -3,23 +3,33 @@ import { Button, Col, Spinner } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
-import { useEditTodo } from '../../../contexts/TodoContext';
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import PropTypes from 'prop-types';
+import { useAuth, useAuthUpdate } from '../../../contexts/AuthContext';
+import { editTodo } from '../../../requests/todos';
 
-function DoneButton ({ todo }) {
+function DoneButton ({ todo, todos, setTodos }) {
     const [loading, setLoading] = useState(false);
-    const editTodo = useEditTodo();
+    const auth = useAuth();
+    const updateAuth = useAuthUpdate();
 
     const handleEdit = async (todo) => {
         setLoading(true);
         todo.isDone = !todo.isDone;
-        await editTodo(todo);
+        const newTodos = await editTodo(todo, todos, auth, updateAuth);
+        setLoading(false);
+
+        if (newTodos === todos) {
+            toast.error(<FormattedMessage id='toast.error'/>);
+
+            return;
+        }
+
+        setTodos(newTodos);
 
         todo.isDone
             ? toast.success(<FormattedMessage id='toast.todo.done' values={{ name: todo.name }}/>)
             : toast.info(<FormattedMessage id='toast.todo.undone' values={{ name: todo.name }}/>);
-        setLoading(false);
     };
 
     return (
@@ -39,7 +49,9 @@ function DoneButton ({ todo }) {
 }
 
 DoneButton.propTypes = {
-    todo: PropTypes.object
+    todo: PropTypes.object,
+    todos: PropTypes.array,
+    setTodos: PropTypes.func
 };
 
 export default DoneButton;

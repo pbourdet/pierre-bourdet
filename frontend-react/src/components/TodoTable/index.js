@@ -39,7 +39,7 @@ function TodoTable ({ todos, setTodos }) {
                 {todos.map((todo, index) => (
                     <div className="pt-2 pb-2 border-bottom" key={index}>
                         <Row >
-                            <DoneButton todo={todo}/>
+                            <DoneButton setTodos={setTodos} todos={todos} todo={todo}/>
                             <TodoDetails todo={todo}/>
                             <Col className="d-flex justify-content-center align-items-center pl-0 pr-1" xs={3} sm={2}>
                                 <div className="mr-1">
