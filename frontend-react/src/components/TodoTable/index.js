@@ -3,14 +3,13 @@ import { Button, Collapse, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage } from 'react-intl';
-import { useTodos } from '../../contexts/TodoContext';
 import TodoForm from '../TodoForm';
 import DeleteButton from './DeleteButton';
 import DoneButton from './DoneButton';
 import TodoDetails from './TodoDetails';
+import PropTypes from 'prop-types';
 
-function TodoTable () {
-    const todos = useTodos();
+function TodoTable ({ todos, setTodos }) {
     const [open, setOpen] = useState(false);
     const [todoEdited, setTodoEdited] = useState(0);
 
@@ -62,5 +61,18 @@ function TodoTable () {
         </>
     );
 }
+
+TodoTable.propTypes = {
+    setTodos: PropTypes.func.isRequired,
+    todos: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number,
+            date: PropTypes.number,
+            name: PropTypes.string,
+            description: PropTypes.string,
+            reminder: PropTypes.number
+        })
+    ).isRequired
+};
 
 export default TodoTable;

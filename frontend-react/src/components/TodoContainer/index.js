@@ -36,7 +36,7 @@ function TodoContainer () {
                             <FormattedMessage id="todos.loggedOut"/>
                         </Alert>
                         }
-                        <TodoTable/>
+                        <TodoTable todos={todos} setTodos={setTodos}/>
                     </>
                 }
             </Container>
