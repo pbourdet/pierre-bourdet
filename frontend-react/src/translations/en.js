@@ -318,7 +318,7 @@ export default {
         },
         hof: {
             highestScores: 'Highest scores',
-            userScores: 'Your best scores',
+            userScores: 'My best scores',
             player: 'Player',
             loggedOut: 'Sign in to save and view your best games !',
             noGames: 'You have no saved games.'

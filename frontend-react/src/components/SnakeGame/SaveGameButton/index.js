@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useAuth, useAuthUpdate } from '../../../contexts/AuthContext';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { saveSnakeGame } from '../../../requests/snakeGames';
 import { toast } from 'react-toastify';
+import refreshToken from '../../../requests/refreshToken';
 
 function SaveGameButton ({ score }) {
     const [loading, setLoading] = useState(false);
     const [gameSaved, setGameSaved] = useState(false);
     const auth = useAuth();
+    const updateAuth = useAuthUpdate();
 
     const saveGame = async () => {
         setLoading(true);
+        await refreshToken(auth, updateAuth);
         const isGameSaved = await saveSnakeGame(score);
         setLoading(false);
         setGameSaved(isGameSaved);

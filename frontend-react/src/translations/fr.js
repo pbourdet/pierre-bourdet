@@ -323,7 +323,7 @@ export default {
         },
         hof: {
             highestScores: 'Meilleurs scores',
-            userScores: 'Vos meilleurs scores',
+            userScores: 'Mes meilleurs scores',
             player: 'Joueur',
             loggedOut: 'Connectez-vous pour enregistrer et consulter vos meilleures parties !',
             noGames: 'Vous n\'avez pas de partie enregistrée.'
