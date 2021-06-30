@@ -5,20 +5,19 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { useCreateTodo, useEditTodo } from '../../contexts/TodoContext';
 import { toast } from 'react-toastify';
 import { format } from 'date-fns';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
+import { createTodo, editTodo } from '../../requests/todos';
 
-function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
+function TodoForm ({ todos, setTodos, setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
     const { currentTodo, errors, handleChange, clearAll } = useTodoForm(todo);
     const intl = useIntl();
-    const createTodo = useCreateTodo();
-    const editTodo = useEditTodo();
     const [loading, setLoading] = useState(false);
     const isTouched = currentTodo !== todo;
     const isFormValid = isTouched && currentTodo.name !== '' && Object.keys(errors).length === 0;
     const auth = useAuth();
+    const updateAuth = useAuthUpdate();
 
     const initialDate = currentTodo.date ? format(currentTodo.date, "yyyy-MM-dd'T'HH:mm") : '';
     const initialReminder = currentTodo.reminder ? format(currentTodo.reminder, "yyyy-MM-dd'T'HH:mm") : '';
@@ -34,23 +33,34 @@ function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
         e.preventDefault();
         setLoading(true);
 
-        if (isEdit) {
-            await editTodo(currentTodo);
-            setLoading(false);
-            setTodoEdited(0);
-            clearAll();
-            toast.success(<FormattedMessage id='toast.todo.edit' values={{ name: currentTodo.name }}/>);
+        const newTodos = isEdit
+            ? await editTodo(currentTodo, todos, auth, updateAuth)
+            : await createTodo(currentTodo, todos, auth, updateAuth);
+        setLoading(false);
+
+        if (newTodos === todos) {
+            toast.error(<FormattedMessage id='toast.error'/>);
 
             return;
         }
 
-        await createTodo(currentTodo);
+        setTodos(newTodos);
+
+        isEdit ? handleEdit(newTodos) : handleCreate(newTodos);
+    };
+
+    const handleEdit = () => {
+        setTodoEdited(0);
+        clearAll();
+        toast.success(<FormattedMessage id='toast.todo.edit' values={{ name: currentTodo.name }}/>);
+    };
+
+    const handleCreate = () => {
+        setOpen(false);
+        toast.success(<FormattedMessage id='toast.todo.add' values={{ name: currentTodo.name }}/>);
 
         if (!isFirstTodo) {
-            setLoading(false);
-            setOpen(false);
             clearAll();
-            toast.success(<FormattedMessage id='toast.todo.add' values={{ name: currentTodo.name }}/>);
         }
     };
 
@@ -114,6 +124,8 @@ function TodoForm ({ setOpen, setTodoEdited, todo, isFirstTodo, isEdit }) {
 }
 
 TodoForm.propTypes = {
+    todos: PropTypes.array,
+    setTodos: PropTypes.func,
     todo: PropTypes.object,
     setOpen: PropTypes.func,
     setTodoEdited: PropTypes.func,

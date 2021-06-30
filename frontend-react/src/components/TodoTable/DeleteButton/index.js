@@ -4,17 +4,27 @@ import { FormattedMessage } from 'react-intl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
-import { useDeleteTodo } from '../../../contexts/TodoContext';
 import PropTypes from 'prop-types';
+import { deleteTodos } from '../../../requests/todos';
+import { useAuth, useAuthUpdate } from '../../../contexts/AuthContext';
 
-function DeleteButton ({ todo }) {
+function DeleteButton ({ todo, todos, setTodos }) {
     const [todoDeleted, setTodoDeleted] = useState(0);
-    const deleteTodo = useDeleteTodo();
+    const auth = useAuth();
+    const updateAuth = useAuthUpdate();
 
     const handleDelete = async (todo) => {
         setTodoDeleted(todo.id);
-        await deleteTodo(todo);
+        const newTodos = await deleteTodos(todo, todos, auth, updateAuth);
+        setTodoDeleted(0);
 
+        if (newTodos === todos) {
+            toast.error(<FormattedMessage id='toast.error'/>);
+
+            return;
+        }
+
+        setTodos(newTodos);
         toast.success(<FormattedMessage id='toast.todo.delete' values={{ name: todo.name }}/>);
     };
 
@@ -23,7 +33,7 @@ function DeleteButton ({ todo }) {
             trigger="focus"
             placement="left"
             overlay={
-                <Popover>
+                <Popover id="delete-todo-confirmation">
                     <Popover.Title as="h5"><FormattedMessage id="todoTable.confirmDelete.title"/></Popover.Title>
                     <Popover.Content>
                         <Button block variant="danger" onClick={() => handleDelete(todo)}>
@@ -44,6 +54,8 @@ function DeleteButton ({ todo }) {
 }
 
 DeleteButton.propTypes = {
+    todos: PropTypes.array,
+    setTodos: PropTypes.func,
     todo: PropTypes.object
 };
 

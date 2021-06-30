@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { useGetTodos } from '../../contexts/TodoContext';
+import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
 import TodoTable from '../TodoTable';
 import { Alert, Container, Spinner } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
+import { getTodos } from '../../requests/todos';
 
 function TodoContainer () {
     const [loading, setLoading] = useState(true);
     const [showAlert, setShowAlert] = useState(true);
+    const [todos, setTodos] = useState([]);
     const auth = useAuth();
-    const getTodos = useGetTodos();
+    const updateAuth = useAuthUpdate();
 
     useEffect(() => {
-        async function fetchData () {
-            setLoading(true);
-            await getTodos();
+        (async () => {
+            const currentTodos = await getTodos(auth, updateAuth);
             setLoading(false);
-        }
-        fetchData();
-    }, [auth]);
+            setTodos(currentTodos);
+        })();
+    }, [auth, updateAuth]);
 
     return (
         <div className="m-2 pt-3">
@@ -35,7 +35,7 @@ function TodoContainer () {
                             <FormattedMessage id="todos.loggedOut"/>
                         </Alert>
                         }
-                        <TodoTable/>
+                        <TodoTable todos={todos} setTodos={setTodos}/>
                     </>
                 }
             </Container>

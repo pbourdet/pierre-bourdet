@@ -15,6 +15,7 @@ export default {
     },
 
     toast: {
+        error: 'Une erreur est survenue lors de l\'opération. Veuillez réessayez plus tard.',
         user: {
             signup: 'Bienvenue {name} !',
             signin: 'Bonjour {name} !',
