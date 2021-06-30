@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Col, Row, Spinner, Table } from 'react-bootstrap';
 import { getTopSnakeGames, getUserSnakeGames } from '../../../requests/snakeGames';
 import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useAuth, useAuthUpdate } from '../../../contexts/AuthContext';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import refreshToken from '../../../requests/refreshToken';
 
 function HallOfFame () {
     const [topGames, setTopGames] = useState([]);
@@ -12,6 +13,7 @@ function HallOfFame () {
     const [userGames, setUserGames] = useState([]);
     const [userGamesLoading, setUserGamesLoading] = useState(true);
     const auth = useAuth();
+    const updateAuth = useAuthUpdate();
 
     useEffect(() => {
         if (auth === null) {
@@ -20,6 +22,7 @@ function HallOfFame () {
         }
 
         (async () => {
+            await refreshToken(auth, updateAuth);
             const userGames = await getUserSnakeGames();
             setUserGames(userGames);
             setUserGamesLoading(false);
