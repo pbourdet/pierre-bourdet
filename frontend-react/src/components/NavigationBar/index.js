@@ -45,7 +45,7 @@ function NavigationBar () {
                                         </Nav.Link>
                                     </Link>
                                 </NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/snake">
+                                <NavDropdown.Item onClick={(e) => e.currentTarget.blur()} as={Link} to="/snake">
                                     <Nav.Link as="span">
                                         Snake
                                     </Nav.Link>

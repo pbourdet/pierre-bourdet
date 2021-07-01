@@ -129,6 +129,8 @@ function SnakeGame () {
     const handleKeyPress = (event) => {
         const { keyCode } = event;
 
+        if ([32, 37, 38, 39, 40].includes(keyCode)) event.preventDefault();
+
         if (gameOver && keyCode === 32) {
             initGame();
 
