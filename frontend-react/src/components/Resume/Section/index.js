@@ -22,11 +22,13 @@ const Section = ({ title, children }) => {
                             className="border pl-3 pr-3"
                             size="sm"
                             onClick={toggle}>
-                            {isOpen ? (
-                                <FontAwesomeIcon icon={faChevronDown}/>
-                            ) : (
-                                <FontAwesomeIcon icon={faChevronUp}/>
-                            )}
+                            {isOpen
+                                ? (
+                                    <FontAwesomeIcon icon={faChevronDown}/>
+                                )
+                                : (
+                                    <FontAwesomeIcon icon={faChevronUp}/>
+                                )}
                         </Button>
                     </div>
                 </Col>
