@@ -10,10 +10,12 @@ import { faChess, faCode, faCogs, faGamepad, faLanguage, faServer } from '@forta
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Col, Row } from 'react-bootstrap';
 import TechnicalStackEntry from '../../components/TechnicalStackEntry';
+import variants from '../../config/framer-motion';
+import { motion } from 'framer-motion';
 
 function Resume () {
     return (
-        <>
+        <motion.div variants={variants} initial="hidden" animate="visible">
             <FormattedMessage id="resume.title">
                 {title => <Helmet><title>{title}</title></Helmet>}
             </FormattedMessage>
@@ -168,7 +170,7 @@ function Resume () {
                 </div>
             </Section>
             <ContactMeModal/>
-        </>
+        </motion.div>
     );
 }
 

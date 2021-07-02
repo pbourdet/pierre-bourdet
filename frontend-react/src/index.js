@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './pages/App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter as Router } from 'react-router-dom';
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 
@@ -15,7 +16,9 @@ Sentry.init({
 });
 
 ReactDOM.render(
-    <App />,
+    <Router>
+        <App/>
+    </Router>,
     document.getElementById('root')
 );
 

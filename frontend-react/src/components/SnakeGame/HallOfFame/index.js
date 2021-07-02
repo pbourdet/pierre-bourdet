@@ -27,6 +27,8 @@ function HallOfFame () {
             setUserGames(userGames);
             setUserGamesLoading(false);
         })();
+
+        return () => setUserGamesLoading(false);
     }, [auth, updateAuth]);
 
     useEffect(() => {
@@ -35,6 +37,8 @@ function HallOfFame () {
             setTopGames(games);
             setTopGamesLoading(false);
         })();
+
+        return () => setTopGamesLoading(false);
     }, []);
 
     if (topGamesLoading || userGamesLoading) {
