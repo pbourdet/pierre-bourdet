@@ -4,10 +4,12 @@ import { Helmet } from 'react-helmet';
 import TodoContainer from '../../components/TodoContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTasks } from '@fortawesome/free-solid-svg-icons';
+import variants from '../../config/framer-motion';
+import { motion } from 'framer-motion';
 
 function Todos () {
     return (
-        <>
+        <motion.div variants={variants} initial="hidden" animate="visible">
             <FormattedMessage id="todos.title">
                 {title => <Helmet><title>{title}</title></Helmet>}
             </FormattedMessage>
@@ -16,7 +18,7 @@ function Todos () {
                 <FormattedMessage id="todos.title"/>
             </h1>
             <TodoContainer />
-        </>
+        </motion.div>
     );
 }
 

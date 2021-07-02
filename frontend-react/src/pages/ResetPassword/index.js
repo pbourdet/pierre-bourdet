@@ -9,6 +9,8 @@ import { resetPassword } from '../../requests/resetPassword';
 import { toast } from 'react-toastify';
 import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
 import { signinSubmit } from '../../requests/submitUserForm';
+import variants from '../../config/framer-motion';
+import { motion } from 'framer-motion';
 
 function ResetPassword () {
     const params = useParams();
@@ -43,45 +45,47 @@ function ResetPassword () {
     };
 
     return (
-        <Container className="d-flex justify-content-around">
-            <FormattedMessage id="reset.page.title">
-                {title => <Helmet><title>{title}</title></Helmet>}
-            </FormattedMessage>
-            <Card style={{ width: '40rem' }} className="m-2 p-3 shadow">
-                <Card.Body>
-                    <Card.Title className="mb-4">
-                        <FormattedMessage id="reset.page.title"/>
-                    </Card.Title>
-                    <Form className="text-left">
-                        {inputTypes.map((type, index) => (
-                            <UserFormInput
-                                type={type}
-                                asterisk={true}
-                                innerRef={{}}
-                                values={values}
-                                errors={errors}
-                                touched={touched}
-                                handleChange={handleChange}
-                                key={index}
-                            />
-                        ))}
-                        {inError &&
-                        <Alert variant="danger" onClose={() => setInError(false)} dismissible>
-                            <p><FormattedMessage id="reset.page.error"/></p>
-                        </Alert>
-                        }
-                        <div className="d-flex justify-content-around mt-4">
-                            {loading
-                                ? <Spinner animation="border" variant="primary"/>
-                                : <Button className="mr-4 ml-4" disabled={false} variant="primary" onClick={handleSignupSubmit} block>
-                                    <FormattedMessage id="reset.page.submit"/>
-                                </Button>
+        <motion.div variants={variants} initial="hidden" animate="visible">
+            <Container className="d-flex justify-content-around">
+                <FormattedMessage id="reset.page.title">
+                    {title => <Helmet><title>{title}</title></Helmet>}
+                </FormattedMessage>
+                <Card style={{ width: '40rem' }} className="m-2 p-3 shadow">
+                    <Card.Body>
+                        <Card.Title className="mb-4">
+                            <FormattedMessage id="reset.page.title"/>
+                        </Card.Title>
+                        <Form className="text-left">
+                            {inputTypes.map((type, index) => (
+                                <UserFormInput
+                                    type={type}
+                                    asterisk={true}
+                                    innerRef={{}}
+                                    values={values}
+                                    errors={errors}
+                                    touched={touched}
+                                    handleChange={handleChange}
+                                    key={index}
+                                />
+                            ))}
+                            {inError &&
+                            <Alert variant="danger" onClose={() => setInError(false)} dismissible>
+                                <p><FormattedMessage id="reset.page.error"/></p>
+                            </Alert>
                             }
-                        </div>
-                    </Form>
-                </Card.Body>
-            </Card>
-        </Container>
+                            <div className="d-flex justify-content-around mt-4">
+                                {loading
+                                    ? <Spinner animation="border" variant="primary"/>
+                                    : <Button className="mr-4 ml-4" disabled={false} variant="primary" onClick={handleSignupSubmit} block>
+                                        <FormattedMessage id="reset.page.submit"/>
+                                    </Button>
+                                }
+                            </div>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Container>
+        </motion.div>
     );
 }
 

@@ -18,6 +18,8 @@ function TodoContainer () {
             setLoading(false);
             setTodos(currentTodos);
         })();
+
+        return () => setLoading(false);
     }, [auth, updateAuth]);
 
     return (
