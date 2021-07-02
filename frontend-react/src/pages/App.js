@@ -3,7 +3,7 @@ import 'bootswatch/dist/litera/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css';
 import NavigationBar from '../components/NavigationBar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import AuthProvider from '../contexts/AuthContext/index';
 import { ToastContainer } from 'react-toastify';
 import LocaleProvider from '../contexts/LocaleContext/index';
@@ -19,29 +19,27 @@ function App () {
 
     return (
         <LocaleProvider>
-            <Router>
-                <div className="App">
-                    <AuthProvider>
-                        <NavigationBar/>
-                        <ToastContainer
-                            position="top-center"
-                            autoClose={4000}
-                            pauseOnFocusLoss={false}
-                            pauseOnHover={false}
-                        />
-                        <Suspense fallback={<div className="mt-5"><Spinner animation="border"/></div>}>
-                            <Switch>
-                                <Route path="/" exact component={Home}/>
-                                <Route path="/resume" component={Resume}/>
-                                <Route path="/me" component={Profile}/>
-                                <Route path="/todo" component={Todos}/>
-                                <Route path="/snake" component={Snake}/>
-                                <Route path="/reset-password/:token" component={ResetPassword}/>
-                            </Switch>
-                        </Suspense>
-                    </AuthProvider>
-                </div>
-            </Router>
+            <div className="App">
+                <AuthProvider>
+                    <NavigationBar/>
+                    <ToastContainer
+                        position="top-center"
+                        autoClose={4000}
+                        pauseOnFocusLoss={false}
+                        pauseOnHover={false}
+                    />
+                    <Suspense fallback={<div className="mt-5"><Spinner animation="border"/></div>}>
+                        <Switch>
+                            <Route path="/" exact component={Home}/>
+                            <Route path="/resume" component={Resume}/>
+                            <Route path="/me" component={Profile}/>
+                            <Route path="/todo" component={Todos}/>
+                            <Route path="/snake" component={Snake}/>
+                            <Route path="/reset-password/:token" component={ResetPassword}/>
+                        </Switch>
+                    </Suspense>
+                </AuthProvider>
+            </div>
         </LocaleProvider>
     );
 }
