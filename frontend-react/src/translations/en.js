@@ -20,7 +20,11 @@ export default {
             signup: 'Welcome {name} !',
             signin: 'Hello {name} !',
             logout: 'You are now logged out.',
-            updatePassword: 'Password updated !'
+            updatePassword: 'Password updated !',
+            delete: {
+                error: 'Une erreur est survenue lors de la suppression de votre compte.',
+                success: 'Votre compte a bien été supprimé.'
+            }
         },
         todo: {
             add: 'Todo {name} added !',
