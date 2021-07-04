@@ -5,7 +5,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage } from 'react-intl';
 import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
-import { signinSubmit } from '../../requests/submitUserForm';
+import { signinSubmit } from '../../requests/user';
 import { useAuthUpdate } from '../../contexts/AuthContext/index';
 import { toast } from 'react-toastify';
 import ResetPasswordEmailModal from '../ResetPasswordEmailModal';

@@ -8,14 +8,14 @@ import SigninModal from '../SigninModal';
 import SignupModal from '../SignupModal';
 import { useAuth, useAuthUpdate } from '../../contexts/AuthContext/index';
 import { toast } from 'react-toastify';
+import { logout } from '../../requests/user';
 
 function NavigationBar () {
     const auth = useAuth();
     const updateAuth = useAuthUpdate();
 
-    const logout = () => {
-        updateAuth(null);
-        localStorage.removeItem('user');
+    const handleLogout = () => {
+        logout(updateAuth);
         toast.info(<FormattedMessage id="toast.user.logout" />);
     };
 
@@ -59,7 +59,7 @@ function NavigationBar () {
                                         <FormattedMessage id="navbar.profile"/>
                                     </Navbar.Text>
                                 </Link>
-                                <Navbar.Text onClick={logout} className="btn btn-link" as="span">
+                                <Navbar.Text onClick={() => handleLogout()} className="btn btn-link" as="span">
                                     <FormattedMessage id="navbar.logout"/>
                                 </Navbar.Text>
                             </>

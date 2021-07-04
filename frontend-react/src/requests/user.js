@@ -71,3 +71,16 @@ export async function getMe () {
 
     return user;
 }
+
+export async function logout (updateAuth) {
+    updateAuth(null);
+    localStorage.removeItem('user');
+
+    await axios.post('/security/logout');
+}
+
+export async function deleteUser (user) {
+    return await axios.delete('/users/' + user.id)
+        .then(() => true)
+        .catch(() => false);
+}

@@ -3,7 +3,7 @@ import { Alert, Button, Form, Modal, Navbar, Spinner } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
-import { signupSubmit, signinSubmit } from '../../requests/submitUserForm';
+import { signupSubmit, signinSubmit } from '../../requests/user';
 import { useAuthUpdate } from '../../contexts/AuthContext/index';
 import { toast } from 'react-toastify';
 import { useLocale } from '../../contexts/LocaleContext';
