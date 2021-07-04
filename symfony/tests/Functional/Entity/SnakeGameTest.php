@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Entity;
+namespace Tests\Functional\Entity;
 
-use App\Tests\Functional\AbstractEndPoint;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Functional\AbstractEndPoint;
 
 class SnakeGameTest extends AbstractEndPoint
 {

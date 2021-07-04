@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Enum;
+namespace Model\Enum;
 
 final class LanguageEnum
 {

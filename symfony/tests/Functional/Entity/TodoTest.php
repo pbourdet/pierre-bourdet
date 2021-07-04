@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Entity;
+namespace Tests\Functional\Entity;
 
-use App\Tests\Functional\AbstractEndPoint;
 use Faker\Factory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Functional\AbstractEndPoint;
 
 class TodoTest extends AbstractEndPoint
 {

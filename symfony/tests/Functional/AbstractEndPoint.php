@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional;
+namespace Tests\Functional;
 
 use App\DataFixtures\UserFixtures;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

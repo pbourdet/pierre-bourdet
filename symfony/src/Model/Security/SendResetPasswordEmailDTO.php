@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Security;
+namespace Model\Security;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Security\SendResetPasswordEmailController;

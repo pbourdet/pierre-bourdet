@@ -20,28 +20,31 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/'
+        resource: '../src/App/'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
+            - '../src/App/Entity/'
+
+    Infrastructure\:
+        resource: '../src/Infrastructure/'
+
+    Domain\:
+        resource: '../src/Domain/'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
-        resource: '../src/Controller/'
+        resource: '../src/App/Controller/'
         tags: ['controller.service_arguments']
 
-    App\OpenApi\JwtDecorator:
+    Infrastructure\OpenApi\JwtDecorator:
         decorates: 'api_platform.openapi.factory'
         autoconfigure: false
 
-    App\OpenApi\RefreshTokenDecorator:
+    Infrastructure\OpenApi\RefreshTokenDecorator:
         decorates: 'api_platform.openapi.factory'
         autoconfigure: false
 
-    App\OpenApi\OpenApiDecorator:
+    Infrastructure\OpenApi\OpenApiDecorator:
         decorates: 'api_platform.openapi.factory'
         autoconfigure: false
 
@@ -54,5 +57,5 @@ services:
                 priority: -2
             }
 
-    App\DataPersister\User\UserCreatedDataPersister:
+    Domain\User\DataPersister\UserCreatedDataPersister:
         decorates: 'api_platform.doctrine.orm.data_persister'

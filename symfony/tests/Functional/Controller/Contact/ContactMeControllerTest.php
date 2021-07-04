@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Controller\Contact;
+namespace Tests\Functional\Controller\Contact;
 
-use App\Tests\Functional\AbstractEndPoint;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Functional\AbstractEndPoint;
 
 class ContactMeControllerTest extends AbstractEndPoint
 {

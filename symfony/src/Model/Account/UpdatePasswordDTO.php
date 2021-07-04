@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Account;
+namespace Model\Account;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Account\UpdatePasswordController;
