@@ -1,0 +1,9 @@
+framework:
+    http_client:
+        scoped_clients:
+            sportradar.client:
+                base_uri: 'https://api.sportradar.com'
+                headers:
+                    Accept: 'application/json'
+                query:
+                    api_key: '%env(SPORTRADAR_API_KEY)%'
