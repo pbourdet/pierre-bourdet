@@ -56,7 +56,7 @@ services:
     Domain\User\DataPersister\UserCreatedDataPersister:
         decorates: 'api_platform.doctrine.orm.data_persister'
 
-    App\Tennis\Client\SportRadarClient:
+    Domain\Tennis\SportRadarClient:
         arguments:
             - '@sportradar.client'
             - '@serializer'
