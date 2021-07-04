@@ -64,7 +64,7 @@ class RefreshTokenRequestListenerTest extends TestCase
                 json_encode(['refreshToken' => $token])
             );
 
-        $this->testedObject->onKernelRequest($event);
+        $this->testedObject->onRefreshToken($event);
     }
 
     public function testOnKernelRequestOnOtherUrl(): void
@@ -82,6 +82,6 @@ class RefreshTokenRequestListenerTest extends TestCase
 
         $request->expects($this->once())->method('getRequestUri')->willReturn($requestedUrl);
 
-        $this->testedObject->onKernelRequest($event);
+        $this->testedObject->onRefreshToken($event);
     }
 }

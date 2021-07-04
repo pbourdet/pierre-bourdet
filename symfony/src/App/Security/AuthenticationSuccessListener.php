@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Cookie;
  */
 class AuthenticationSuccessListener
 {
-    private const REFRESH_TOKEN_COOKIE_NAME = 'REFRESH_TOKEN';
+    public const REFRESH_TOKEN_COOKIE_NAME = 'REFRESH_TOKEN';
 
     public function __construct(
         private string $refreshTokenTtl
