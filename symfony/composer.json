@@ -55,12 +55,19 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
-        }
+            "App\\": "src/App",
+            "Infrastructure\\": "src/Infrastructure",
+            "Model\\": "src/Model",
+            "Domain\\": "src/Domain"
+        },
+        "classmap": [
+            "src/Kernel.php"
+        ]
+
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "Tests\\": "tests"
         }
     },
     "replace": {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Controller\Security;
+namespace Tests\Functional\Controller\Security;
 
 use App\DataFixtures\UserFixtures;
 use App\Repository\UserRepository;
-use App\Tests\Functional\AbstractEndPoint;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Functional\AbstractEndPoint;
 
 class SendResetPasswordEmailControllerTest extends AbstractEndPoint
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Controller\Account;
+namespace Tests\Functional\Controller\Account;
 
 use App\DataFixtures\UserFixtures;
-use App\Tests\Functional\AbstractEndPoint;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Functional\AbstractEndPoint;
 
 class UpdatePasswordControllerTest extends AbstractEndPoint
 {

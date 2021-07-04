@@ -3,6 +3,6 @@ parameters:
 	paths:
 		- src
 	excludes_analyse:
-		- src/DataFixtures
+		- src/App/DataFixtures
 	checkMissingIterableValueType: false
 	checkGenericClassInNonGenericObjectType: false

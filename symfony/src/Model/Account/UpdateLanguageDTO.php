@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Account;
+namespace Model\Account;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Account\UpdateLanguageController;
-use App\Model\Enum\LanguageEnum;
+use Model\Enum\LanguageEnum;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;

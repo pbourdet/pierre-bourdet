@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Contact;
+namespace Model\Contact;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\Contact\ContactMeController;
