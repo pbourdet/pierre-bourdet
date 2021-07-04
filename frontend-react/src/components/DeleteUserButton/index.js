@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, OverlayTrigger, Popover, Spinner } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import axios from '../../config/axios';
 import { toast } from 'react-toastify';
 import { useAuthUpdate } from '../../contexts/AuthContext';
 import PropTypes from 'prop-types';
+import { deleteUser, logout } from '../../requests/user';
 
 function DeleteUserButton ({ user }) {
     const updateAuth = useAuthUpdate();
@@ -12,10 +12,7 @@ function DeleteUserButton ({ user }) {
 
     const handleDelete = async () => {
         setLoading(true);
-        const isDeleted = await axios.delete('/users/' + user.id)
-            .then(() => true)
-            .catch(() => false);
-
+        const isDeleted = deleteUser(user);
         setLoading(false);
 
         if (!isDeleted) {
@@ -24,8 +21,7 @@ function DeleteUserButton ({ user }) {
             return;
         }
 
-        updateAuth(null);
-        localStorage.removeItem('user');
+        logout(updateAuth);
         toast.success(<FormattedMessage id="toast.user.delete.success"/>);
     };
 

@@ -3,7 +3,7 @@ import { Alert, Button, Form, Modal, Spinner } from 'react-bootstrap';
 import useUserFormValidation from '../../hooks/useUserFormValidation';
 import UserFormInput from '../Input/UserFormInput';
 import { FormattedMessage } from 'react-intl';
-import { updatePasswordSubmit } from '../../requests/submitUserForm';
+import { updatePasswordSubmit } from '../../requests/user';
 import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
 

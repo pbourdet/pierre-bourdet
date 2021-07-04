@@ -8,7 +8,7 @@ import UserFormInput from '../../components/Input/UserFormInput';
 import { resetPassword } from '../../requests/resetPassword';
 import { toast } from 'react-toastify';
 import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
-import { signinSubmit } from '../../requests/submitUserForm';
+import { signinSubmit } from '../../requests/user';
 import variants from '../../config/framer-motion';
 import { motion } from 'framer-motion';
 
