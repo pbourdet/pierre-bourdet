@@ -18,11 +18,11 @@ class RefreshTokenRequestListener implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => ['onKernelRequest'],
+            KernelEvents::REQUEST => ['onRefreshToken'],
         ];
     }
 
-    public function onKernelRequest(RequestEvent $event): void
+    public function onRefreshToken(RequestEvent $event): void
     {
         $refreshTokenUrl = $this->router->generate('gesdinet_jwt_refresh_token');
         $request = $event->getRequest();
