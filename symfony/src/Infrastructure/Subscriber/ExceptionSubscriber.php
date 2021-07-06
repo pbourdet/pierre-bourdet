@@ -6,14 +6,13 @@ namespace Infrastructure\Subscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-    private const SERVER_ERROR_EXCEPTION = 500;
-
     /**
      * @return array<array>
      */
@@ -30,7 +29,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $exception = $event->getThrowable();
         $statusCode = method_exists($exception, 'getStatusCode')
             ? $exception->getStatusCode()
-            : self::SERVER_ERROR_EXCEPTION
+            : Response::HTTP_INTERNAL_SERVER_ERROR
         ;
 
         $event->setResponse(new JsonResponse([

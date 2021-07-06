@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Model\Tennis\ExternalModel\Rankings;
+namespace Model\Tennis\ExternalModel\PlayerProfile;
 
 class Competitor
 {
@@ -15,4 +15,6 @@ class Competitor
     public string $countryCode = '';
 
     public string $abbreviation = '';
+
+    public string $gender = '';
 }

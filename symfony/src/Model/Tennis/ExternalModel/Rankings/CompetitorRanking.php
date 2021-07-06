@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Model\Tennis\ExternalModel\Rankings;
 
+use Model\Tennis\ExternalModel\PlayerProfile\Competitor;
+
 class CompetitorRanking
 {
     public int $rank = 0;
@@ -13,6 +15,14 @@ class CompetitorRanking
     public int $points = 0;
 
     public int $competitionsPlayed = 0;
+
+    public string $type = '';
+
+    public string $name = '';
+
+    public string $competitorId = '';
+
+    public bool $raceRanking = false;
 
     public Competitor $competitor;
 

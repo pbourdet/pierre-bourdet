@@ -6,6 +6,7 @@ namespace App\Controller\Tennis\Rankings;
 
 use Domain\Tennis\Repository\RankingsRepository;
 use Model\Enum\CompetitionNameEnum;
+use Model\Tennis\Exception\RankingNotFoundException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,7 +31,7 @@ class SinglesRankingsController extends AbstractController
     {
         try {
             return $this->json($this->rankingsRepository->getSinglesRankingsByName($competitionName));
-        } catch (\Exception $exception) {
+        } catch (RankingNotFoundException $exception) {
             $this->logger->error('Could not retrieve rankings', [
                 'competitionName' => $competitionName,
                 'message' => $exception->getMessage(),
