@@ -44,7 +44,7 @@ services:
         decorates: 'api_platform.openapi.factory'
         autoconfigure: false
 
-    Infrastructure\OpenApi\Tennis\RankingsDecorator:
+    Infrastructure\OpenApi\TennisDecorator:
         decorates: 'api_platform.openapi.factory'
         autoconfigure: false
 
