@@ -51,12 +51,12 @@ class RankingsDecorator implements OpenApiFactoryInterface
                     ],
                 ],
                 summary: 'Get singles ranking by competition type.',
-                parameters: [new Parameter('name', 'query', 'Ranking type', required: true)],
+                parameters: [new Parameter('competitionName', 'path', 'Competition name', required: true)],
                 security: [],
             ),
         );
 
-        $openApi->getPaths()->addPath('/tennis/singles-rankings', $pathItem);
+        $openApi->getPaths()->addPath('/tennis/singles-rankings/{competitionName}', $pathItem);
 
         return $openApi;
     }
