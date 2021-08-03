@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { faHome, faCode, faServer, faCogs } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
 import TechnicalStackEntry from '../../components/TechnicalStackEntry';
 import { motion } from 'framer-motion';
 import variants from '../../config/framer-motion';
@@ -40,17 +39,7 @@ function Home () {
                                 />
                             </div>
                             <div className="mb-3">
-                                <FormattedMessage
-                                    id="homepage.introCard.text2"
-                                    values={{
-                                        // eslint-disable-next-line react/display-name
-                                        a: chunks => (
-                                            <Link to="/todo">
-                                                {chunks}
-                                            </Link>
-                                        )
-                                    }}
-                                />
+                                <FormattedMessage id="homepage.introCard.text2"/>
                             </div>
                             <div className="mb-3">
                                 <FormattedMessage
@@ -80,7 +69,7 @@ function Home () {
                             </div>
                             <div className="text-justify ml-3">
                                 <ul>
-                                    <TechnicalStackEntry entry="react" version="16"/>
+                                    <TechnicalStackEntry entry="react" version="17"/>
                                     <TechnicalStackEntry entry="bootstrap" version="4"/>
                                     <TechnicalStackEntry entry="jest"/>
                                     <TechnicalStackEntry entry="formatjs" version="React-intl"/>
@@ -95,8 +84,8 @@ function Home () {
                             </div>
                             <div className="text-justify ml-3">
                                 <ul>
-                                    <TechnicalStackEntry entry="PHP" version="7.4"/>
-                                    <TechnicalStackEntry entry="symfony" version="5"/>
+                                    <TechnicalStackEntry entry="PHP" version="8"/>
+                                    <TechnicalStackEntry entry="symfony" version="5.2"/>
                                     <TechnicalStackEntry entry="API-Platform"/>
                                     <TechnicalStackEntry entry="doctrine"/>
                                     <TechnicalStackEntry entry="phpunit"/>

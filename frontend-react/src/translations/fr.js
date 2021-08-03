@@ -119,8 +119,8 @@ export default {
         title: 'Page d\'accueil',
         introCard: {
             title: 'Bienvenue !',
-            text1: 'Ce site web a été développé comme un entraînement à la création d\'une application React communiquant avec une API Rest. La documentation de l\'API peut être <a>consultée ici</a>.',
-            text2: 'L\'API est consommée par une authentification JWT ainsi qu\'une <a>Todo list</a>.',
+            text1: 'Ce site web a été développé à des fins d\'apprentisage personnel sur différentes technologies front-end et back-end. Il est constitué d\'une SPA React et d\'une API Symfony. La documentation de l\'API peut être <a>consultée ici</a>.',
+            text2: 'L\'API est consommée par une authentification JWT ainsi que des petites applications trouvables dans la barre de navigation.',
             text3: 'Tout le code est disponible sur <a>Github</a>',
             text4: 'Plus de détails sur les technologies utilisées ci-dessous.'
         },
