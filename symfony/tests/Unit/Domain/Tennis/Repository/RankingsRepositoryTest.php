@@ -5,8 +5,8 @@ namespace Tests\Unit\Domain\Tennis\Repository;
 use Domain\Tennis\Repository\RankingsRepository;
 use Domain\Tennis\SportRadarClient;
 use Model\Tennis\Exception\RankingNotFoundException;
-use Model\Tennis\ExternalModel\Rankings\Ranking;
-use Model\Tennis\ExternalModel\Rankings\RankingsBaseClass;
+use Model\Tennis\Rankings\Ranking;
+use Model\Tennis\Rankings\RankingsBaseClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
