@@ -11,8 +11,10 @@ use ApiPlatform\Core\OpenApi\Model\Operation;
 use ApiPlatform\Core\OpenApi\Model\Parameter;
 use ApiPlatform\Core\OpenApi\Model\PathItem;
 use ApiPlatform\Core\OpenApi\OpenApi;
-use Model\Tennis\ExternalModel\PlayerProfile\PlayerProfile;
-use Model\Tennis\ExternalModel\Rankings\Ranking;
+use App\Controller\Tennis\Player\GetPlayerProfileController;
+use App\Controller\Tennis\Rankings\SinglesRankingsController;
+use Model\Tennis\PlayerProfile\PlayerProfile;
+use Model\Tennis\Rankings\Ranking;
 use Symfony\Component\HttpFoundation\Response;
 
 class TennisDecorator implements OpenApiFactoryInterface
@@ -33,8 +35,8 @@ class TennisDecorator implements OpenApiFactoryInterface
         $singlesRankingsPath = $this->createSinglesRankingsPath($schemas);
         $playerProfilePath = $this->createPlayerProfilePath($schemas);
 
-        $openApi->getPaths()->addPath('/tennis/singles-rankings/{competitionName}', $singlesRankingsPath);
-        $openApi->getPaths()->addPath('/tennis/player-profile/{playerId}', $playerProfilePath);
+        $openApi->getPaths()->addPath(SinglesRankingsController::PATH, $singlesRankingsPath);
+        $openApi->getPaths()->addPath(GetPlayerProfileController::PATH, $playerProfilePath);
 
         return $openApi;
     }
@@ -69,7 +71,7 @@ class TennisDecorator implements OpenApiFactoryInterface
         );
     }
 
-    public function createPlayerProfilePath(\ArrayObject $schemas): PathItem
+    private function createPlayerProfilePath(\ArrayObject $schemas): PathItem
     {
         $schema = new Schema(Schema::VERSION_OPENAPI);
         $schema->setDefinitions($schemas);

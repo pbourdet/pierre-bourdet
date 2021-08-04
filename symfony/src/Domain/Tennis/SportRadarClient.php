@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Domain\Tennis;
 
 use Model\Tennis\Exception\SportRadarApiException;
-use Model\Tennis\ExternalModel\PlayerProfile\PlayerProfile;
-use Model\Tennis\ExternalModel\Rankings\RankingsBaseClass;
+use Model\Tennis\PlayerProfile\PlayerProfile;
+use Model\Tennis\Rankings\RankingsBaseClass;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -24,7 +25,7 @@ class SportRadarClient
     public function getSinglesRankings(): RankingsBaseClass
     {
         return $this->request(
-            '/tennis/trial/v3/fr/rankings.json',
+            '/tennis/trial/v3/en/rankings.json',
             RankingsBaseClass::class
         );
     }
@@ -44,7 +45,7 @@ class SportRadarClient
             $url
         );
 
-        if ($response->getStatusCode() >= 400) {
+        if ($response->getStatusCode() >= Response::HTTP_BAD_REQUEST) {
             $this->logger->error(
                 sprintf('Error when calling URL %s with status code %s', $url, $response->getStatusCode()),
                 [
