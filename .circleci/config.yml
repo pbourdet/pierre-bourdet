@@ -82,7 +82,7 @@ commands:
                   name: PHP CS Fixer
                   command: |
                       cd symfony/
-                      ./vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --stop-on-violation --using-cache=no
+                      ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation --using-cache=no
                       cd ..
             - run:
                   name: Yaml lint
