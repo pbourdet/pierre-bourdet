@@ -15,7 +15,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TodosSendRemindersCommand extends Command
 {
     protected static $defaultName = 'app:todos:send-reminders';
-    protected static string $defaultDescription = 'Send todo reminder emails';
 
     public function __construct(
         private TodoRepository $todoRepository,
@@ -29,7 +28,7 @@ class TodosSendRemindersCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription(self::$defaultDescription);
+        $this->setDescription('Send todo reminder emails');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

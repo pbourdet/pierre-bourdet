@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\IdGenerator\UuidV4Generator;
 use Symfony\Component\Serializer\Annotation as Serializer;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,11 +20,9 @@ abstract class Game
 
     #[
         ORM\Id,
-        ORM\GeneratedValue(strategy: 'CUSTOM'),
         ORM\Column(type: 'uuid'),
-        ORM\CustomIdGenerator(class: UuidV4Generator::class)
     ]
-    private ?Uuid $id = null;
+    private Uuid $id;
 
     #[ORM\Column]
     #[Serializer\Groups(groups: [Game::READ_COLLECTION_TOP_GROUP, Game::READ_COLLECTION_USER_GROUP])]
@@ -47,6 +44,7 @@ abstract class Game
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->id = Uuid::v4();
     }
 
     public function getId(): ?Uuid

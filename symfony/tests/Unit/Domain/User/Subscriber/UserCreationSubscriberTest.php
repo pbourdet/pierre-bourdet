@@ -13,23 +13,23 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserCreationSubscriberTest extends TestCase
 {
-    /** @var UserPasswordEncoderInterface|MockObject */
-    private $encoder;
+    private UserPasswordHasherInterface|MockObject $hasher;
 
     private UserCreationSubscriber $testedObject;
 
     protected function setUp(): void
     {
-        $this->encoder = $this->getMockBuilder(UserPasswordEncoderInterface::class)
+        $this->hasher = $this->getMockBuilder(UserPasswordHasherInterface::class)
             ->disableOriginalConstructor()
+            ->addMethods(['hashPassword'])
             ->getMock();
 
         $this->testedObject = new UserCreationSubscriber(
-            $this->encoder
+            $this->hasher
         );
     }
 
@@ -51,7 +51,7 @@ class UserCreationSubscriberTest extends TestCase
         $request->expects($this->once())->method('getMethod')->willReturn(Request::METHOD_POST);
         $httpKernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
 
-        $this->encoder->expects($this->once())->method('encodePassword')->with($user, $password)->willReturn($encodedPassword);
+        $this->hasher->expects($this->once())->method('hashPassword')->with($user, $password)->willReturn($encodedPassword);
 
         $event = new ViewEvent($httpKernel, $request, 1, $user);
 
