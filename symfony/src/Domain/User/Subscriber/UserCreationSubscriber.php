@@ -10,12 +10,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserCreationSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private UserPasswordEncoderInterface $encoder
+        private UserPasswordHasherInterface $hasher
     ) {
     }
 
@@ -35,7 +35,7 @@ class UserCreationSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
 
         if ($user instanceof User && Request::METHOD_POST === $method) {
-            $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
+            $user->setPassword($this->hasher->hashPassword($user, $user->getPassword()));
         }
     }
 }

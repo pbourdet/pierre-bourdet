@@ -9,7 +9,7 @@ use Model\Account\UpdatePasswordDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UpdatePasswordController extends AbstractController
@@ -18,7 +18,7 @@ class UpdatePasswordController extends AbstractController
 
     public function __construct(
         private ValidatorInterface $validator,
-        private UserPasswordEncoderInterface $encoder
+        private UserPasswordHasherInterface $hasher
     ) {
     }
 
@@ -31,7 +31,7 @@ class UpdatePasswordController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        $user->setPassword($this->encoder->encodePassword($user, $data->getNewPassword()));
+        $user->setPassword($this->hasher->hashPassword($user, $data->getNewPassword()));
         $user->hasBeenUpdated();
 
         $em = $this->getDoctrine()->getManager();

@@ -1,5 +1,6 @@
 security:
-    encoders:
+    enable_authenticator_manager: true
+    password_hashers:
         App\Entity\User:
             algorithm: auto
 
@@ -17,11 +18,9 @@ security:
         refresh:
             pattern:  ^/security/refresh-token
             stateless: true
-            anonymous: true
         login:
             pattern:  ^/security/login
             stateless: true
-            anonymous: true
             json_login:
                 check_path:               /security/login
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
@@ -30,33 +29,23 @@ security:
             pattern:   ^/users
             methods: [DELETE, GET]
             stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+            jwt: ~
         todos:
             pattern:   ^/todos
             methods: [PUT, DELETE, GET, POST]
             stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+            jwt: ~
         games:
             pattern: ^/games
             methods: [GET, POST]
             stateless: true
-            anonymous: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+            jwt: ~
         account:
             pattern:   ^/account
             methods: [POST, GET]
             stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+            jwt: ~
         main:
-            anonymous: true
             lazy: true
             provider: app_user_provider
 

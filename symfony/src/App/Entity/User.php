@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Model\User\CreateUserDTO;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
@@ -70,7 +71,7 @@ use Symfony\Component\Serializer\Annotation as Serializer;
         formats: ['json'],
     )
 ]
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[
         ORM\Id,
@@ -344,5 +345,10 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
     }
 }

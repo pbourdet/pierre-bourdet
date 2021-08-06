@@ -9,7 +9,7 @@ use Model\Security\ResetPasswordDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ResetPasswordController extends AbstractController
@@ -18,7 +18,7 @@ class ResetPasswordController extends AbstractController
 
     public function __construct(
         private ValidatorInterface $validator,
-        private UserPasswordEncoderInterface $encoder,
+        private UserPasswordHasherInterface $hasher,
         private UserRepository $userRepository
     ) {
     }
@@ -37,7 +37,7 @@ class ResetPasswordController extends AbstractController
             return $this->json(['message' => 'INVALID_TOKEN'], Response::HTTP_UNAUTHORIZED);
         }
 
-        $user->setPassword($this->encoder->encodePassword($user, $data->password));
+        $user->setPassword($this->hasher->hashPassword($user, $data->password));
         $user->eraseResetPasswordData();
         $user->hasBeenUpdated();
 

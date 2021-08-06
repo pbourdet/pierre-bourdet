@@ -8,7 +8,7 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
@@ -16,17 +16,15 @@ class UserFixtures extends Fixture
     public const DEFAULT_PASSWORD = '123456';
     public const DEFAULT_NICKNAME = 'pierre';
 
-    private UserPasswordEncoderInterface $encoder;
-
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
-        $this->encoder = $encoder;
+    public function __construct(
+        private UserPasswordHasherInterface $hasher
+    ) {
     }
 
     public function load(ObjectManager $manager): void
     {
         $defaultUser = new User();
-        $password = $this->encoder->encodePassword($defaultUser, self::DEFAULT_PASSWORD);
+        $password = $this->hasher->hashPassword($defaultUser, self::DEFAULT_PASSWORD);
         $languages = ['fr', 'en'];
 
         $defaultUser
@@ -43,7 +41,7 @@ class UserFixtures extends Fixture
         for ($u = 0; $u < 10; ++$u) {
             $user = new User();
 
-            $password = $this->encoder->encodePassword($user, self::DEFAULT_PASSWORD);
+            $password = $this->hasher->hashPassword($user, self::DEFAULT_PASSWORD);
 
             $user
                 ->setEmail($faker->email())

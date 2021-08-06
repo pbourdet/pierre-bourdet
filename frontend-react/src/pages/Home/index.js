@@ -85,7 +85,7 @@ function Home () {
                             <div className="text-justify ml-3">
                                 <ul>
                                     <TechnicalStackEntry entry="PHP" version="8"/>
-                                    <TechnicalStackEntry entry="symfony" version="5.2"/>
+                                    <TechnicalStackEntry entry="symfony" version="5.3"/>
                                     <TechnicalStackEntry entry="API-Platform"/>
                                     <TechnicalStackEntry entry="doctrine"/>
                                     <TechnicalStackEntry entry="phpunit"/>
