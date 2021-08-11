@@ -329,5 +329,22 @@ export default {
             loggedOut: 'Connectez-vous pour enregistrer et consulter vos meilleures parties !',
             noGames: 'Vous n\'avez pas de partie enregistrée.'
         }
+    },
+
+    tennis: {
+        rankings: {
+            title: 'Classements',
+            competition: {
+                'ATP-singles': 'Simples ATP',
+                'WTA-singles': 'Simples WTA',
+                'ATP-doubles': 'Doubles ATP',
+                'WTA-doubles': 'Doubles WTA'
+            },
+            table: {
+                name: 'Nom',
+                tournaments: 'Tournois joués',
+                points: 'Points'
+            }
+        }
     }
 };
