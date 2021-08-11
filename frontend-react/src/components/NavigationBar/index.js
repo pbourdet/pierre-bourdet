@@ -50,6 +50,11 @@ function NavigationBar () {
                                         Snake
                                     </Nav.Link>
                                 </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/tennis/rankings">
+                                    <Nav.Link as="span">
+                                        Tennis Rankings
+                                    </Nav.Link>
+                                </NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                         {auth

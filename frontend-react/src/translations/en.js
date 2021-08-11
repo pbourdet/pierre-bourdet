@@ -328,5 +328,22 @@ export default {
             loggedOut: 'Sign in to save and view your best games !',
             noGames: 'You have no saved games.'
         }
+    },
+
+    tennis: {
+        rankings: {
+            title: 'Rankings',
+            competition: {
+                'ATP-singles': 'ATP Singles',
+                'WTA-singles': 'WTA Singles',
+                'ATP-doubles': 'ATP Doubles',
+                'WTA-doubles': 'WTA Doubles'
+            },
+            table: {
+                name: 'Name',
+                tournaments: 'Tournaments played',
+                points: 'Points'
+            }
+        }
     }
 };
