@@ -11,7 +11,8 @@ export default {
         signin: 'Sign in',
         signup: 'Sign up',
         profile: 'My profile',
-        logout: 'Log out'
+        logout: 'Log out',
+        tennis: 'Tennis Rankings'
     },
 
     toast: {

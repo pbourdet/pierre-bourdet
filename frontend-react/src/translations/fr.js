@@ -11,7 +11,8 @@ export default {
         signin: 'Se connecter',
         signup: 'S\'inscrire',
         profile: 'Mon profil',
-        logout: 'Déconnexion'
+        logout: 'Déconnexion',
+        tennis: 'Classements Tennis'
     },
 
     toast: {

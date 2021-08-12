@@ -52,7 +52,7 @@ function NavigationBar () {
                                 </NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/tennis/rankings">
                                     <Nav.Link as="span">
-                                        Tennis Rankings
+                                        <FormattedMessage id="navbar.tennis"/>
                                     </Nav.Link>
                                 </NavDropdown.Item>
                             </NavDropdown>
