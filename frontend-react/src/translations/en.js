@@ -335,6 +335,8 @@ export default {
         rankings: {
             title: 'Rankings',
             competition: {
+                singles: 'Singles',
+                doubles: 'Doubles',
                 'ATP-singles': 'ATP Singles',
                 'WTA-singles': 'WTA Singles',
                 'ATP-doubles': 'ATP Doubles',
@@ -344,6 +346,22 @@ export default {
                 name: 'Name',
                 tournaments: 'Tournaments played',
                 points: 'Points'
+            }
+        },
+        player: {
+            info: {
+                rankings: 'Rankings',
+                nationality: 'Nationality',
+                birth: 'Date of birth',
+                body: 'Height / Weight',
+                handedness: 'Handedness',
+                proDate: 'Pro since',
+                highestSinglesRanking: 'Highest singles ranking',
+                highestDoublesRanking: 'Highest doubles ranking'
+            },
+            handedness: {
+                right: 'Right',
+                left: 'Left'
             }
         }
     }

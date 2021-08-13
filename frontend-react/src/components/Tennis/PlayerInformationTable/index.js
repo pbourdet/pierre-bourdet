@@ -5,11 +5,11 @@ import img from '../../../assets/img';
 import PropTypes from 'prop-types';
 
 function PlayerInformationTable ({ player }) {
-    console.log(player);
     const rankingsOrder = ['singles', 'doubles'];
     const orderedRankings = player.competitorRankings
         .sort((r1, r2) => rankingsOrder.indexOf(r1.type) - rankingsOrder.indexOf(r2.type))
         .sort((r1, r2) => r1.raceRanking - r2.raceRanking);
+
     return (
         <Row>
             <Col md={3}>

@@ -32,5 +32,12 @@ export default {
         n7: require('./n7-logo.png').default
     },
 
+    tennis: {
+        placeholder: {
+            female: require('./female-placeholder.png').default,
+            male: require('./male-placeholder.png').default
+        }
+    },
+
     id: require('./id.jpg').default
 };
