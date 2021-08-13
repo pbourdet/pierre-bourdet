@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Spinner, Table } from 'react-bootstrap';
 import { getRankings } from '../../../requests/Tennis/rankings';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +10,7 @@ import PropTypes from 'prop-types';
 function RankingsTable ({ ranking }) {
     const name = ranking.split('-')[0];
     const type = ranking.split('-')[1];
+    const history = useHistory();
 
     if (type === 'doubles') {
         return <div>Soon...</div>;
@@ -16,6 +18,11 @@ function RankingsTable ({ ranking }) {
 
     const [rankings, setRankings] = useState({ competitorRankings: [] });
     const [loading, setLoading] = useState(true);
+
+    const handleRowClick = (competitor) => {
+        const formattedName = competitor.name.replace(/\W\s/, '-').toLowerCase();
+        history.push(`/tennis/player/${formattedName}`, { playerId: competitor.id });
+    };
 
     const getMovementSpan = (movement) => {
         let className = 'text-success';
@@ -47,7 +54,7 @@ function RankingsTable ({ ranking }) {
     }
 
     return (
-        <Table>
+        <Table hover>
             <thead>
                 <tr>
                     <th className="col-1"/>
@@ -59,12 +66,14 @@ function RankingsTable ({ ranking }) {
             </thead>
             <tbody style={{ fontSize: '95%' }}>
                 {rankings.competitorRankings.map((competitorRanking, index) => (
-                    <tr key={index}>
+                    <tr onClick={() => handleRowClick(competitorRanking.competitor)} style={{ cursor: 'pointer' }} key={index}>
                         <td className="pl-0 pr-0" style={{ fontSize: '85%' }}>
                             {competitorRanking.movement !== 0 && getMovementSpan(competitorRanking.movement)}
                         </td>
                         <td className="pl-0 pr-0 font-weight-bold">{competitorRanking.rank}.</td>
-                        <td className="pl-0 pr-0 text-left text-capitalize">{competitorRanking.competitor.name.toLowerCase()}</td>
+                        <td className="pl-0 pr-0 text-left text-capitalize text-info">
+                            <u>{competitorRanking.competitor.name.toLowerCase()}</u>
+                        </td>
                         <td className="pl-0 pr-0 col-2 d-none d-sm-table-cell">{competitorRanking.competitionsPlayed}</td>
                         <td className="pl-0 pr-0">{competitorRanking.points}</td>
                     </tr>

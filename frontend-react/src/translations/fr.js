@@ -11,7 +11,8 @@ export default {
         signin: 'Se connecter',
         signup: 'S\'inscrire',
         profile: 'Mon profil',
-        logout: 'Déconnexion'
+        logout: 'Déconnexion',
+        tennis: 'Classements Tennis'
     },
 
     toast: {
@@ -335,6 +336,8 @@ export default {
         rankings: {
             title: 'Classements',
             competition: {
+                singles: 'Simples',
+                doubles: 'Doubles',
                 'ATP-singles': 'Simples ATP',
                 'WTA-singles': 'Simples WTA',
                 'ATP-doubles': 'Doubles ATP',
@@ -344,6 +347,22 @@ export default {
                 name: 'Nom',
                 tournaments: 'Tournois joués',
                 points: 'Points'
+            }
+        },
+        player: {
+            info: {
+                rankings: 'Classements',
+                nationality: 'Nationalité',
+                birth: 'Date de naissance',
+                body: 'Taille / Poids',
+                handedness: 'Prise',
+                proDate: 'Pro depuis',
+                highestSinglesRanking: 'Meilleur classement simples',
+                highestDoublesRanking: 'Meilleur classement doubles'
+            },
+            handedness: {
+                right: 'Droite',
+                left: 'Gauche'
             }
         }
     }
