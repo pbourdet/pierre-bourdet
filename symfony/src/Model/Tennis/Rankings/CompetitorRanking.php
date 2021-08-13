@@ -29,6 +29,7 @@ class CompetitorRanking
 
     public string $competitorId = '';
 
+    #[Serializer\Groups([PlayerProfile::READ])]
     public bool $raceRanking = false;
 
     #[Serializer\Groups([Ranking::READ])]
