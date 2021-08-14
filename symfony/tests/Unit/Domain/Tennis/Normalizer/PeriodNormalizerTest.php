@@ -62,24 +62,22 @@ class PeriodNormalizerTest extends TestCase
             ],
         ];
 
-        $period = new Period();
-        $period->surfaces = $this->getAggregatedSurfaces();
-
         $this->normalizer
             ->expects($this->once())
             ->method('normalize')
-            ->with($period, 'json', ['groups' => PlayerProfile::READ])
+            ->with($this->getAggregatedPeriod(), 'json', ['groups' => PlayerProfile::READ])
             ->willReturn($expected)
         ;
 
-        $period->surfaces = $this->getInitialSurfaces();
-        $actual = $this->testedObject->normalize($period, 'json', ['groups' => PlayerProfile::READ]);
+        $actual = $this->testedObject->normalize($this->getInitialPeriod(), 'json', ['groups' => PlayerProfile::READ]);
 
-        $this->assertEquals($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
-    private function getInitialSurfaces(): array
+    private function getInitialPeriod(): Period
     {
+        $period = new Period();
+
         $hardSurface1 = new Surface();
         $hardSurface1->type = SurfaceTypeEnum::HARDCOURT_OUTDOOR;
         $hardSurface1Statistics = new Statistics();
@@ -107,11 +105,15 @@ class PeriodNormalizerTest extends TestCase
         $claySurfaceStatistics->matchesWon = 4;
         $claySurface->statistics = $claySurfaceStatistics;
 
-        return [$hardSurface1, $hardSurface2, $claySurface];
+        $period->surfaces = [$hardSurface1, $hardSurface2, $claySurface];
+
+        return $period;
     }
 
-    private function getAggregatedSurfaces(): array
+    private function getAggregatedPeriod(): Period
     {
+        $period = new Period();
+
         $aggregatedHardSurface = new Surface();
         $aggregatedHardSurface->type = SurfaceTypeEnum::HARD_TYPE;
         $aggregatedHardSurfaceStatistics = new Statistics();
@@ -130,6 +132,8 @@ class PeriodNormalizerTest extends TestCase
         $aggregatedClaySurfaceStatistics->matchesWon = 4;
         $aggregatedClaySurface->statistics = $aggregatedClaySurfaceStatistics;
 
-        return [$aggregatedHardSurface, $aggregatedClaySurface];
+        $period->surfaces = [$aggregatedHardSurface, $aggregatedClaySurface];
+
+        return $period;
     }
 }

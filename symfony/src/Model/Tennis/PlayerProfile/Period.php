@@ -22,4 +22,34 @@ class Period
     {
         $this->statistics = new Statistics();
     }
+
+    public function addSurface(Surface $newSurface): void
+    {
+        $this->statistics->addStatistics($newSurface->statistics);
+
+        $surface = $this->findSurface($newSurface);
+
+        if (null === $surface) {
+            $surface = new Surface();
+            $surface->type = $newSurface->type;
+            $surface->statistics->addStatistics($newSurface->statistics);
+
+            $this->surfaces[] = $surface;
+
+            return;
+        }
+
+        $surface->statistics->addStatistics($newSurface->statistics);
+    }
+
+    private function findSurface(Surface $searchedSurface): ?Surface
+    {
+        foreach ($this->surfaces as $surface) {
+            if ($surface->type === $searchedSurface->type) {
+                return $surface;
+            }
+        }
+
+        return null;
+    }
 }

@@ -30,7 +30,7 @@ class PeriodNormalizer implements ContextAwareNormalizerInterface
                 continue;
             }
 
-            $this->addSurfaceStatistics($aggregatedSurfaces, $surface, $surfaceType);
+            $aggregatedSurfaces[$surfaceType]->statistics->addStatistics($surface->statistics);
         }
 
         $period->surfaces = array_values($aggregatedSurfaces);
@@ -56,14 +56,5 @@ class PeriodNormalizer implements ContextAwareNormalizerInterface
         }
 
         return true;
-    }
-
-    /** @param array<string, Surface> $aggregatedSurfaces */
-    private function addSurfaceStatistics(array $aggregatedSurfaces, Surface $surface, string $surfaceType): void
-    {
-        $aggregatedSurfaces[$surfaceType]->statistics->competitionsPlayed += $surface->statistics->competitionsPlayed;
-        $aggregatedSurfaces[$surfaceType]->statistics->competitionsWon += $surface->statistics->competitionsWon;
-        $aggregatedSurfaces[$surfaceType]->statistics->matchesPlayed += $surface->statistics->matchesPlayed;
-        $aggregatedSurfaces[$surfaceType]->statistics->matchesWon += $surface->statistics->matchesWon;
     }
 }
