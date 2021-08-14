@@ -19,4 +19,12 @@ class Statistics
 
     #[Serializer\Groups([PlayerProfile::READ])]
     public int $matchesWon = 0;
+
+    public function addStatistics(Statistics $statistics): void
+    {
+        $this->competitionsWon += $statistics->competitionsWon;
+        $this->competitionsPlayed += $statistics->competitionsPlayed;
+        $this->matchesWon += $statistics->matchesWon;
+        $this->matchesPlayed += $statistics->matchesPlayed;
+    }
 }
