@@ -6,11 +6,13 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import { useLocale } from '../../../contexts/LocaleContext';
 
 function RankingsTable ({ ranking }) {
     const name = ranking.split('-')[0];
     const type = ranking.split('-')[1];
     const history = useHistory();
+    const locale = useLocale();
 
     if (type === 'doubles') {
         return <div>Soon...</div>;
@@ -40,7 +42,7 @@ function RankingsTable ({ ranking }) {
 
     useEffect(() => {
         async function getRankingsData () {
-            const rankingsData = await getRankings(name, type);
+            const rankingsData = await getRankings(name, type, locale);
 
             setRankings(rankingsData);
             setLoading(false);
