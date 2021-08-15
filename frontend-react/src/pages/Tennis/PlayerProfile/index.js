@@ -6,10 +6,12 @@ import { Container, Spinner } from 'react-bootstrap';
 import { Redirect, useLocation, useParams } from 'react-router-dom';
 import { getPlayerProfile } from '../../../requests/Tennis/playerProfile';
 import PlayerInformationTable from '../../../components/Tennis/PlayerInformationTable';
+import { useLocale } from '../../../contexts/LocaleContext';
 
 function TennisPlayerProfile () {
     const location = useLocation();
     const params = useParams();
+    const locale = useLocale();
     const [loading, setLoading] = useState(true);
     const [player, setPlayer] = useState({});
 
@@ -22,7 +24,7 @@ function TennisPlayerProfile () {
 
     useEffect(() => {
         async function getPlayerData () {
-            const playerData = await getPlayerProfile(playerId);
+            const playerData = await getPlayerProfile(playerId, locale);
 
             setPlayer(playerData);
             setLoading(false);

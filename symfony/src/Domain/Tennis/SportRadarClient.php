@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Domain\Tennis;
 
+use Model\Account\Enum\LanguageEnum;
 use Model\Tennis\Exception\SportRadarApiException;
 use Model\Tennis\PlayerProfile\PlayerProfile;
 use Model\Tennis\Rankings\RankingsBaseClass;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -18,14 +20,17 @@ class SportRadarClient
     public function __construct(
         private HttpClientInterface $client,
         private SerializerInterface $serializer,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        RequestStack $requestStack,
+        private string $locale = ''
     ) {
+        $this->locale = $requestStack->getMainRequest()?->getLocale() ?? LanguageEnum::EN;
     }
 
     public function getSinglesRankings(): RankingsBaseClass
     {
         return $this->request(
-            '/tennis/trial/v3/en/rankings.json',
+            sprintf('/tennis/trial/v3/%s/rankings.json', $this->locale),
             RankingsBaseClass::class
         );
     }
@@ -33,7 +38,7 @@ class SportRadarClient
     public function getPlayerProfile(string $playerId): object
     {
         return $this->request(
-            sprintf('/tennis/trial/v3/en/competitors/%s/profile.json', $playerId),
+            sprintf('/tennis/trial/v3/%s/competitors/%s/profile.json', $this->locale, $playerId),
             PlayerProfile::class
         );
     }
