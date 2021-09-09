@@ -17,8 +17,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class UserDeletionSubscriberTest extends TestCase
 {
-    /** @var UserAuthorizationChecker|MockObject */
-    private $userAuthorizationChecker;
+    private UserAuthorizationChecker|MockObject $userAuthorizationChecker;
 
     private UserDeletionSubscriber $testedObject;
 

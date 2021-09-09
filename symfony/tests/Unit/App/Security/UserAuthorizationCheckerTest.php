@@ -11,11 +11,11 @@ use App\Security\UserAuthorizationChecker;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Uid\Uuid;
 
 class UserAuthorizationCheckerTest extends TestCase
 {
-    /** @var MockObject|Security */
-    private $security;
+    private MockObject|Security $security;
 
     private UserAuthorizationChecker $testedObject;
 
@@ -40,8 +40,10 @@ class UserAuthorizationCheckerTest extends TestCase
             ->method('getUser')
             ->willReturn($loggedInUser);
 
-        $user->method('getId')->willReturn(1);
-        $loggedInUser->method('getId')->willReturn(1);
+        $uuid = Uuid::v4();
+
+        $user->method('getId')->willReturn($uuid);
+        $loggedInUser->method('getId')->willReturn($uuid);
 
         $this->testedObject->check($user);
     }
@@ -70,8 +72,8 @@ class UserAuthorizationCheckerTest extends TestCase
             ->method('getUser')
             ->willReturn($loggedInUser);
 
-        $user->method('getId')->willReturn(1);
-        $loggedInUser->method('getId')->willReturn(2);
+        $user->method('getId')->willReturn(Uuid::v4());
+        $loggedInUser->method('getId')->willReturn(Uuid::v4());
 
         $this->testedObject->check($user);
     }

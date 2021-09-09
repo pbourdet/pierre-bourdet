@@ -17,8 +17,7 @@ use Symfony\Component\Security\Core\Security;
 
 class TodoCreationSubscriberTest extends TestCase
 {
-    /** @var Security|MockObject */
-    private $security;
+    private Security|MockObject $security;
 
     private TodoCreationSubscriber $testedObject;
 

@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation as Serializer;
+use Symfony\Component\Uid\Uuid;
 
 #[
     ORM\Entity(repositoryClass: UserRepository::class),
@@ -75,11 +76,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[
         ORM\Id,
-        ORM\GeneratedValue,
-        ORM\Column(type: 'integer'),
+        ORM\Column(type: 'uuid'),
         Serializer\Groups(groups: ['get_users', 'get_user', 'get_me'])
     ]
-    private int $id;
+    private Uuid $id;
 
     #[
         ORM\Column(type: 'datetime'),
@@ -129,11 +129,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->createdAt = new \DateTimeImmutable();
         $this->todos = new ArrayCollection();
         $this->games = new ArrayCollection();
+        $this->id = Uuid::v4();
     }
 
-    public function getId(): int
+    public function getId(): Uuid
     {
         return $this->id;
+    }
+
+    //For tests purposes
+    public function setId(Uuid $id): void
+    {
+        $this->id = $id;
     }
 
     public function getCreatedAt(): \DateTimeInterface
