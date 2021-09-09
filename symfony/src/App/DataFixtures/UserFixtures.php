@@ -9,12 +9,14 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Uid\Uuid;
 
 class UserFixtures extends Fixture
 {
     public const DEFAULT_EMAIL = 'test@test.fr';
     public const DEFAULT_PASSWORD = '123456';
     public const DEFAULT_NICKNAME = 'pierre';
+    public const DEFAULT_UUID = '20354d7a-e4fe-47af-8ff6-187bca92f3f9';
 
     public function __construct(
         private UserPasswordHasherInterface $hasher
@@ -32,6 +34,7 @@ class UserFixtures extends Fixture
             ->setEmail(self::DEFAULT_EMAIL)
             ->setNickname(self::DEFAULT_NICKNAME)
             ->setLanguage('en')
+            ->setId(Uuid::fromString(self::DEFAULT_UUID))
         ;
 
         $manager->persist($defaultUser);

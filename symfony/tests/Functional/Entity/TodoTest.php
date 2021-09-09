@@ -28,7 +28,7 @@ class TodoTest extends AbstractEndPoint
         $this->assertCount(5, $contentDecoded);
     }
 
-    public function testPostTodo(): int
+    public function testPostTodo(): string
     {
         $response = $this->getResponseFromRequest(
             Request::METHOD_POST,
@@ -49,7 +49,7 @@ class TodoTest extends AbstractEndPoint
     /**
      * @depends testPostTodo
      */
-    public function testPutTodo(int $id): void
+    public function testPutTodo(string $id): void
     {
         $response = $this->getResponseFromRequest(
             Request::METHOD_PUT,
@@ -68,7 +68,7 @@ class TodoTest extends AbstractEndPoint
     /**
      * @depends testPostTodo
      */
-    public function testPatchTodo(int $id): void
+    public function testPatchTodo(string $id): void
     {
         $response = $this->getResponseFromRequest(
             Request::METHOD_PATCH,
@@ -87,7 +87,7 @@ class TodoTest extends AbstractEndPoint
     /**
      * @depends testPostTodo
      */
-    public function testDeleteTodo(int $id): void
+    public function testDeleteTodo(string $id): void
     {
         $response = $this->getResponseFromRequest(
             Request::METHOD_DELETE,

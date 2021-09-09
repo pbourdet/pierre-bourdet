@@ -13,8 +13,7 @@ use Symfony\Component\Security\Core\Security;
 
 class TodoCollectionDataProviderTest extends TestCase
 {
-    /** @var MockObject|Security */
-    private $security;
+    private MockObject|Security $security;
 
     private TodoCollectionDataProvider $testedObject;
 

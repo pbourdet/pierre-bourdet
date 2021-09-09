@@ -14,8 +14,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RefreshTokenRequestListenerTest extends TestCase
 {
-    /** @var MockObject|RouterInterface */
-    private $router;
+    private MockObject|RouterInterface $router;
 
     private RefreshTokenRequestListener $testedObject;
 

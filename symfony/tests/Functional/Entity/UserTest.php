@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Entity;
 
+use App\DataFixtures\UserFixtures;
 use Faker\Factory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,7 @@ class UserTest extends AbstractEndPoint
         $this->assertNotEmpty($contentDecoded);
     }
 
-    public function testPostUser(): int
+    public function testPostUser(): string
     {
         $response = $this->getResponseFromRequest(
             Request::METHOD_POST,
@@ -51,11 +52,11 @@ class UserTest extends AbstractEndPoint
         return $contentDecoded['id'];
     }
 
-    public function testGetDefaultUser(): int
+    public function testGetDefaultUser(): string
     {
         $response = $this->getResponseFromRequest(
             Request::METHOD_GET,
-            self::USERS_URI.'/1',
+            self::USERS_URI.'/'.UserFixtures::DEFAULT_UUID,
             '',
             [],
             true
@@ -74,7 +75,7 @@ class UserTest extends AbstractEndPoint
     /**
      * @depends testGetDefaultUser
      */
-    public function testPutDefaultUser(int $id): void
+    public function testPutDefaultUser(string $id): void
     {
         $response = $this->getResponseFromRequest(
             Request::METHOD_PUT,
@@ -95,7 +96,7 @@ class UserTest extends AbstractEndPoint
     /**
      * @depends testGetDefaultUser
      */
-    public function testPatchDefaultUser(int $id): void
+    public function testPatchDefaultUser(string $id): void
     {
         $response = $this->getResponseFromRequest(
                 Request::METHOD_PATCH,
@@ -116,7 +117,7 @@ class UserTest extends AbstractEndPoint
     /**
      * @depends testGetDefaultUser
      */
-    public function testDeleteDefaultUser(int $id): void
+    public function testDeleteDefaultUser(string $id): void
     {
         $response = $this->getResponseFromRequest(
             Request::METHOD_DELETE,
@@ -137,7 +138,7 @@ class UserTest extends AbstractEndPoint
     /**
      * @depends testPostUser
      */
-    public function testDeleteOtherUserWithJWT(int $id): void
+    public function testDeleteOtherUserWithJWT(string $id): void
     {
         $response = $this->getResponseFromRequest(
                 Request::METHOD_DELETE,
@@ -156,7 +157,7 @@ class UserTest extends AbstractEndPoint
     /**
      * @depends testGetDefaultUser
      */
-    public function testDeleteDefaultUserWithJWT(int $id): void
+    public function testDeleteDefaultUserWithJWT(string $id): void
     {
         $response = $this->getResponseFromRequest(
                 Request::METHOD_DELETE,

@@ -10,6 +10,7 @@ use App\Repository\TodoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Model\Todo\PersistTodoDTO;
 use Symfony\Component\Serializer\Annotation as Serializer;
+use Symfony\Component\Uid\Uuid;
 
 #[
     Orm\Entity(repositoryClass: TodoRepository::class),
@@ -48,11 +49,10 @@ class Todo
 {
     #[
         ORM\Id,
-        ORM\GeneratedValue,
-        ORM\Column(type: 'integer'),
+        ORM\Column(type: 'uuid'),
         Serializer\Groups(groups: ['get_todos', 'persist_todo'])
     ]
-    private int $id;
+    private Uuid $id;
 
     #[
         ORM\Column(type: 'string', length: 255),
@@ -90,7 +90,12 @@ class Todo
     ]
     private ?\DateTimeInterface $reminder = null;
 
-    public function getId(): int
+    public function __construct()
+    {
+        $this->id = Uuid::v4();
+    }
+
+    public function getId(): Uuid
     {
         return $this->id;
     }

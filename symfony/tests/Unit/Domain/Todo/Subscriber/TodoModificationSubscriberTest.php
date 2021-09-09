@@ -17,8 +17,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class TodoModificationSubscriberTest extends TestCase
 {
-    /** @var UserAuthorizationChecker|MockObject */
-    private $userAuthorizationChecker;
+    private UserAuthorizationChecker|MockObject $userAuthorizationChecker;
 
     private TodoModificationSubscriber $testedObject;
 
