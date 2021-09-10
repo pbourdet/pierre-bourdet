@@ -18,7 +18,7 @@ class Competitor
     #[Serializer\Groups([PlayerProfile::READ, Ranking::READ])]
     public string $country = '';
 
-    #[Serializer\Groups([Ranking::READ])]
+    #[Serializer\Groups([PlayerProfile::READ, Ranking::READ])]
     public string $countryCode = '';
 
     #[Serializer\Groups([PlayerProfile::READ])]
