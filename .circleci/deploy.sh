@@ -13,8 +13,8 @@ yarn --frozen-lockfile --prod
 yarn build
 
 #Delete server react build and transmit new on
-ssh $USERNAME@$HOSTNAME -p 5022 'rm -r build/* && echo ----Folder build/ empty---- && exit'
-scp -P 5022 -r ./build/* $USERNAME@$HOSTNAME:build/
+ssh $USERNAME@$HOSTNAME -p 5022 'rm -r public_html/* && echo ----Folder build/ empty---- && exit'
+scp -P 5022 -r ./build/* $USERNAME@$HOSTNAME:public_html/
 
 #Synchronization back to server
 cd ../symfony/
