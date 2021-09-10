@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import img from '../../assets/img';
 import { Dropdown } from 'react-bootstrap';
 import { useLocale, useLocaleUpdate } from '../../contexts/LocaleContext/index';
@@ -15,16 +15,14 @@ function LocaleSelector () {
     const auth = useAuth();
     const updateAuth = useAuthUpdate();
 
-    useEffect(() => {
-        async function updateLanguageSelected () {
-            if (auth !== null) {
-                await refreshToken(auth, updateAuth);
-                updateLanguage(locale);
-            }
-        }
+    const handleLocaleChange = async (choice) => {
+        updateLocale(choice);
 
-        updateLanguageSelected();
-    }, [locale, auth, updateAuth]);
+        if (auth !== null) {
+            await refreshToken(auth, updateAuth);
+            updateLanguage(locale);
+        }
+    };
 
     return (
         <Dropdown>
@@ -33,7 +31,7 @@ function LocaleSelector () {
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {localeChoiceList.map((choice, index) => (
-                    <Dropdown.Item key={index} onClick={() => updateLocale(choice)}>
+                    <Dropdown.Item key={index} onClick={() => handleLocaleChange(choice)}>
                         <img id={`${choice}-flag`} className="mr-1"
                             height={25} width={25}
                             alt={`${choice}-flag`} src={img.flag[choice]}
