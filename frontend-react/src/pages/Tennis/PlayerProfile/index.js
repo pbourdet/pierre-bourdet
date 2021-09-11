@@ -7,6 +7,7 @@ import { Redirect, useLocation, useParams } from 'react-router-dom';
 import { getPlayerProfile } from '../../../requests/Tennis/playerProfile';
 import PlayerInformationTable from '../../../components/Tennis/PlayerInformationTable';
 import { useLocale } from '../../../contexts/LocaleContext';
+import StatisticsTable from '../../../components/Tennis/StatisticsTable';
 
 function TennisPlayerProfile () {
     const location = useLocation();
@@ -44,7 +45,10 @@ function TennisPlayerProfile () {
                         <Spinner animation="grow" variant="danger"/>
                         <Spinner animation="grow" variant="warning"/>
                     </div>
-                    : <div><PlayerInformationTable player={player}/></div>
+                    : <div>
+                        <PlayerInformationTable player={player}/>
+                        <StatisticsTable player={player}/>
+                    </div>
                 }
             </Container>
         </motion.div>

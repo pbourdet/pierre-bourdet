@@ -359,6 +359,12 @@ export default {
                 highestSinglesRanking: 'Highest singles ranking',
                 highestDoublesRanking: 'Highest doubles ranking'
             },
+            statistics: {
+                title: 'Statistics',
+                played: 'Played',
+                won: 'Won',
+                win: 'Win'
+            },
             handedness: {
                 right: 'Right',
                 left: 'Left'

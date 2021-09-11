@@ -360,6 +360,12 @@ export default {
                 highestSinglesRanking: 'Meilleur classement simples',
                 highestDoublesRanking: 'Meilleur classement doubles'
             },
+            statistics: {
+                title: 'Statistiques',
+                played: 'Joués',
+                won: 'Gagnés',
+                win: 'Victoire'
+            },
             handedness: {
                 right: 'Droite',
                 left: 'Gauche'
