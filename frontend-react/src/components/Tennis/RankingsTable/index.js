@@ -9,8 +9,7 @@ import PropTypes from 'prop-types';
 import { useLocale } from '../../../contexts/LocaleContext';
 
 function RankingsTable ({ ranking }) {
-    const name = ranking.split('-')[0];
-    const type = ranking.split('-')[1];
+    const [name, type] = ranking.split('-');
     const history = useHistory();
     const locale = useLocale();
 
@@ -52,7 +51,11 @@ function RankingsTable ({ ranking }) {
     }, []);
 
     if (loading) {
-        return <div><Spinner animation="border"/></div>;
+        return <div className="m-5">
+            <Spinner animation="grow" variant="success"/>
+            <Spinner animation="grow" variant="danger"/>
+            <Spinner animation="grow" variant="warning"/>
+        </div>;
     }
 
     return (
