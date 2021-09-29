@@ -1,0 +1,43 @@
+version: '3.3'
+
+services:
+    php:
+        container_name: php
+        build: .
+        depends_on:
+            mysql:
+                condition: service_started
+        ports:
+            - 8000:8000
+        volumes:
+            - ./:/var/www/html
+        entrypoint: ./docker/entrypoint.sh
+    mysql:
+        container_name: mysql
+        image: mysql
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+            MYSQL_DATABASE: pbourdet
+        volumes:
+            - ./db:/var/lib/mysql
+    phpmyadmin:
+        container_name: phpmyadmin
+        depends_on:
+            - mysql
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        ports:
+            - '8080:80'
+        environment:
+            PMA_HOST: mysql
+    mailhog:
+        container_name: mailhog
+        image: mailhog/mailhog
+        logging:
+            driver: 'none'  #disable saving logs
+        ports:
+            - 1025:1025
+            - 8025:8025
