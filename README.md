@@ -1,13 +1,9 @@
-**Installation**
--
-(requires Vagrant & Virtualbox)
-- git clone https://github.com/pbourdet/pierre-bourdet.git
-- cd homestead/
-- composer install
-- vagrant up
-- cd ../frontend-react
-- yarn install
-- yarn start
+## Installation
 
-The website is up at  http://localhost:3000<br/>
-The REST API is exposed at http://192.168.10.10
+(requires Docker & docker compose)
+- git clone https://github.com/pbourdet/pierre-bourdet.git
+- cd pierre-bourdet/
+- docker-compose up
+
+The React app is up at  https://localhost:3000
+The REST API is exposed at https://localhost:8000

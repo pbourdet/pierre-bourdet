@@ -1,16 +1,16 @@
 version: '3.3'
 
 services:
-    php:
-        container_name: php
-        build: .
+    symfony:
+        container_name: symfony
+        build: ./symfony/.
         depends_on:
             mysql:
-                condition: service_started
+                condition: service_healthy
         ports:
             - 8000:8000
         volumes:
-            - ./:/var/www/html
+            - ./symfony/:/var/www/html
         entrypoint: ./docker/entrypoint.sh
     mysql:
         container_name: mysql
@@ -21,8 +21,10 @@ services:
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
             MYSQL_DATABASE: pbourdet
-        volumes:
-            - ./db:/var/lib/mysql
+        healthcheck:
+            test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+            timeout: 20s
+            retries: 10
     phpmyadmin:
         container_name: phpmyadmin
         depends_on:
@@ -30,7 +32,7 @@ services:
         image: phpmyadmin/phpmyadmin
         restart: always
         ports:
-            - '8080:80'
+            - 8080:80
         environment:
             PMA_HOST: mysql
     mailhog:
@@ -41,3 +43,11 @@ services:
         ports:
             - 1025:1025
             - 8025:8025
+    react:
+        container_name: react
+        build: ./frontend-react/.
+        volumes:
+            - ./frontend-react/:/var/app/html
+        ports:
+            - 3000:3000
+        entrypoint: [ "yarn", "start" ]
