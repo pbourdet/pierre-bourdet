@@ -11,6 +11,7 @@ services:
             - 8000:8000
         volumes:
             - ./symfony/:/var/www/html
+            - ./symfony/docker/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
         entrypoint: ./docker/entrypoint.sh
     mysql:
         container_name: mysql
