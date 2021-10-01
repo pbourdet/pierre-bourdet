@@ -18,6 +18,10 @@ codecheck:
 fixtures:
 	php bin/console doctrine:fixtures:load --no-interaction
 
+.PHONY:migrations
+migrations:
+	php bin/console doctrine:migration:migrate --no-interaction
+
 test:
 	make fixtures
 	./vendor/bin/simple-phpunit
