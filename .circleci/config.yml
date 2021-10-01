@@ -85,7 +85,9 @@ jobs:
             - phpunit
 
     deploy_prod:
-        <<: *defaults
+        working_directory: ~/pbourdet
+        docker:
+            -   image: circleci/php:8.0-node
         steps:
             - add_ssh_keys:
                 fingerprint:
