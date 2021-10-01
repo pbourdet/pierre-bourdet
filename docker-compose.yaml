@@ -1,0 +1,54 @@
+version: '3.3'
+
+services:
+    symfony:
+        container_name: symfony
+        build: ./symfony/.
+        depends_on:
+            mysql:
+                condition: service_healthy
+        ports:
+            - 8000:8000
+        volumes:
+            - ./symfony/:/var/www/html
+            - ./symfony/docker/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+        entrypoint: ./docker/entrypoint.sh
+    mysql:
+        container_name: mysql
+        image: mysql
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+            MYSQL_DATABASE: pbourdet
+        healthcheck:
+            test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+            timeout: 20s
+            retries: 10
+    phpmyadmin:
+        container_name: phpmyadmin
+        depends_on:
+            - mysql
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        ports:
+            - 8080:80
+        environment:
+            PMA_HOST: mysql
+    mailhog:
+        container_name: mailhog
+        image: mailhog/mailhog
+        logging:
+            driver: 'none'  #disable saving logs
+        ports:
+            - 1025:1025
+            - 8025:8025
+    react:
+        container_name: react
+        build: ./frontend-react/.
+        volumes:
+            - ./frontend-react/:/var/app/html
+        ports:
+            - 3000:3000
+        entrypoint: [ "yarn", "start" ]

@@ -1,5 +1,0 @@
-{
-    "require": {
-        "laravel/homestead": "^11.0"
-    }
-}
