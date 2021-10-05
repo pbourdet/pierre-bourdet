@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class PlayerProfilePeriodsSumNormalizerTest extends TestCase
 {
-    private MockObject | ObjectNormalizer $normalizer;
+    private MockObject|ObjectNormalizer $normalizer;
 
     private PlayerProfilePeriodsSumNormalizer $testedObject;
 

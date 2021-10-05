@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class RankingsRepositoryTest extends TestCase
 {
-    private MockObject | SportRadarClient $client;
+    private MockObject|SportRadarClient $client;
 
     private RankingsRepository $testedObject;
 

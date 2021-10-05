@@ -50,7 +50,7 @@ commands:
         steps:
             - run:
                   name: PHP CS Fixer
-                  command: docker-compose exec symfony make csfix
+                  command: docker-compose exec symfony ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation --using-cache=no
             - run:
                   name: Yaml lint
                   command: docker-compose exec symfony make yamlint
