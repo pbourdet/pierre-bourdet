@@ -44,6 +44,18 @@ services:
         ports:
             - 1025:1025
             - 8025:8025
+    mercure:
+        container_name: mercure
+        image: dunglas/mercure
+        restart: unless-stopped
+        environment:
+            SERVER_NAME: ':80'
+            MERCURE_PUBLISHER_JWT_KEY: '1234'
+            MERCURE_SUBSCRIBER_JWT_KEY: '1234'
+        command: /usr/bin/caddy run -config /etc/caddy/Caddyfile.dev
+        ports:
+            - "80:80"
+            - "443:443"
     react:
         container_name: react
         build: ./frontend-react/.
