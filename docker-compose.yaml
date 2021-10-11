@@ -1,18 +1,21 @@
-version: '3.3'
+version: '3.8'
 
 services:
     symfony:
         container_name: symfony
-        build: ./symfony/.
+        build:
+            context: ./symfony/.
+            target: symfony_dev
         depends_on:
             mysql:
-                condition: service_healthy
+                condition: service_started
         ports:
-            - 8000:8000
+            - 8000:80
         volumes:
-            - ./symfony/:/var/www/html
+            - ./symfony/:/app
             - ./symfony/docker/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-        entrypoint: ./docker/entrypoint.sh
+        environment:
+            APP_ENV: dev
     mysql:
         container_name: mysql
         image: mysql
@@ -22,10 +25,6 @@ services:
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
             MYSQL_DATABASE: pbourdet
-        healthcheck:
-            test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-            timeout: 20s
-            retries: 10
     phpmyadmin:
         container_name: phpmyadmin
         depends_on:
@@ -49,13 +48,12 @@ services:
         image: dunglas/mercure
         restart: unless-stopped
         environment:
-            SERVER_NAME: ':80'
+            SERVER_NAME: ':4000'
             MERCURE_PUBLISHER_JWT_KEY: '1234'
             MERCURE_SUBSCRIBER_JWT_KEY: '1234'
         command: /usr/bin/caddy run -config /etc/caddy/Caddyfile.dev
         ports:
-            - "80:80"
-            - "443:443"
+            - "4000:4000"
     react:
         container_name: react
         build: ./frontend-react/.

@@ -1,12 +1,16 @@
-version: '3.3'
+version: '3.8'
 
 services:
     symfony:
         container_name: symfony
-        build: ./symfony/.
+        build:
+            context: ./symfony/.
+            target: symfony
         ports:
-            - 8000:8000
+            - 8000:80
         entrypoint: ["tail", "-f", "/dev/null"]
+        environment:
+            APP_ENV: test
     mysql:
         container_name: mysql
         image: mysql

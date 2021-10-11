@@ -25,7 +25,7 @@ commands:
             - run:
                   name: Start containers
                   command: |
-                      docker-compose -f docker-compose.test.yaml up -d
+                      docker-compose -f docker-compose-test.yaml up -d
                       docker-compose exec symfony composer install
 
     migrations:
