@@ -5,5 +5,5 @@
 - cd pierre-bourdet/
 - docker-compose up
 
-The React app is up at  https://localhost:3000
-The REST API is exposed at https://localhost:8000
+The React app is up at  http://localhost:3000
+The REST API is exposed at http://localhost:8000

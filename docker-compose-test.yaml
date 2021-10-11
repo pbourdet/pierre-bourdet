@@ -30,7 +30,11 @@ services:
             - 8025:8025
     react:
         container_name: react
-        build: ./frontend-react/.
+        build:
+            context: ./frontend-react/.
+            target: react
+            args:
+                APP_ENV: dev
         ports:
             - 3000:3000
         entrypoint: ["tail", "-f", "/dev/null"]

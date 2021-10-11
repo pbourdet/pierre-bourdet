@@ -3,6 +3,7 @@ version: '3.8'
 services:
     symfony:
         container_name: symfony
+        image: pbourdet/symfony
         build:
             context: ./symfony/.
             target: symfony_dev
@@ -56,9 +57,13 @@ services:
             - "4000:4000"
     react:
         container_name: react
-        build: ./frontend-react/.
+        image: pbourdet/react
+        build:
+            context: ./frontend-react/.
+            target: react
+            args:
+                APP_ENV: dev
         volumes:
-            - ./frontend-react/:/var/app/html
+            - ./frontend-react/:/app
         ports:
             - 3000:3000
-        entrypoint: [ "yarn", "start" ]
