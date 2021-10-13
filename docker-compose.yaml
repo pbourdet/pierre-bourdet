@@ -3,7 +3,7 @@ version: '3.8'
 services:
     symfony:
         container_name: symfony
-        image: pbourdet/symfony
+        image: pbourdet/symfony-dev
         build:
             context: ./symfony/.
             target: symfony_dev
@@ -57,7 +57,7 @@ services:
             - "4000:4000"
     react:
         container_name: react
-        image: pbourdet/react
+        image: pbourdet/react-dev
         build:
             context: ./frontend-react/.
             target: react
