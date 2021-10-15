@@ -15,21 +15,20 @@ CURRENT_FRONT_SHA=$(find ./frontend-react/ -type f \( -exec sha1sum "$PWD"/{} \;
 CURRENT_BACK_SHA=$(find ./symfony/ -type f \( -exec sha1sum "$PWD"/{} \; \) | awk '{print $1}' | sort | sha1sum | sed 's/\(.*\).../\1/')
 
 #Build and push images
-if [ "$CURRENT_FRONT_SHA" = $PREVIOUS_FRONT_SHA ]; then
+if [ "$CURRENT_FRONT_SHA" != $PREVIOUS_FRONT_SHA ]; then
   docker build -t "$FRONT_IMAGE_URL" ./frontend-react/.
   docker push "$FRONT_IMAGE_URL"
 fi
-
-if [ "$CURRENT_BACK_SHA" = $PREVIOUS_BACK_SHA ]; then
+if [ "$CURRENT_BACK_SHA" != $PREVIOUS_BACK_SHA ]; then
   docker build -t "$BACK_IMAGE_URL" --target symfony ./symfony/.
   docker push "$BACK_IMAGE_URL"
 fi
 
 #Deploy to Cloud Run
-if [ "$CURRENT_FRONT_SHA" = $PREVIOUS_FRONT_SHA ]; then
+if [ "$CURRENT_FRONT_SHA" != $PREVIOUS_FRONT_SHA ]; then
   gcloud run deploy react --image "$FRONT_IMAGE_URL":latest
 fi
-if [ "$CURRENT_BACK_SHA" = $PREVIOUS_BACK_SHA ]; then
+if [ "$CURRENT_BACK_SHA" != $PREVIOUS_BACK_SHA ]; then
   gcloud run deploy symfony --image "$BACK_IMAGE_URL":latest
 fi
 
@@ -39,11 +38,11 @@ curl --location --request DELETE "https://circleci.com/api/v2/project/$CIRCLECI_
 curl --location --request DELETE "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar/PREVIOUS_BACK_SHA" \
 --header "Circle-Token: $CIRCLECI_API_TOKEN"
 
-curl --location --request POST "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/PREVIOUS_FRONT_SHA" \
+curl --location --request POST "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar" \
 --header "Circle-Token: $CIRCLECI_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data-raw "{\"name\":\"PREVIOUS_FRONT_SHA\",\"value\":\"$CURRENT_FRONT_SHA\"}"
-curl --location --request POST "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/PREVIOUS_BACK_SHA" \
+curl --location --request POST "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar" \
 --header "Circle-Token: $CIRCLECI_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data-raw "{\"name\":\"PREVIOUS_BACK_SHA\",\"value\":\"$CURRENT_BACK_SHA\"}"
