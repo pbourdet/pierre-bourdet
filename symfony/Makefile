@@ -10,6 +10,9 @@ phpstan:
 yamlint:
 	./vendor/bin/yaml-lint config/
 
+phpunit:
+	./vendor/bin/simple-phpunit
+
 codecheck:
 	make csfix
 	make phpstan

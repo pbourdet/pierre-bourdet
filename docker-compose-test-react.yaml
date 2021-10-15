@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+    react:
+        container_name: react
+        build:
+            context: ./frontend-react/.
+            target: react
+            args:
+                APP_ENV: dev
+        ports:
+            - 3000:3000
+        entrypoint: ["tail", "-f", "/dev/null"]
