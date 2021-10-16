@@ -9,7 +9,6 @@ use App\Entity\User;
 use Model\Contact\ContactMeDTO;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
 
 class EmailFactory
 {
@@ -21,13 +20,17 @@ class EmailFactory
     ) {
     }
 
-    public function createForContactMe(ContactMeDTO $dto): Email
+    public function createForContactMe(ContactMeDTO $dto): TemplatedEmail
     {
-        return (new Email())
+        return (new TemplatedEmail())
             ->to(new Address($this->personalEmail))
-            ->from(new Address($dto->getEmail(), $dto->getName()))
+            ->from(new Address($this->contactEmail, $dto->getName()))
             ->subject($dto->getSubject())
-            ->text($dto->getMessage())
+            ->htmlTemplate('email/contact.html.twig')
+            ->context([
+                'from' => $dto->getEmail(),
+                'message' => $dto->getMessage(),
+            ])
         ;
     }
 

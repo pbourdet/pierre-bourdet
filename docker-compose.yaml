@@ -64,6 +64,7 @@ services:
             args:
                 APP_ENV: dev
         volumes:
+            - /app/node_modules
             - ./frontend-react/:/app
         ports:
             - 3000:3000
