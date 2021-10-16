@@ -2,7 +2,6 @@
 
 php-fpm -D
 while ! pgrep php-fpm; do sleep 0.1; done;
-nginx
 
 PHP_INI_RECOMMENDED="$PHP_INI_DIR/php.ini-production"
 if [ "$APP_ENV" != 'prod' ]; then
@@ -17,7 +16,7 @@ if [ "$APP_ENV" = 'prod' ]; then
     make migrations
   fi
 
-  exit 0;
+  nginx -g 'daemon off;'
 fi
 
 rm -f .env.local.php
@@ -50,6 +49,8 @@ if grep -q ^DATABASE_URL= .env; then
 fi
 
 bin/console lexik:jwt:generate-keypair --skip-if-exists
+
+nginx
 
 LOGFILE=/app/var/log/"$APP_ENV".log
 if [ ! -f "$LOGFILE" ]; then
