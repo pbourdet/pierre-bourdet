@@ -12,7 +12,7 @@ ln -sf "$PHP_INI_RECOMMENDED" "$PHP_INI_DIR/php.ini"
 if [ "$APP_ENV" = 'prod' ]; then
   bin/console lexik:jwt:generate-keypair --skip-if-exists
 
-  if [ "$(bin/console dbal:run-sql "select count(*) from doctrine_migration_versions" | awk -F"'" '{print $4}')" != "$(ls migrations/ | wc -l)" ]; then
+  if [ "$(bin/console dbal:run-sql "select count(*) from doctrine_migration_versions" | tr -d '\n' | awk -F'"' '{print $4}')" != "$(ls migrations/ | wc -l)" ]; then
     make migrations
   fi
 
