@@ -22,6 +22,8 @@ export default {
         eslint: require('./eslint-icon.svg').default,
         jquery: require('./jquery-icon.svg').default,
         git: require('./git-icon.svg').default,
+        docker: require('./docker-icon.svg').default,
+        GCP: require('./gcp-icon.svg').default,
         doctrine: require('./doctrine-icon.svg').default
     },
 

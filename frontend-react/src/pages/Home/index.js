@@ -96,14 +96,14 @@ function Home () {
                         <Col sm={4}>
                             <div className="h5 mb-4">
                                 <FontAwesomeIcon className="mr-2" icon={faCogs}/>
-                                <span><FormattedMessage id="homepage.techCard.misc"/></span>
+                                <span>Devops</span>
                             </div>
                             <div className="text-justify ml-3">
                                 <ul>
                                     <TechnicalStackEntry entry="circleci"/>
                                     <TechnicalStackEntry entry="sentry"/>
-                                    <TechnicalStackEntry entry="laravel" version="Homestead"/>
-                                    <TechnicalStackEntry entry="vagrant"/>
+                                    <TechnicalStackEntry entry="docker"/>
+                                    <TechnicalStackEntry entry="GCP"/>
                                 </ul>
                             </div>
                         </Col>
