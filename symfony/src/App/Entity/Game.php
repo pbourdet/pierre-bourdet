@@ -37,7 +37,7 @@ abstract class Game
     #[Assert\GreaterThan(value: 0)]
     private int $score = 0;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'games')]
     #[Serializer\Groups(groups: [Game::READ_COLLECTION_TOP_GROUP])]
     private User $user;
 
