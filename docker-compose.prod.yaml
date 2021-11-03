@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+    symfony:
+        container_name: symfony
+        image: pbourdet/symfony-prod
+        build:
+            context: ./symfony/.
+            target: symfony_php
+        restart: unless-stopped
+        volumes:
+            - php_socket:/var/run/php
+            - php_logs:/srv/app/var/log
+        environment:
+            APP_ENV: prod
+    workers:
+        container_name: workers
+        image: pbourdet/workers-prod
+        build:
+            context: ./symfony/.
+            target: symfony_php
+        restart: unless-stopped
+        command: [ "bin/console", "messenger:consume", "async" ]
+        environment:
+            APP_ENV: prod
+    caddy:
+        container_name: caddy
+        image: pbourdet/caddy-prod
+        build:
+            context: ./symfony/.
+            target: symfony_caddy
+        depends_on:
+            - symfony
+        restart: unless-stopped
+        volumes:
+            - php_socket:/var/run/php
+            - caddy_data:/data
+            - caddy_config:/config
+        ports:
+            - "80:80/tcp"
+            - "443:443/tcp"
+            - "443:443/udp"
+        environment:
+            SERVER_NAME: ${SERVER_NAME}
+            MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
+            MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
+    php-logs:
+        container_name: php-logs
+        image: busybox
+        depends_on:
+            - symfony
+        volumes:
+            - php_logs:/var/log
+            - ./symfony/docker/php-logs/print-logs.sh:/var/print-logs.sh
+        command: ["sh", "/var/print-logs.sh"]
+        environment:
+            APP_ENV: prod
+volumes:
+    php_socket:
+    caddy_data:
+    caddy_config:
+    php_logs:

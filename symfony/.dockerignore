@@ -1,7 +1,4 @@
 ###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
 /public/bundles/
 /var/
 /db/
@@ -15,11 +12,13 @@
 /phpunit.xml
 /coverage
 ###< symfony/phpunit-bridge ###
-###> lexik/jwt-authentication-bundle ###
-/config/jwt/*.pem
-###< lexik/jwt-authentication-bundle ###
 
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
+
+###> Docker ###
+Dockerfile
+.dockerignore
+####< docker ###

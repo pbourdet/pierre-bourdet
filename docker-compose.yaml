@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
     symfony:
@@ -6,55 +6,84 @@ services:
         image: pbourdet/symfony-dev
         build:
             context: ./symfony/.
-            target: symfony_dev
-        depends_on:
-            mysql:
-                condition: service_started
-        ports:
-            - 8000:80
+            target: symfony_php_dev
+        restart: unless-stopped
         volumes:
-            - ./symfony/:/app
-            - ./symfony/docker/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            - php_socket:/var/run/php
+            - php_logs:/srv/app/var/log
+            - ./symfony/:/srv/app:rw,cached
+            - ./symfony/docker/php/conf.d/symfony.dev.ini:/usr/local/etc/php/conf.d/symfony.ini
         environment:
             APP_ENV: dev
-    mysql:
-        container_name: mysql
-        image: mysql
-        restart: always
-        ports:
-            - 3306:3306
+            RUN_FIXTURES: 'true'
+            #Xdebug config
+            XDEBUG_CONFIG: >-
+                discover_client_host=yes
+                start_with_request=yes
+            XDEBUG_MODE: debug
+            PHP_IDE_CONFIG: serverName=symfony
+    workers:
+        container_name: workers
+        image: pbourdet/workers-dev
+        build:
+            context: ./symfony/.
+            target: symfony_php
+        restart: unless-stopped
+        command: ["bin/console", "messenger:consume", "async"]
         environment:
-            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-            MYSQL_DATABASE: pbourdet
-    phpmyadmin:
-        container_name: phpmyadmin
+            APP_ENV: dev
+    caddy:
+        container_name: caddy
+        image: pbourdet/caddy-dev
+        build:
+            context: ./symfony/.
+            target: symfony_caddy
         depends_on:
-            - mysql
-        image: phpmyadmin/phpmyadmin
+             - symfony
+        restart: unless-stopped
+        volumes:
+            - php_socket:/var/run/php
+            - caddy_data:/data
+            - caddy_config:/config
+            - ./symfony/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+            - ./symfony/public:/srv/app/public:ro
+        ports:
+            - "80:80/tcp"
+            - "443:443/tcp"
+            - "443:443/udp"
+        environment:
+            SERVER_NAME: localhost, caddy:80
+            MERCURE_PUBLISHER_JWT_KEY: 1234
+            MERCURE_SUBSCRIBER_JWT_KEY: 1234
+    php-logs:
+        container_name: php-logs
+        image: busybox
+        depends_on:
+            - symfony
+        volumes:
+            - php_logs:/var/log
+            - ./symfony/docker/php-logs/print-logs.sh:/var/print-logs.sh
+        command: ["sh", "/var/print-logs.sh"]
+        environment:
+            APP_ENV: dev
+    postgres:
+        container_name: postgres
+        image: postgres:13-alpine
         restart: always
         ports:
-            - 8080:80
+            - "5432:5432"
         environment:
-            PMA_HOST: mysql
+            POSTGRES_DB: pbourdet
+            POSTGRES_PASSWORD: root
+            POSTGRES_USER: root
     mailhog:
         container_name: mailhog
         image: mailhog/mailhog
         logging:
-            driver: 'none'  #disable saving logs
+            driver: 'none'
         ports:
-            - 1025:1025
-            - 8025:8025
-    mercure:
-        container_name: mercure
-        image: dunglas/mercure
-        restart: unless-stopped
-        environment:
-            SERVER_NAME: ':4000'
-            MERCURE_PUBLISHER_JWT_KEY: '1234'
-            MERCURE_SUBSCRIBER_JWT_KEY: '1234'
-        command: /usr/bin/caddy run -config /etc/caddy/Caddyfile.dev
-        ports:
-            - "4000:4000"
+            - "1025:1025"
+            - "8025:8025"
     react:
         container_name: react
         image: pbourdet/react-dev
@@ -68,3 +97,8 @@ services:
             - ./frontend-react/:/app
         ports:
             - 3000:3000
+volumes:
+    php_socket:
+    caddy_data:
+    caddy_config:
+    php_logs:

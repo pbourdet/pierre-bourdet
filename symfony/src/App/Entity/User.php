@@ -19,6 +19,7 @@ use Symfony\Component\Serializer\Annotation as Serializer;
 use Symfony\Component\Uid\Uuid;
 
 #[
+    ORM\Table(name: 'app_user'),
     ORM\Entity(repositoryClass: UserRepository::class),
     ApiResource(
         collectionOperations: [
