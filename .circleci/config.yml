@@ -28,6 +28,12 @@ commands:
                       chmod 755 .circleci/tests.sh
                       ./.circleci/tests.sh
 
+    install_compose:
+        steps:
+            - run:
+                  name: Install Docker Compose
+                  command: |
+                      apk add docker-compose
     deploy:
         steps:
             - setup_remote_docker:
@@ -52,6 +58,7 @@ jobs:
             - image: google/cloud-sdk:alpine
         steps:
             - checkout
+            - install_compose
             - deploy
 
 workflows:
