@@ -8,7 +8,6 @@ gcloud config set compute/zone $GCP_ZONE
 #Login to docker as service account
 echo $GCP_ARTIFACT_ACCOUNT_KEY | docker login -u _json_key --password-stdin https://$GCP_REGION-docker.pkg.dev
 
-docker-compose version
 #Images name and SHA variables
 FRONT_IMAGE_URL=$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_NAME/react-prod/front
 PHP_IMAGE_URL=$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_NAME/symfony-prod/php
