@@ -66,7 +66,7 @@ TodoTable.propTypes = {
     setTodos: PropTypes.func.isRequired,
     todos: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number,
+            id: PropTypes.string,
             date: PropTypes.oneOfType([
                 PropTypes.string,
                 PropTypes.number
