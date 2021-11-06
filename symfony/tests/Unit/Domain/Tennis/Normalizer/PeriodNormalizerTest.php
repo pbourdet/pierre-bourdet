@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Domain\Tennis\Normalizer;
 
 use Domain\Tennis\Normalizer\PeriodNormalizer;
