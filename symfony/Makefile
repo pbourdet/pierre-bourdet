@@ -2,7 +2,7 @@ cc:
 	php bin/console c:c
 
 csfix:
-	./vendor/bin/php-cs-fixer fix src/ --allow-risky=yes $(1)
+	./vendor/bin/php-cs-fixer fix --allow-risky=yes $(1)
 
 phpstan:
 	./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=-1
