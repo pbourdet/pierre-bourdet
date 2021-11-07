@@ -16,7 +16,7 @@ if [ "$CURRENT_BACK_SHA" = $PREVIOUS_BACK_SHA ]; then
 else
   docker-compose -f docker-compose-test-symfony.yaml up -d
   docker-compose exec symfony composer install
-  docker-compose exec symfony ./vendor/bin/php-cs-fixer fix src/ --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation --using-cache=no
+  docker-compose exec symfony ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation --using-cache=no
   docker-compose exec symfony make yamlint
   docker-compose exec symfony make phpstan
   docker-compose exec symfony make migrations
