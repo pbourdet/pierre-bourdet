@@ -9,6 +9,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ConversationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Model\Messaging\CreateConversationDTO;
 use Symfony\Component\Serializer\Annotation as Serializer;
@@ -27,19 +28,25 @@ use Symfony\Component\Uid\Uuid;
         ],
     ],
     itemOperations: [
-        'get',
+        'get' => [
+            'normalization_context' => [
+                'groups' => Conversation::READ_ITEM_GROUP,
+            ],
+        ],
     ],
     formats: ['json']
 )]
 class Conversation
 {
     public const READ_COLLECTION_GROUP = 'read:collection';
+    public const READ_ITEM_GROUP = 'read:item';
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     #[ApiProperty(identifier: true)]
     #[Serializer\Groups(groups: [
         Conversation::READ_COLLECTION_GROUP,
+        Conversation::READ_ITEM_GROUP,
     ])]
     private Uuid $id;
 
@@ -50,6 +57,8 @@ class Conversation
     private Collection $participants;
 
     #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Message::class, orphanRemoval: true)]
+    #[ORM\OrderBy(['date' => Criteria::ASC])]
+    #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
     private Collection $messages;
 
     public function __construct()

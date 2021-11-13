@@ -78,7 +78,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[
         ORM\Id,
         ORM\Column(type: 'uuid'),
-        Serializer\Groups(groups: ['get_users', 'get_user', 'get_me'])
+        Serializer\Groups(groups: [
+            'get_users',
+            'get_user',
+            'get_me',
+            Conversation::READ_COLLECTION_GROUP,
+            Conversation::READ_ITEM_GROUP,
+        ])
     ]
     private Uuid $id;
 
@@ -114,6 +120,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             'get_user',
             Game::READ_COLLECTION_TOP_GROUP,
             Conversation::READ_COLLECTION_GROUP,
+            Conversation::READ_ITEM_GROUP,
         ])
     ]
     private string $nickname = '';

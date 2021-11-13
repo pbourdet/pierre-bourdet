@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation as Serializer;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
@@ -13,10 +14,12 @@ class Message
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
+    #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
     private Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
     private Participant $sender;
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'messages')]
@@ -24,9 +27,11 @@ class Message
     private Conversation $conversation;
 
     #[ORM\Column(type: 'text')]
+    #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
     private string $content = '';
 
     #[ORM\Column]
+    #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
     private \DateTimeImmutable $date;
 
     public function __construct()
