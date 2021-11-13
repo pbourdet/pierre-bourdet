@@ -30,11 +30,10 @@ final class OpenApiDecorator implements OpenApiFactoryInterface
         $filteredPaths = new Paths();
 
         foreach ($paths as $path => $pathItem) {
-            if ('/todos/{id}' === $path) {
-                $pathItem = $pathItem->withGet(null);
-            }
-
-            if ('/games/snake/{id}' === $path) {
+            if ('/todos/{id}' === $path
+                || '/games/snake/{id}' === $path
+                || '/messages/{id}' === $path
+            ) {
                 $pathItem = $pathItem->withGet(null);
             }
 

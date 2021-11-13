@@ -47,7 +47,7 @@ class ConversationCreationValidator extends ConstraintValidator
         }
 
         foreach ($user->getParticipants() as $participant) {
-            if ($participant->getConversation()->hasUser($value)) {
+            if ($participant->getConversation()->hasUser($otherUser)) {
                 $this->context->buildViolation($constraint->conversationExistsMessage)
                     ->setParameter('{{ id }}', $value)
                     ->addViolation();

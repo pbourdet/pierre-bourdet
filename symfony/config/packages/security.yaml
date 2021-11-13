@@ -50,6 +50,11 @@ security:
             methods: [POST, GET]
             stateless: true
             jwt: ~
+        messages:
+            pattern:   ^/messages
+            methods: [POST]
+            stateless: true
+            jwt: ~
         main:
             lazy: true
             provider: app_user_provider
@@ -71,3 +76,4 @@ security:
         - { path: ^/games/\w+/top, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET, POST] }
         - { path: ^/games, roles: IS_AUTHENTICATED_FULLY, methods: [GET, POST] }
         - { path: ^/conversations, roles: IS_AUTHENTICATED_FULLY, methods: [GET, POST] }
+        - { path: ^/messages, roles: IS_AUTHENTICATED_FULLY, methods: [POST] }

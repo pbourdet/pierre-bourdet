@@ -38,8 +38,8 @@ use Symfony\Component\Uid\Uuid;
 )]
 class Conversation
 {
-    public const READ_COLLECTION_GROUP = 'read:collection';
-    public const READ_ITEM_GROUP = 'read:item';
+    public const READ_COLLECTION_GROUP = 'conversation:read:collection';
+    public const READ_ITEM_GROUP = 'conversation:read:item';
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
@@ -89,10 +89,21 @@ class Conversation
         return $this;
     }
 
-    public function hasUser(string $userId): bool
+    public function getParticipantByUser(User $user): ?Participant
     {
         foreach ($this->participants as $participant) {
-            if ((string) $participant->getUser()->getId() === $userId) {
+            if ($participant->getUser() === $user) {
+                return $participant;
+            }
+        }
+
+        return null;
+    }
+
+    public function hasUser(User $user): bool
+    {
+        foreach ($this->participants as $participant) {
+            if ($participant->getUser() === $user) {
                 return true;
             }
         }
