@@ -10,6 +10,7 @@ use App\Repository\ConversationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Model\Messaging\CreateConversationDTO;
 use Symfony\Component\Serializer\Annotation as Serializer;
 use Symfony\Component\Uid\Uuid;
 
@@ -20,6 +21,9 @@ use Symfony\Component\Uid\Uuid;
             'normalization_context' => [
                 'groups' => Conversation::READ_COLLECTION_GROUP,
             ],
+        ],
+        'post' => [
+            'input' => CreateConversationDTO::class,
         ],
     ],
     itemOperations: [
@@ -39,7 +43,7 @@ class Conversation
     ])]
     private Uuid $id;
 
-    #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Participant::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Participant::class, cascade: ['PERSIST'], orphanRemoval: true)]
     #[Serializer\Groups(groups: [
         Conversation::READ_COLLECTION_GROUP,
     ])]
@@ -74,6 +78,17 @@ class Conversation
         }
 
         return $this;
+    }
+
+    public function hasUser(string $userId): bool
+    {
+        foreach ($this->participants as $participant) {
+            if ((string) $participant->getUser()->getId() === $userId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function removeParticipant(Participant $participant): self
