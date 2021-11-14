@@ -125,12 +125,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Game::class, orphanRemoval: true)]
     private Collection $games;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Participant::class, orphanRemoval: true)]
+    private Collection $participants;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->todos = new ArrayCollection();
         $this->games = new ArrayCollection();
         $this->id = Uuid::v4();
+        $this->participants = new ArrayCollection();
     }
 
     public function getId(): Uuid
@@ -358,5 +362,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->getUsername();
+    }
+
+    /** @return Collection<int, Participant> */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
     }
 }
