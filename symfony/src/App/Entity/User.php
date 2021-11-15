@@ -84,6 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             'get_me',
             Conversation::READ_COLLECTION_GROUP,
             Conversation::READ_ITEM_GROUP,
+            Message::CREATE_GROUP,
         ])
     ]
     private Uuid $id;
