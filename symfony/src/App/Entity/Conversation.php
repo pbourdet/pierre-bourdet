@@ -25,6 +25,9 @@ use Symfony\Component\Uid\Uuid;
         ],
         'post' => [
             'input' => CreateConversationDTO::class,
+            'normalization_context' => [
+                'groups' => Conversation::READ_ITEM_GROUP,
+            ],
         ],
     ],
     itemOperations: [
@@ -53,6 +56,7 @@ class Conversation
     #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Participant::class, cascade: ['PERSIST'], orphanRemoval: true)]
     #[Serializer\Groups(groups: [
         Conversation::READ_COLLECTION_GROUP,
+        Conversation::READ_ITEM_GROUP,
     ])]
     private Collection $participants;
 
@@ -93,6 +97,17 @@ class Conversation
     {
         foreach ($this->participants as $participant) {
             if ($participant->getUser() === $user) {
+                return $participant;
+            }
+        }
+
+        return null;
+    }
+
+    public function getOtherParticipant(User $user): ?Participant
+    {
+        foreach ($this->participants as $participant) {
+            if ($participant->getUser() !== $user) {
                 return $participant;
             }
         }
