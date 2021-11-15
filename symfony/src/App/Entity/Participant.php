@@ -8,6 +8,7 @@ use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation as Serializer;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
@@ -19,6 +20,10 @@ class Participant
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'participants')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Serializer\Groups(groups: [
+        Conversation::READ_COLLECTION_GROUP,
+        Conversation::READ_ITEM_GROUP,
+    ])]
     private User $user;
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'participants')]

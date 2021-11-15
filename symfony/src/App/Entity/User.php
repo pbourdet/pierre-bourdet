@@ -78,7 +78,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[
         ORM\Id,
         ORM\Column(type: 'uuid'),
-        Serializer\Groups(groups: ['get_users', 'get_user', 'get_me'])
+        Serializer\Groups(groups: [
+            'get_users',
+            'get_user',
+            'get_me',
+            Conversation::READ_COLLECTION_GROUP,
+            Conversation::READ_ITEM_GROUP,
+        ])
     ]
     private Uuid $id;
 
@@ -109,7 +115,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[
         ORM\Column(type: 'string', length: 255),
-        Serializer\Groups(groups: ['get_me', 'get_user', Game::READ_COLLECTION_TOP_GROUP])
+        Serializer\Groups(groups: [
+            'get_me',
+            'get_user',
+            Game::READ_COLLECTION_TOP_GROUP,
+            Conversation::READ_COLLECTION_GROUP,
+            Conversation::READ_ITEM_GROUP,
+        ])
     ]
     private string $nickname = '';
 
@@ -368,5 +380,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getParticipants(): Collection
     {
         return $this->participants;
+    }
+
+    //For tests purposes
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->setUser($this);
+        }
+
+        return $this;
     }
 }

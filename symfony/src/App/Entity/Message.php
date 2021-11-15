@@ -4,19 +4,48 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Action\NotFoundAction;
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Model\Messaging\CreateMessageDTO;
+use Symfony\Component\Serializer\Annotation as Serializer;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
+#[ApiResource(
+    collectionOperations: [
+        'post' => [
+            'input' => CreateMessageDTO::class,
+            'normalization_context' => [
+                'groups' => Message::CREATE_GROUP,
+            ],
+        ],
+    ],
+    itemOperations: [
+        'get' => [
+            'controller' => NotFoundAction::class,
+            'read' => false,
+            'output' => false,
+        ],
+    ],
+    formats: ['json']
+)]
 class Message
 {
+    public const CREATE_GROUP = 'message:create';
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
+    #[Serializer\Groups(groups: [
+        Conversation::READ_ITEM_GROUP,
+        Message::CREATE_GROUP,
+    ])]
     private Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
     private Participant $sender;
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'messages')]
@@ -24,9 +53,11 @@ class Message
     private Conversation $conversation;
 
     #[ORM\Column(type: 'text')]
+    #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
     private string $content = '';
 
     #[ORM\Column]
+    #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
     private \DateTimeImmutable $date;
 
     public function __construct()
