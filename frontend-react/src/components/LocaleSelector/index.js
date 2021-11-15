@@ -20,7 +20,7 @@ function LocaleSelector () {
 
         if (auth !== null) {
             await refreshToken(auth, updateAuth);
-            updateLanguage(locale);
+            updateLanguage(choice);
         }
     };
 
