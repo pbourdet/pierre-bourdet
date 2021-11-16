@@ -65,6 +65,10 @@ class Conversation
     #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
     private Collection $messages;
 
+    #[ORM\OneToOne(targetEntity: Message::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Serializer\Groups(groups: [Conversation::READ_COLLECTION_GROUP])]
+    private ?Message $lastMessage = null;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -152,6 +156,18 @@ class Conversation
     public function removeMessage(Message $message): self
     {
         $this->messages->removeElement($message);
+
+        return $this;
+    }
+
+    public function getLastMessage(): ?Message
+    {
+        return $this->lastMessage;
+    }
+
+    public function setLastMessage(?Message $lastMessage): self
+    {
+        $this->lastMessage = $lastMessage;
 
         return $this;
     }

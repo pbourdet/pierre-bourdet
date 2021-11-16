@@ -38,25 +38,28 @@ class Message
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]
     #[Serializer\Groups(groups: [
+        Conversation::READ_COLLECTION_GROUP,
         Conversation::READ_ITEM_GROUP,
         Message::CREATE_GROUP,
     ])]
     private Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Serializer\Groups(groups: [
+        Conversation::READ_COLLECTION_GROUP,
         Conversation::READ_ITEM_GROUP,
         Message::CREATE_GROUP,
     ])]
     private Participant $sender;
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private Conversation $conversation;
 
     #[ORM\Column(type: 'text')]
     #[Serializer\Groups(groups: [
+        Conversation::READ_COLLECTION_GROUP,
         Conversation::READ_ITEM_GROUP,
         Message::CREATE_GROUP,
     ])]
@@ -64,6 +67,7 @@ class Message
 
     #[ORM\Column]
     #[Serializer\Groups(groups: [
+        Conversation::READ_COLLECTION_GROUP,
         Conversation::READ_ITEM_GROUP,
         Message::CREATE_GROUP,
     ])]
