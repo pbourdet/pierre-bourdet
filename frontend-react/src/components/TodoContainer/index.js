@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth, useAuthUpdate } from '../../contexts/AuthContext';
 import TodoTable from '../TodoTable';
-import { Alert, Container, Spinner } from 'react-bootstrap';
+import { Alert, Container } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { getTodos } from '../../requests/todos';
+import Loader from '../Loader';
 
 function TodoContainer () {
     const [loading, setLoading] = useState(true);
@@ -26,11 +27,7 @@ function TodoContainer () {
         <div className="m-2 pt-3">
             <Container className="shadow border rounded">
                 {loading
-                    ? <div className="m-5">
-                        <Spinner animation="grow" variant="success"/>
-                        <Spinner animation="grow" variant="danger"/>
-                        <Spinner animation="grow" variant="warning"/>
-                    </div>
+                    ? <Loader/>
                     : <>
                         {(auth === null && showAlert) &&
                         <Alert className="m-3 p-3" variant="warning" onClose={() => setShowAlert(false)} dismissible>

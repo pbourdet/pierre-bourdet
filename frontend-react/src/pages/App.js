@@ -7,8 +7,8 @@ import { Switch, Route, useLocation } from 'react-router-dom';
 import AuthProvider from '../contexts/AuthContext/index';
 import { ToastContainer } from 'react-toastify';
 import LocaleProvider from '../contexts/LocaleContext/index';
-import { Spinner } from 'react-bootstrap';
 import { AnimatePresence } from 'framer-motion';
+import Loader from '../components/Loader';
 
 function App () {
     const location = useLocation();
@@ -32,7 +32,7 @@ function App () {
                         pauseOnFocusLoss={false}
                         pauseOnHover={false}
                     />
-                    <Suspense fallback={<div className="mt-5"><Spinner animation="border"/></div>}>
+                    <Suspense fallback={<Loader/>}>
                         <AnimatePresence exitBeforeEnter>
                             <Switch location={location} key={location.key}>
                                 <Route path="/" exact component={Home}/>
