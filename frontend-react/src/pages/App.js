@@ -20,6 +20,7 @@ function App () {
     const Snake = React.lazy(() => import('./Snake/index'));
     const TennisRankings = React.lazy(() => import('./Tennis/Rankings/index'));
     const TennisPlayerProfile = React.lazy(() => import('./Tennis/PlayerProfile/index'));
+    const Messaging = React.lazy(() => import('./Messaging/index'));
 
     return (
         <LocaleProvider>
@@ -43,6 +44,7 @@ function App () {
                                 <Route path="/reset-password/:token" component={ResetPassword}/>
                                 <Route path="/tennis/rankings" component={TennisRankings}/>
                                 <Route path="/tennis/player/:name" component={TennisPlayerProfile}/>
+                                <Route path="/messaging" component={Messaging}/>
                             </Switch>
                         </AnimatePresence>
                     </Suspense>
