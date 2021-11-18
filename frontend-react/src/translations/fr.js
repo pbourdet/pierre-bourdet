@@ -12,7 +12,8 @@ export default {
         signup: 'S\'inscrire',
         profile: 'Mon profil',
         logout: 'Déconnexion',
-        tennis: 'Classements Tennis'
+        tennis: 'Classements Tennis',
+        messaging: 'Messagerie'
     },
 
     toast: {
@@ -369,6 +370,23 @@ export default {
             handedness: {
                 right: 'Droite',
                 left: 'Gauche'
+            }
+        }
+    },
+
+    messaging: {
+        title: 'Messagerie',
+        loggedOut: 'Connectez-vous ou inscrivez-vous pour utiliser l\'application.',
+        create: {
+            conversation: {
+                or: 'OU',
+                share: 'Partagez votre identifiant :',
+                copied: 'Identifiant copié !',
+                title: 'Nouvelle conversation',
+                userId: 'Identifiant de l\'utilisateur',
+                submit: 'Créer conversation',
+                error: 'Une erreur s\'est produite lors de la création de la conversation',
+                success: 'Conversation créée, bonne discussion !'
             }
         }
     }

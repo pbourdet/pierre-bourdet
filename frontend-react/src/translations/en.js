@@ -12,7 +12,8 @@ export default {
         signup: 'Sign up',
         profile: 'My profile',
         logout: 'Log out',
-        tennis: 'Tennis Rankings'
+        tennis: 'Tennis Rankings',
+        messaging: 'Messaging'
     },
 
     toast: {
@@ -368,6 +369,23 @@ export default {
             handedness: {
                 right: 'Right',
                 left: 'Left'
+            }
+        }
+    },
+
+    messaging: {
+        title: 'Messaging',
+        loggedOut: 'Sign up or sign in to use the app.',
+        create: {
+            conversation: {
+                or: 'OR',
+                share: 'Share your ID :',
+                copied: 'ID copied !',
+                title: 'New conversation',
+                userId: 'User ID',
+                submit: 'Create conversation',
+                error: 'An error occured when creating the conversation',
+                success: 'Conversation created, happy chatting !'
             }
         }
     }
