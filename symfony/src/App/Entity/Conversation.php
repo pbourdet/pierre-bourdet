@@ -77,6 +77,12 @@ class Conversation
         return $this->id;
     }
 
+    //For testing purposes
+    public function setId(Uuid $uuid): void
+    {
+        $this->id = $uuid;
+    }
+
     /** @return Collection<int, Participant> */
     public function getParticipants(): Collection
     {

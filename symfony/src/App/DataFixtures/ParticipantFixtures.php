@@ -27,8 +27,8 @@ class ParticipantFixtures extends Fixture implements DependentFixtureInterface
         /** @var User $defaultUser */
         $defaultUser = $this->userRepository->find(UserFixtures::DEFAULT_UUID);
 
-        $users = array_values(array_filter($users, function ($user) use ($defaultUser) {
-            return $user->getId() !== $defaultUser->getId();
+        $users = array_values(array_filter($users, function ($user) {
+            return !in_array((string) $user->getId(), [UserFixtures::DEFAULT_UUID, UserFixtures::USER_WITH_NO_CONVERSATION]);
         }));
 
         foreach ($conversations as $key => $conversation) {
