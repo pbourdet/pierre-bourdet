@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import variants from '../../../config/framer-motion';
 import { Helmet } from 'react-helmet';
-import { Container, Spinner } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Redirect, useLocation, useParams } from 'react-router-dom';
 import { getPlayerProfile } from '../../../requests/Tennis/playerProfile';
 import PlayerInformationTable from '../../../components/Tennis/PlayerInformationTable';
 import { useLocale } from '../../../contexts/LocaleContext';
 import StatisticsTable from '../../../components/Tennis/StatisticsTable';
+import Loader from '../../../components/Loader';
 
 function TennisPlayerProfile () {
     const location = useLocation();
@@ -40,11 +41,7 @@ function TennisPlayerProfile () {
             <h1 className="m-3 text-capitalize">{title}</h1>
             <Container className="shadow p-md-3 p-0 border">
                 {loading
-                    ? <div className="m-5">
-                        <Spinner animation="grow" variant="success"/>
-                        <Spinner animation="grow" variant="danger"/>
-                        <Spinner animation="grow" variant="warning"/>
-                    </div>
+                    ? <Loader/>
                     : <div>
                         <PlayerInformationTable player={player}/>
                         <StatisticsTable player={player}/>

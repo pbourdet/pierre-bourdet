@@ -7,8 +7,8 @@ import { Switch, Route, useLocation } from 'react-router-dom';
 import AuthProvider from '../contexts/AuthContext/index';
 import { ToastContainer } from 'react-toastify';
 import LocaleProvider from '../contexts/LocaleContext/index';
-import { Spinner } from 'react-bootstrap';
 import { AnimatePresence } from 'framer-motion';
+import Loader from '../components/Loader';
 
 function App () {
     const location = useLocation();
@@ -20,6 +20,7 @@ function App () {
     const Snake = React.lazy(() => import('./Snake/index'));
     const TennisRankings = React.lazy(() => import('./Tennis/Rankings/index'));
     const TennisPlayerProfile = React.lazy(() => import('./Tennis/PlayerProfile/index'));
+    const Messaging = React.lazy(() => import('./Messaging/index'));
 
     return (
         <LocaleProvider>
@@ -32,7 +33,7 @@ function App () {
                         pauseOnFocusLoss={false}
                         pauseOnHover={false}
                     />
-                    <Suspense fallback={<div className="mt-5"><Spinner animation="border"/></div>}>
+                    <Suspense fallback={<Loader/>}>
                         <AnimatePresence exitBeforeEnter>
                             <Switch location={location} key={location.key}>
                                 <Route path="/" exact component={Home}/>
@@ -43,6 +44,7 @@ function App () {
                                 <Route path="/reset-password/:token" component={ResetPassword}/>
                                 <Route path="/tennis/rankings" component={TennisRankings}/>
                                 <Route path="/tennis/player/:name" component={TennisPlayerProfile}/>
+                                <Route path="/messaging" component={Messaging}/>
                             </Switch>
                         </AnimatePresence>
                     </Suspense>

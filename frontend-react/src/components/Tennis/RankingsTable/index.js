@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Spinner, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { getRankings } from '../../../requests/Tennis/rankings';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { useLocale } from '../../../contexts/LocaleContext';
+import Loader from '../../Loader';
 
 function RankingsTable ({ ranking }) {
     const [name, type] = ranking.split('-');
@@ -51,11 +52,7 @@ function RankingsTable ({ ranking }) {
     }, []);
 
     if (loading) {
-        return <div className="m-5">
-            <Spinner animation="grow" variant="success"/>
-            <Spinner animation="grow" variant="danger"/>
-            <Spinner animation="grow" variant="warning"/>
-        </div>;
+        return <Loader/>;
     }
 
     return (

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Spinner, Table } from 'react-bootstrap';
+import { Col, Row, Table } from 'react-bootstrap';
 import { getTopSnakeGames, getUserSnakeGames } from '../../../requests/snakeGames';
 import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
 import { useAuth, useAuthUpdate } from '../../../contexts/AuthContext';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import refreshToken from '../../../requests/refreshToken';
+import Loader from '../../Loader';
 
 function HallOfFame () {
     const [topGames, setTopGames] = useState([]);
@@ -43,11 +44,7 @@ function HallOfFame () {
 
     if (topGamesLoading || userGamesLoading) {
         return (
-            <div className="m-5">
-                <Spinner animation="grow" variant="success"/>
-                <Spinner animation="grow" variant="danger"/>
-                <Spinner animation="grow" variant="warning"/>
-            </div>
+            <Loader/>
         );
     }
 

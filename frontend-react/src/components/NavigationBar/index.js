@@ -55,6 +55,11 @@ function NavigationBar () {
                                         <FormattedMessage id="navbar.tennis"/>
                                     </Nav.Link>
                                 </NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/messaging">
+                                    <Nav.Link as="span">
+                                        <FormattedMessage id="navbar.messaging"/>
+                                    </Nav.Link>
+                                </NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                         {auth
