@@ -17,6 +17,7 @@ class UserFixtures extends Fixture
     public const DEFAULT_PASSWORD = '123456';
     public const DEFAULT_NICKNAME = 'pierre';
     public const DEFAULT_UUID = '20354d7a-e4fe-47af-8ff6-187bca92f3f9';
+    public const USER_WITH_NO_CONVERSATION = 'c138ab77-11d0-45a4-b2b1-f826875efb0e';
 
     public function __construct(
         private UserPasswordHasherInterface $hasher
@@ -43,6 +44,10 @@ class UserFixtures extends Fixture
 
         for ($u = 0; $u < 10; ++$u) {
             $user = new User();
+
+            if (9 === $u) {
+                $user->setId(Uuid::fromString(self::USER_WITH_NO_CONVERSATION));
+            }
 
             $password = $this->hasher->hashPassword($user, self::DEFAULT_PASSWORD);
 

@@ -28,7 +28,7 @@ class Participant
     private User $user;
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'participants')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(nullable: false)]
     private Conversation $conversation;
 
     #[ORM\OneToMany(mappedBy: 'sender', targetEntity: Message::class, orphanRemoval: true)]

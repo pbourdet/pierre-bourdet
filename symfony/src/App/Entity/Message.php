@@ -45,7 +45,7 @@ class Message
     private Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(nullable: false)]
     #[Serializer\Groups(groups: [
         Conversation::READ_COLLECTION_GROUP,
         Conversation::READ_ITEM_GROUP,
@@ -54,7 +54,7 @@ class Message
     private Participant $sender;
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'messages')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(nullable: false)]
     private Conversation $conversation;
 
     #[ORM\Column(type: 'text')]

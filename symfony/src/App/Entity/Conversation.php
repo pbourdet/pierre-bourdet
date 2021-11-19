@@ -65,10 +65,6 @@ class Conversation
     #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
     private Collection $messages;
 
-    #[ORM\OneToOne(targetEntity: Message::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
-    #[Serializer\Groups(groups: [Conversation::READ_COLLECTION_GROUP])]
-    private ?Message $lastMessage = null;
-
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -79,6 +75,12 @@ class Conversation
     public function getId(): Uuid
     {
         return $this->id;
+    }
+
+    //For testing purposes
+    public function setId(Uuid $uuid): void
+    {
+        $this->id = $uuid;
     }
 
     /** @return Collection<int, Participant> */
@@ -160,15 +162,15 @@ class Conversation
         return $this;
     }
 
+    #[Serializer\Groups(groups: [Conversation::READ_COLLECTION_GROUP])]
     public function getLastMessage(): ?Message
     {
-        return $this->lastMessage;
-    }
+        $message = $this->messages->last();
 
-    public function setLastMessage(?Message $lastMessage): self
-    {
-        $this->lastMessage = $lastMessage;
+        if (false === $message) {
+            return null;
+        }
 
-        return $this;
+        return $message;
     }
 }
