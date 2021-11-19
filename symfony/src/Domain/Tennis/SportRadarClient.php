@@ -29,21 +29,27 @@ class SportRadarClient
 
     public function getSinglesRankings(): RankingsBaseClass
     {
-        return $this->request(
+        /** @var RankingsBaseClass $rankings */
+        $rankings = $this->request(
             sprintf('/tennis/trial/v3/%s/rankings.json', $this->locale),
             RankingsBaseClass::class
         );
+
+        return $rankings;
     }
 
-    public function getPlayerProfile(string $playerId): object
+    public function getPlayerProfile(string $playerId): PlayerProfile
     {
-        return $this->request(
+        /** @var PlayerProfile $playerProfile */
+        $playerProfile = $this->request(
             sprintf('/tennis/trial/v3/%s/competitors/%s/profile.json', $this->locale, $playerId),
             PlayerProfile::class
         );
+
+        return $playerProfile;
     }
 
-    private function request(string $url, string $outputClass): mixed
+    private function request(string $url, string $outputClass): object
     {
         $response = $this->client->request(
             Request::METHOD_GET,

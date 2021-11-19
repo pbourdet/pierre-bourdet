@@ -23,7 +23,6 @@ class UserSnakeGameCollectionDataProvider implements CollectionDataProviderInter
         /** @var User $user */
         $user = $this->security->getUser();
 
-        /** @phpstan-ignore-next-line */
         $games = $user->getGames()->matching(
             Criteria::create()->orderBy(['score' => Criteria::DESC])
         );
