@@ -26,11 +26,14 @@ class TodoRepository extends ServiceEntityRepository
     /** @return Todo[] */
     public function findNotDoneByReminder(\DateTimeInterface $date): array
     {
-        return $this->createQueryBuilder('t')
+        /** @var array<Todo> $todos */
+        $todos = $this->createQueryBuilder('t')
             ->where('t.reminder = :date')
             ->andWhere('t.isDone = false')
             ->setParameter('date', $date)
             ->getQuery()
             ->getResult();
+
+        return $todos;
     }
 }

@@ -15,6 +15,7 @@ class TimestampNormalizer implements NormalizerInterface, DenormalizerInterface
         \DateTime::class,
     ];
 
+    /** @param \DateTimeInterface $object */
     public function normalize($object, string $format = null, array $context = []): int
     {
         return $object->getTimestamp() * 1000;
