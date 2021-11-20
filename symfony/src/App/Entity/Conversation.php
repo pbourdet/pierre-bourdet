@@ -50,6 +50,7 @@ class Conversation
     #[Serializer\Groups(groups: [
         Conversation::READ_COLLECTION_GROUP,
         Conversation::READ_ITEM_GROUP,
+        Message::CREATE_GROUP,
     ])]
     private Uuid $id;
 
