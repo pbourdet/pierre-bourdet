@@ -11,7 +11,7 @@ function MessageInput ({ fullConversation, setFullConversation, conversations, s
     const updateAuth = useAuthUpdate();
 
     const inputRef = useRef();
-    useEffect(() => inputRef.current && inputRef.current.focus(), []);
+    useEffect(() => inputRef.current && inputRef.current.focus());
 
     const handleSubmit = async (e) => {
         e.preventDefault();

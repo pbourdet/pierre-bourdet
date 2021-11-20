@@ -385,7 +385,8 @@ export default {
                 userId: 'User ID',
                 submit: 'Create conversation',
                 error: 'An error occured when creating the conversation',
-                success: 'Conversation created, happy chatting !'
+                success: 'Conversation created, happy chatting !',
+                other: '{name} has started a conversation with you.'
             }
         }
     }

@@ -37,3 +37,12 @@ export async function createMessage (conversationId, content, auth, updateAuth) 
         .then(response => response.data)
         .catch(() => null);
 }
+
+export function createMercureEventSource (topic) {
+    const hub = new URL(process.env.REACT_APP_MERCURE_URL, window.origin);
+    hub.searchParams.append('topic', topic);
+
+    return new EventSource(hub, {
+        withCredentials: true
+    });
+}

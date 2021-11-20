@@ -386,7 +386,8 @@ export default {
                 userId: 'Identifiant de l\'utilisateur',
                 submit: 'Créer conversation',
                 error: 'Une erreur s\'est produite lors de la création de la conversation',
-                success: 'Conversation créée, bonne discussion !'
+                success: 'Conversation créée, bonne discussion !',
+                other: '{name} a crée une conversation avec vous.'
             }
         }
     }
