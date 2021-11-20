@@ -28,7 +28,6 @@ route {
         subscriptions
         # Extra directives
         {$MERCURE_EXTRA_DIRECTIVES}
-        cors_origins *
     }
     vulcain
     push

@@ -20,6 +20,8 @@ class MessageFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
+        $manager->getConnection()->getConfiguration()->setSQLLogger();
+
         $participants = $this->participantRepository->findAll();
         $faker = Factory::create();
 

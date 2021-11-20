@@ -44,6 +44,8 @@ services:
             SERVER_NAME: ${SERVER_NAME}
             MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
             MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
+            MERCURE_EXTRA_DIRECTIVES: |-
+                cors_origins https://pierre-bourdet.dev
     php-logs:
         container_name: php-logs
         image: busybox

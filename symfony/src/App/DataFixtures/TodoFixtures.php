@@ -22,6 +22,8 @@ class TodoFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
+        $manager->getConnection()->getConfiguration()->setSQLLogger();
+
         $users = $this->userRepository->findAll();
 
         $faker = Factory::create();
