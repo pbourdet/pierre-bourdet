@@ -55,6 +55,9 @@ class Message
 
     #[ORM\ManyToOne(targetEntity: Conversation::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Serializer\Groups(groups: [
+        Message::CREATE_GROUP,
+    ])]
     private Conversation $conversation;
 
     #[ORM\Column(type: 'text')]
