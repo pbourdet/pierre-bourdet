@@ -55,6 +55,8 @@ services:
             SERVER_NAME: localhost, caddy:80
             MERCURE_PUBLISHER_JWT_KEY: 1234
             MERCURE_SUBSCRIBER_JWT_KEY: 1234
+            MERCURE_EXTRA_DIRECTIVES: |-
+                cors_origins https://localhost:3000
     php-logs:
         container_name: php-logs
         image: busybox

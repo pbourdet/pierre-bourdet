@@ -22,6 +22,8 @@ class ParticipantFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
+        $manager->getConnection()->getConfiguration()->setSQLLogger();
+
         $conversations = $this->conversationRepository->findAll();
         $users = $this->userRepository->findAll();
         /** @var User $defaultUser */

@@ -15,6 +15,8 @@ class ConversationFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $manager->getConnection()->getConfiguration()->setSQLLogger();
+
         for ($c = 0; $c < 9; ++$c) {
             $conversation = new Conversation();
 

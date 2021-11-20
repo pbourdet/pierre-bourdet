@@ -26,6 +26,8 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $manager->getConnection()->getConfiguration()->setSQLLogger();
+
         $defaultUser = new User();
         $password = $this->hasher->hashPassword($defaultUser, self::DEFAULT_PASSWORD);
         $languages = ['fr', 'en'];
