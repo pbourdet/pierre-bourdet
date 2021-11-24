@@ -23,9 +23,6 @@ fi
 
 #Deploy back-end to instance
 if [ "$CURRENT_BACK_SHA" != $PREVIOUS_BACK_SHA ]; then
-  #Retrieve production secrets key
-  echo $GCP_CLOUDSTORAGE_ACCOUNT_KEY | gcloud auth activate-service-account --key-file=-
-  gsutil cp gs://$GCP_PROJECT_NAME.appspot.com/secret-key-prod/prod.decrypt.private.php symfony/config/secrets/prod/
 
   #Build images and push them to registry
   docker-compose -f docker-compose.prod.yaml build
@@ -37,10 +34,7 @@ if [ "$CURRENT_BACK_SHA" != $PREVIOUS_BACK_SHA ]; then
   #Transfer files to instance
   echo $GCP_COMPUTE_ACCOUNT_KEY | gcloud auth activate-service-account --key-file=-
   gcloud compute config-ssh --quiet
-  gcloud compute ssh $GCP_ENGINE_INSTANCE -- rm -rf ~/pierre-bourdet/
-  gcloud compute ssh $GCP_ENGINE_INSTANCE -- mkdir -p ~/pierre-bourdet/symfony
-  gcloud compute scp docker-compose.prod.yaml $GCP_ENGINE_INSTANCE:~/pierre-bourdet/
-  gcloud compute scp --recurse symfony/ $GCP_ENGINE_INSTANCE:~/pierre-bourdet/
+  gcloud compute ssh $GCP_ENGINE_INSTANCE -- 'cd ~/pierre-bourdet/ && sudo git pull origin master'
 
   #Pull and tag images
   gcloud compute ssh $GCP_ENGINE_INSTANCE -- sudo docker image pull "$CADDY_IMAGE_URL"
@@ -51,8 +45,8 @@ if [ "$CURRENT_BACK_SHA" != $PREVIOUS_BACK_SHA ]; then
 
   #Stop containers and start them with new images
   gcloud compute ssh $GCP_ENGINE_INSTANCE -- sudo docker-compose -f ~/pierre-bourdet/docker-compose.prod.yaml down --remove-orphans
-  gcloud compute ssh $GCP_ENGINE_INSTANCE -- sudo SERVER_NAME=\'api.pierre-bourdet.dev, caddy:80\' CADDY_MERCURE_JWT_SECRET=$MERCURE_JWT_SECRET docker-compose -f ~/pierre-bourdet/docker-compose.prod.yaml up -d
-  gcloud compute ssh $GCP_ENGINE_INSTANCE -- sudo docker image prune -f
+  gcloud compute ssh $GCP_ENGINE_INSTANCE -- sudo CADDY_MERCURE_JWT_SECRET=$MERCURE_JWT_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f ~/pierre-bourdet/docker-compose.prod.yaml up -d
+  gcloud compute ssh $GCP_ENGINE_INSTANCE -- 'sudo docker image prune -f && sudo docker volume prune -f'
 fi
 
 #Deploy to Cloud Run
