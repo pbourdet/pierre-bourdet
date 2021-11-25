@@ -17,49 +17,228 @@ only_master: &only_master
             only:
                 - master
 
-commands:
-    tests:
-        steps:
-            - setup_remote_docker:
-                  version: 20.10.7
-            - run:
-                  name: Run tests
-                  command: |
-                      chmod 755 .circleci/tests.sh
-                      ./.circleci/tests.sh
+check_sha_back: &check_sha_back
+    run:
+        name: Check back-end sha
+        command: |
+            if [ "$CURRENT_BACK_SHA" = "$PREVIOUS_BACK_SHA" ]; then
+              echo 'THE BACKEND SOURCE CODE HAS NOT BEEN MODIFIED. THE CI WILL NOT RUN'
+              circleci-agent step halt
+            fi;
 
+check_sha_front: &check_sha_front
+    run:
+        name: Check front-end sha
+        command: |
+            if [ "$CURRENT_FRONT_SHA" = "$PREVIOUS_FRONT_SHA" ]; then
+              echo 'THE FRONTEND SOURCE CODE HAS NOT BEEN MODIFIED. THE CI WILL NOT RUN'
+              circleci-agent step halt
+            fi;
+
+commands:
     install_compose:
         steps:
-            - run:
-                  name: Install Docker Compose
-                  command: |
-                      apk add docker-compose
-    deploy:
+            - when:
+                  condition:
+                      equal: [ master, << pipeline.git.branch >> ]
+                  steps:
+                      - run:
+                            name: Install docker-compose
+                            command: apk add docker-compose
+            - unless:
+                  condition:
+                      equal: [ master, << pipeline.git.branch >> ]
+                  steps:
+                      - run:
+                            name: Install docker-compose
+                            environment:
+                                COMPOSE_VERSION: '1.29.2'
+                            command : |
+                                curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+                                chmod +x ~/docker-compose
+                                sudo mv ~/docker-compose /usr/local/bin/docker-compose
+    setup_env_vars:
         steps:
-            - setup_remote_docker:
-                  version: 20.10.7
             - run:
-                  name: Production deploy
+                  name: Export shasum of directories
                   command: |
-                      chmod 755 .circleci/deploy.sh
-                      ./.circleci/deploy.sh
+                      echo "export CURRENT_BACK_SHA=$(find ./symfony/ -type f \( -exec sha1sum "$PWD"/{} \; \) | awk '{print $1}' | sort | sha1sum | sed 's/\(.*\).../\1/')" >> $BASH_ENV
+                      echo "export CURRENT_FRONT_SHA=$(find ./frontend-react/ -type f \( -exec sha1sum "$PWD"/{} \; \) | awk '{print $1}' | sort | sha1sum | sed 's/\(.*\).../\1/')" >> $BASH_ENV
+            - when:
+                  condition:
+                      equal: [ master, << pipeline.git.branch >> ]
+                  steps:
+                      - run:
+                            name: Export images artifact registry URL
+                            command: |
+                                echo "export FRONT_IMAGE_URL=$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_NAME/react-prod/front" >> $BASH_ENV
+                                echo "export PHP_IMAGE_URL=$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_NAME/symfony-prod/php" >> $BASH_ENV
+                                echo "export CADDY_IMAGE_URL=$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_NAME/symfony-prod/caddy" >> $BASH_ENV
+    build_front:
+        steps:
+            - <<: *check_sha_front
+            - when:
+                  condition:
+                      equal: [ master, << pipeline.git.branch >> ]
+                  steps:
+                      - run:
+                            name: Build react production image
+                            command: docker build -t "$FRONT_IMAGE_URL" ./frontend-react/.
+                      - run:
+                          name: Push react image to artifact registry
+                          command: docker push "$FRONT_IMAGE_URL"
+            - unless:
+                  condition:
+                      equal: [ master, << pipeline.git.branch >> ]
+                  steps:
+                      - run:
+                            name: Build React testing image
+                            command : docker-compose -f docker-compose-test-react.yaml up -d
+    build_back:
+        steps:
+            - <<: *check_sha_back
+            - when:
+                  condition:
+                      equal: [ master, << pipeline.git.branch >> ]
+                  steps:
+                      - run:
+                            name: Build symfony and caddy production images
+                            command: |
+                                docker-compose -f docker-compose.prod.yaml build
+                      - run:
+                            name: Push images to artifact registry
+                            command: |
+                                docker image tag pbourdet/symfony-prod "$PHP_IMAGE_URL"
+                                docker image tag pbourdet/caddy-prod "$CADDY_IMAGE_URL"
+                                docker image push "$CADDY_IMAGE_URL"
+                                docker image push "$PHP_IMAGE_URL"
+            - unless:
+                  condition:
+                      equal: [ master, << pipeline.git.branch >> ]
+                  steps:
+                      - run:
+                            name: Build Symfony testing image
+                            command: docker-compose -f docker-compose-test-symfony.yaml up -d
+    test_back:
+        steps:
+            - <<: *check_sha_back
+            - run:
+                  name: Install dev dependencies and prepare database
+                  command: |
+                      docker-compose exec symfony composer install
+                      docker-compose exec symfony make migrations
+                      docker-compose exec symfony make fixtures
+            - run:
+                  name: Run php-cs-fixer and yaml lint
+                  command: |
+                      docker-compose exec symfony make yamlint
+                      docker-compose exec symfony make csfix-dry
+            - run:
+                  name: Run Phpstan
+                  command: docker-compose exec symfony make phpstan
+            - run:
+                name: Run PhpUnit tests
+                command: docker-compose exec symfony make phpunit
+    test_front:
+        steps:
+            - <<: *check_sha_front
+            - run:
+                  name: Run eslint
+                  command: docker-compose exec react yarn eslint-fix
+            - run:
+                  name: Run Jest tests
+                  command: docker-compose exec react yarn test src/ --watchAll=false
+    deploy_front:
+        steps:
+            - <<: *check_sha_front
+            - run:
+                  name: Deploy front-end to Cloud Run
+                  command: |
+                      echo $GCP_CLOUDRUN_ACCOUNT_KEY | gcloud auth activate-service-account --key-file=-
+                      gcloud run deploy react --image "$FRONT_IMAGE_URL":latest
+    deploy_back:
+        steps:
+            - <<: *check_sha_back
+            - run:
+                  name: Retrieve production secret key
+                  command: |
+                      echo $GCP_CLOUDSTORAGE_ACCOUNT_KEY | gcloud auth activate-service-account --key-file=-
+                      gsutil cp gs://$GCP_PROJECT_NAME.appspot.com/secret-key-prod/prod.decrypt.private.php symfony/config/secrets/prod/
+            - run:
+                  name: Setup Compute SSH connection
+                  command: |
+                      echo $GCP_COMPUTE_ACCOUNT_KEY | gcloud auth activate-service-account --key-file=-
+                      gcloud compute config-ssh --quiet
+            - run:
+                  name: Pull code
+                  command: gcloud compute ssh $GCP_ENGINE_INSTANCE -- 'cd /home/pierre/pierre-bourdet && sudo git pull origin master'
+            - run:
+                  name: Pull and tag new images
+                  command: |
+                      gcloud compute ssh $GCP_ENGINE_INSTANCE -- '\
+                            sudo docker image pull "$CADDY_IMAGE_URL \
+                            && sudo docker image pull "$PHP_IMAGE_URL" \
+                            && sudo docker image tag "$PHP_IMAGE_URL" pbourdet/symfony-prod \
+                            && sudo docker image tag "$PHP_IMAGE_URL" pbourdet/workers-prod \
+                            && sudo docker image tag "$CADDY_IMAGE_URL" pbourdet/caddy-prod'
+            - run:
+                  name: Restart container
+                  command: |
+                      gcloud compute ssh $GCP_ENGINE_INSTANCE -- '\
+                            sudo docker-compose -f ~/pierre-bourdet/docker-compose.prod.yaml down --remove-orphans \
+                            && sudo SERVER_NAME=\'api.pierre-bourdet.dev, caddy:80\' CADDY_MERCURE_JWT_SECRET=$MERCURE_JWT_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f ~/pierre-bourdet/docker-compose.prod.yaml up -d \
+                            && sudo docker image prune -f \
+                            && sudo docker volume prune -f'
+    update_sha_variables:
+        steps:
+            - run:
+                  name: Delete current sha variables
+                  command: |
+                      curl --location --request DELETE "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar/PREVIOUS_FRONT_SHA" \
+                        --header "Circle-Token: $CIRCLECI_API_TOKEN"
+                      curl --location --request DELETE "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar/PREVIOUS_BACK_SHA" \
+                        --header "Circle-Token: $CIRCLECI_API_TOKEN"
+            - run:
+                  name: Recreate sha variables with new values
+                  command: |
+                      curl --location --request POST "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar" \
+                          --header "Circle-Token: $CIRCLECI_API_TOKEN" \
+                          --header "Content-Type: application/json" \
+                          --data-raw "{\"name\":\"PREVIOUS_FRONT_SHA\",\"value\":\"$CURRENT_FRONT_SHA\"}"
+                      curl --location --request POST "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar" \
+                          --header "Circle-Token: $CIRCLECI_API_TOKEN" \
+                          --header "Content-Type: application/json" \
+                          --data-raw "{\"name\":\"PREVIOUS_BACK_SHA\",\"value\":\"$CURRENT_BACK_SHA\"}"
 
 jobs:
     check_pr:
         <<: *defaults
         steps:
+            - setup_remote_docker:
+                  version: 20.10.7
             - checkout
-            - tests
-
+            - install_compose
+            - setup_env_vars
+            - build_front
+            - build_back
+            - test_front
+            - test_back
 
     deploy_prod:
         working_directory: ~/pbourdet
         docker:
             - image: google/cloud-sdk:alpine
         steps:
+            - setup_remote_docker:
+                  version: 20.10.7
             - checkout
             - install_compose
-            - deploy
+            - setup_env_vars
+            - build_front
+            - build_back
+            - deploy_back
+            - deploy_front
+            - update_sha_variables
 
 workflows:
     version: 2
