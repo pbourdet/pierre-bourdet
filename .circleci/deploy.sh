@@ -23,6 +23,9 @@ fi
 
 #Deploy back-end to instance
 if [ "$CURRENT_BACK_SHA" != $PREVIOUS_BACK_SHA ]; then
+  #Retrieve production secrets key
+  echo $GCP_CLOUDSTORAGE_ACCOUNT_KEY | gcloud auth activate-service-account --key-file=-
+  gsutil cp gs://$GCP_PROJECT_NAME.appspot.com/secret-key-prod/prod.decrypt.private.php symfony/config/secrets/prod/
 
   #Build images and push them to registry
   docker-compose -f docker-compose.prod.yaml build
