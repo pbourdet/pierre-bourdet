@@ -45,7 +45,7 @@ if [ "$CURRENT_BACK_SHA" != $PREVIOUS_BACK_SHA ]; then
 
   #Stop containers and start them with new images
   gcloud compute ssh $GCP_ENGINE_INSTANCE -- sudo docker-compose -f ~/pierre-bourdet/docker-compose.prod.yaml down --remove-orphans
-  gcloud compute ssh $GCP_ENGINE_INSTANCE -- sudo CADDY_MERCURE_JWT_SECRET=$MERCURE_JWT_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f ~/pierre-bourdet/docker-compose.prod.yaml up -d
+  gcloud compute ssh $GCP_ENGINE_INSTANCE -- sudo SERVER_NAME=\'api.pierre-bourdet.dev, caddy:80\' CADDY_MERCURE_JWT_SECRET=$MERCURE_JWT_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f ~/pierre-bourdet/docker-compose.prod.yaml up -d
   gcloud compute ssh $GCP_ENGINE_INSTANCE -- 'sudo docker image prune -f && sudo docker volume prune -f'
 fi
 
