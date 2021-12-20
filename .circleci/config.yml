@@ -57,6 +57,11 @@ commands:
                                 curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
                                 chmod +x ~/docker-compose
                                 sudo mv ~/docker-compose /usr/local/bin/docker-compose
+    login_docker:
+        steps:
+            - run:
+                  name: Login to docker as Artifact registry service account
+                  command: echo $GCP_ARTIFACT_ACCOUNT_KEY | docker login -u _json_key --password-stdin https://$GCP_REGION-docker.pkg.dev
     setup_env_vars:
         steps:
             - run:
@@ -233,6 +238,7 @@ jobs:
                   version: 20.10.7
             - checkout
             - install_compose
+            - login_docker
             - setup_env_vars
             - build_front
             - build_back
