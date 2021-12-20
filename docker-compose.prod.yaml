@@ -41,6 +41,7 @@ services:
             - "443:443/tcp"
             - "443:443/udp"
         environment:
+            SERVER_NAME: ${SERVER_NAME}
             MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
             MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
             MERCURE_EXTRA_DIRECTIVES: |-

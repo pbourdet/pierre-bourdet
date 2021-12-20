@@ -4,6 +4,9 @@ cc:
 csfix:
 	./vendor/bin/php-cs-fixer fix --allow-risky=yes $(1)
 
+csfix-dry:
+	./vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no --allow-risky=yes
+
 phpstan:
 	./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=-1
 
