@@ -107,9 +107,13 @@ commands:
                       equal: [ master, << pipeline.git.branch >> ]
                   steps:
                       - run:
-                            name: Build symfony and caddy production images
+                            name: Retrieve production secret key
                             command: |
-                                docker-compose -f docker-compose.prod.yaml build
+                                echo $GCP_CLOUDSTORAGE_ACCOUNT_KEY | gcloud auth activate-service-account --key-file=-
+                                gsutil cp gs://$GCP_PROJECT_NAME.appspot.com/secret-key-prod/prod.decrypt.private.php symfony/config/secrets/prod/
+                      - run:
+                            name: Build symfony and caddy production images
+                            command: docker-compose -f docker-compose.prod.yaml build
                       - run:
                             name: Push images to artifact registry
                             command: |
@@ -165,10 +169,11 @@ commands:
         steps:
             - <<: *check_sha_back
             - run:
-                  name: Retrieve production secret key
+                  name: Setup gcloud configuration
                   command: |
-                      echo $GCP_CLOUDSTORAGE_ACCOUNT_KEY | gcloud auth activate-service-account --key-file=-
-                      gsutil cp gs://$GCP_PROJECT_NAME.appspot.com/secret-key-prod/prod.decrypt.private.php symfony/config/secrets/prod/
+                      gcloud config set run/region $GCP_REGION
+                      gcloud config set project $GCP_PROJECT_NAME
+                      gcloud config set compute/zone $GCP_ZONE
             - run:
                   name: Setup Compute SSH connection
                   command: |
