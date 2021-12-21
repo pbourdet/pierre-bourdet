@@ -186,7 +186,7 @@ commands:
                   name: Pull and tag new images
                   command: |
                       gcloud compute ssh $GCP_ENGINE_INSTANCE -- '\
-                            sudo docker image pull "$CADDY_IMAGE_URL \
+                            sudo docker image pull "$CADDY_IMAGE_URL" \
                             && sudo docker image pull "$PHP_IMAGE_URL" \
                             && sudo docker image tag "$PHP_IMAGE_URL" pbourdet/symfony-prod \
                             && sudo docker image tag "$PHP_IMAGE_URL" pbourdet/workers-prod \
