@@ -1,9 +1,14 @@
 version: 2.1
 
-defaults: &defaults
+defaults: &defaults_pr
     working_directory: ~/pbourdet
     docker:
         - image: cimg/base:stable
+
+defaults_deploy: &defaults_deploy
+    working_directory: ~/pbourdet
+    docker:
+        - image: google/cloud-sdk:alpine
 
 filter_merge: &filter_merge
     filters:
@@ -17,25 +22,25 @@ only_master: &only_master
             only:
                 - master
 
-check_sha_back: &check_sha_back
-    run:
-        name: Check back-end sha
-        command: |
-            if [ "$CURRENT_BACK_SHA" = "$PREVIOUS_BACK_SHA" ]; then
-              echo 'THE BACKEND SOURCE CODE HAS NOT BEEN MODIFIED. THE CI WILL NOT RUN'
-              circleci-agent step halt
-            fi;
-
-check_sha_front: &check_sha_front
-    run:
-        name: Check front-end sha
-        command: |
-            if [ "$CURRENT_FRONT_SHA" = "$PREVIOUS_FRONT_SHA" ]; then
-              echo 'THE FRONTEND SOURCE CODE HAS NOT BEEN MODIFIED. THE CI WILL NOT RUN'
-              circleci-agent step halt
-            fi;
-
 commands:
+    check_sha_front:
+        steps:
+            - run:
+                  name: Check front-end sha
+                  command: |
+                      if [ "$CURRENT_FRONT_SHA" = "$PREVIOUS_FRONT_SHA" ]; then
+                        echo 'THE FRONTEND SOURCE CODE HAS NOT BEEN MODIFIED. THE CI WILL NOT RUN'
+                        circleci-agent step halt
+                      fi;
+    check_sha_back:
+        steps:
+            - run:
+                  name: Check back-end sha
+                  command: |
+                      if [ "$CURRENT_BACK_SHA" = "$PREVIOUS_BACK_SHA" ]; then
+                        echo 'THE BACKEND SOURCE CODE HAS NOT BEEN MODIFIED. THE CI WILL NOT RUN'
+                        circleci-agent step halt
+                      fi;
     install_compose:
         steps:
             - when:
@@ -81,7 +86,6 @@ commands:
                                 echo "export CADDY_IMAGE_URL=$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_NAME/symfony-prod/caddy" >> $BASH_ENV
     build_front:
         steps:
-            - <<: *check_sha_front
             - when:
                   condition:
                       equal: [ master, << pipeline.git.branch >> ]
@@ -101,7 +105,6 @@ commands:
                             command : docker-compose -f docker-compose-test-react.yaml up -d
     build_back:
         steps:
-            - <<: *check_sha_back
             - when:
                   condition:
                       equal: [ master, << pipeline.git.branch >> ]
@@ -130,7 +133,6 @@ commands:
                             command: docker-compose -f docker-compose-test-symfony.yaml up -d
     test_back:
         steps:
-            - <<: *check_sha_back
             - run:
                   name: Install dev dependencies and prepare database
                   command: |
@@ -150,7 +152,6 @@ commands:
                 command: docker-compose exec symfony make phpunit
     test_front:
         steps:
-            - <<: *check_sha_front
             - run:
                   name: Run eslint
                   command: docker-compose exec react yarn eslint-fix
@@ -159,7 +160,6 @@ commands:
                   command: docker-compose exec react yarn test src/ --watchAll=false
     deploy_front:
         steps:
-            - <<: *check_sha_front
             - run:
                   name: Deploy front-end to Cloud Run
                   command: |
@@ -167,7 +167,6 @@ commands:
                       gcloud run deploy react --image "$FRONT_IMAGE_URL":latest
     deploy_back:
         steps:
-            - <<: *check_sha_back
             - run:
                   name: Setup gcloud configuration
                   command: |
@@ -181,84 +180,112 @@ commands:
                       gcloud compute config-ssh --quiet
             - run:
                   name: Pull code
-                  command: gcloud compute ssh $GCP_ENGINE_INSTANCE -- 'cd /home/pierre/pierre-bourdet && sudo git pull origin master'
+                  command: gcloud compute ssh $GCP_ENGINE_INSTANCE -- "cd ${PROJECT_DIRECTORY} && sudo git pull origin master"
             - run:
                   name: Pull and tag new images
                   command: |
-                      gcloud compute ssh $GCP_ENGINE_INSTANCE -- '\
-                            sudo docker image pull "$CADDY_IMAGE_URL" \
-                            && sudo docker image pull "$PHP_IMAGE_URL" \
-                            && sudo docker image tag "$PHP_IMAGE_URL" pbourdet/symfony-prod \
-                            && sudo docker image tag "$PHP_IMAGE_URL" pbourdet/workers-prod \
-                            && sudo docker image tag "$CADDY_IMAGE_URL" pbourdet/caddy-prod'
+                      gcloud compute ssh $GCP_ENGINE_INSTANCE --command "\
+                            sudo docker image pull ${CADDY_IMAGE_URL} \
+                            && sudo docker image pull ${PHP_IMAGE_URL} \
+                            && sudo docker image tag ${PHP_IMAGE_URL} pbourdet/symfony-prod \
+                            && sudo docker image tag ${PHP_IMAGE_URL} pbourdet/workers-prod \
+                            && sudo docker image tag ${CADDY_IMAGE_URL} pbourdet/caddy-prod"
             - run:
                   name: Restart container
                   command: |
-                      gcloud compute ssh $GCP_ENGINE_INSTANCE -- '\
-                            sudo docker-compose -f ~/pierre-bourdet/docker-compose.prod.yaml down --remove-orphans \
-                            && sudo SERVER_NAME=\'api.pierre-bourdet.dev, caddy:80\' CADDY_MERCURE_JWT_SECRET=$MERCURE_JWT_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f ~/pierre-bourdet/docker-compose.prod.yaml up -d \
+                      gcloud compute ssh $GCP_ENGINE_INSTANCE --command "\
+                            sudo docker-compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml down --remove-orphans \
+                            && sudo SERVER_NAME='api.pierre-bourdet.dev, caddy:80' CADDY_MERCURE_JWT_SECRET=${MERCURE_JWT_SECRET} POSTGRES_PASSWORD=${POSTGRES_PASSWORD} docker-compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml up -d \
                             && sudo docker image prune -f \
-                            && sudo docker volume prune -f'
-    update_sha_variables:
+                            && sudo docker volume prune -f"
+    update_sha_back:
         steps:
             - run:
-                  name: Delete current sha variables
+                  name: Update back sha variable
                   command: |
-                      curl --location --request DELETE "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar/PREVIOUS_FRONT_SHA" \
-                        --header "Circle-Token: $CIRCLECI_API_TOKEN"
                       curl --location --request DELETE "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar/PREVIOUS_BACK_SHA" \
-                        --header "Circle-Token: $CIRCLECI_API_TOKEN"
-            - run:
-                  name: Recreate sha variables with new values
-                  command: |
-                      curl --location --request POST "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar" \
-                          --header "Circle-Token: $CIRCLECI_API_TOKEN" \
-                          --header "Content-Type: application/json" \
-                          --data-raw "{\"name\":\"PREVIOUS_FRONT_SHA\",\"value\":\"$CURRENT_FRONT_SHA\"}"
+                          --header "Circle-Token: $CIRCLECI_API_TOKEN"
                       curl --location --request POST "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar" \
                           --header "Circle-Token: $CIRCLECI_API_TOKEN" \
                           --header "Content-Type: application/json" \
                           --data-raw "{\"name\":\"PREVIOUS_BACK_SHA\",\"value\":\"$CURRENT_BACK_SHA\"}"
+    update_sha_front:
+        steps:
+            - run:
+                  name: Update front sha variable
+                  command: |
+                      curl --location --request DELETE "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar/PREVIOUS_FRONT_SHA" \
+                          --header "Circle-Token: $CIRCLECI_API_TOKEN"
+                      curl --location --request POST "https://circleci.com/api/v2/project/$CIRCLECI_PROJECT_SLUG/envvar" \
+                          --header "Circle-Token: $CIRCLECI_API_TOKEN" \
+                          --header "Content-Type: application/json" \
+                          --data-raw "{\"name\":\"PREVIOUS_FRONT_SHA\",\"value\":\"$CURRENT_FRONT_SHA\"}"
 
 jobs:
-    check_pr:
-        <<: *defaults
+    check_pr_front:
+        <<: *defaults_pr
         steps:
+            - checkout
+            - setup_env_vars
+            - check_sha_front
             - setup_remote_docker:
                   version: 20.10.7
-            - checkout
             - install_compose
-            - setup_env_vars
             - build_front
-            - build_back
             - test_front
+
+    check_pr_back:
+        <<: *defaults_pr
+        steps:
+            - checkout
+            - setup_env_vars
+            - check_sha_back
+            - setup_remote_docker:
+                  version: 20.10.7
+            - install_compose
+            - build_back
             - test_back
 
-    deploy_prod:
-        working_directory: ~/pbourdet
-        docker:
-            - image: google/cloud-sdk:alpine
+    deploy_prod_back:
+        <<: *defaults_deploy
         steps:
+            - checkout
+            - setup_env_vars
+            - check_sha_back
             - setup_remote_docker:
                   version: 20.10.7
-            - checkout
             - install_compose
             - login_docker
-            - setup_env_vars
-            - build_front
             - build_back
             - deploy_back
+            - update_sha_back
+
+    deploy_prod_front:
+        <<: *defaults_deploy
+        steps:
+            - checkout
+            - setup_env_vars
+            - check_sha_front
+            - setup_remote_docker:
+                  version: 20.10.7
+            - install_compose
+            - login_docker
+            - build_front
             - deploy_front
-            - update_sha_variables
+            - update_sha_front
 
 workflows:
     version: 2
     check:
         jobs:
-            - check_pr:
+            - check_pr_front:
+                  <<: *filter_merge
+            - check_pr_back:
                   <<: *filter_merge
 
     deploy:
         jobs:
-            - deploy_prod:
+            - deploy_prod_back:
+                  <<: *only_master
+            - deploy_prod_front:
                   <<: *only_master
