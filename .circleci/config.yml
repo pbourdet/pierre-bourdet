@@ -161,10 +161,15 @@ commands:
     deploy_front:
         steps:
             - run:
-                  name: Deploy front-end to Cloud Run
+                  name: Setup gcloud configuration
                   command: |
                       echo $GCP_CLOUDRUN_ACCOUNT_KEY | gcloud auth activate-service-account --key-file=-
-                      gcloud run deploy react --image "$FRONT_IMAGE_URL":latest
+                      gcloud config set run/region $GCP_REGION
+                      gcloud config set project $GCP_PROJECT_NAME
+                      gcloud config set compute/zone $GCP_ZONE
+            - run:
+                  name: Deploy front-end to Cloud Run
+                  command: gcloud run deploy react --image "$FRONT_IMAGE_URL":latest
     deploy_back:
         steps:
             - run:
@@ -191,7 +196,7 @@ commands:
                             && sudo docker image tag ${PHP_IMAGE_URL} pbourdet/workers-prod \
                             && sudo docker image tag ${CADDY_IMAGE_URL} pbourdet/caddy-prod"
             - run:
-                  name: Restart container
+                  name: Restart containers
                   command: |
                       gcloud compute ssh $GCP_ENGINE_INSTANCE --command "\
                             sudo docker-compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml down --remove-orphans \
