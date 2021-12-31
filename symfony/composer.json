@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -54,6 +54,10 @@
         "symfony/web-profiler-bundle": "5.3.*"
     },
     "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "composer/package-versions-deprecated": true
+        },
         "optimize-autoloader": true,
         "preferred-install": {
             "*": "dist"

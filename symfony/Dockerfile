@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-alpine AS symfony_php
+FROM php:8.1-fpm-alpine AS symfony_php
 
 # persistent / runtime deps
 RUN apk add --no-cache \
@@ -16,7 +16,7 @@ RUN apk add --no-cache \
 # see https://github.com/docker-library/php/issues/240#issuecomment-763112749
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so
 
-ARG APCU_VERSION=5.1.20
+ARG APCU_VERSION=5.1.21
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
@@ -74,7 +74,7 @@ ENV PATH="${PATH}:/root/.composer/vendor/bin"
 WORKDIR /srv/app
 
 # Download the Symfony skeleton and leverage Docker cache layers
-RUN composer create-project symfony/skeleton . --stability=stable --prefer-dist --no-dev --no-progress --no-interaction; \
+RUN composer create-project "symfony/skeleton 5.3.*" . --stability=stable --prefer-dist --no-dev --no-progress --no-interaction; \
 	composer clear-cache
 
 # Postgres extensions
