@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Account;
 
-use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Model\Account\Enum\LanguageEnum;
 use Model\Account\UpdateLanguageDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UpdateLanguageController extends AbstractController
 {
@@ -24,7 +25,9 @@ class UpdateLanguageController extends AbstractController
 
     public function __invoke(UpdateLanguageDTO $data): JsonResponse
     {
-        $this->validator->validate($data);
+        if (count($errors = $this->validator->validate($data)) > 0) {
+            return $this->json($errors, Response::HTTP_BAD_REQUEST);
+        }
 
         /** @var User $user */
         $user = $this->getUser();
@@ -36,6 +39,6 @@ class UpdateLanguageController extends AbstractController
         $user->setLanguage($language);
         $this->userRepository->save($user);
 
-        return $this->json(null);
+        return $this->json(['message' => 'Language updated']);
     }
 }
