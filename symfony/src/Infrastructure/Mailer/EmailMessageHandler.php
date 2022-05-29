@@ -22,7 +22,9 @@ class EmailMessageHandler implements MessageHandlerInterface
 
     public function __invoke(EmailMessage $emailMessage): void
     {
-        if (null !== $locale = $emailMessage->getLocale()) {
+        $locale = $emailMessage->getLocale();
+
+        if (null !== $locale) {
             /* @phpstan-ignore-next-line */
             $this->translator->setLocale($locale);
         }
