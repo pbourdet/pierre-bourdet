@@ -137,19 +137,19 @@ commands:
                   name: Install dev dependencies and prepare database
                   command: |
                       docker-compose exec symfony composer install
-                      docker-compose exec symfony make migrations
-                      docker-compose exec symfony make fixtures
+                      docker-compose exec symfony bin/console doctrine:migration:migrate --no-interaction
+                      docker-compose exec symfony bin/console doctrine:fixtures:load --no-interaction
             - run:
                   name: Run php-cs-fixer and yaml lint
                   command: |
-                      docker-compose exec symfony make yamlint
-                      docker-compose exec symfony make csfix-dry
+                      docker-compose exec symfony ./vendor/bin/yaml-lint config/
+                      docker-compose exec symfony ./vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no --allow-risky=yes
             - run:
                   name: Run Phpstan
-                  command: docker-compose exec symfony make phpstan
+                  command: docker-compose exec symfony ./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=-1
             - run:
                 name: Run PhpUnit tests
-                command: docker-compose exec symfony make phpunit
+                command: docker-compose exec symfony ./vendor/bin/simple-phpunit
     test_front:
         steps:
             - run:
