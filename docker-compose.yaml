@@ -18,10 +18,13 @@ services:
             RUN_FIXTURES: 'true'
             #Xdebug config
             XDEBUG_CONFIG: >-
-                discover_client_host=yes
+                client_host=host.docker.internal
                 start_with_request=yes
             XDEBUG_MODE: debug
             PHP_IDE_CONFIG: serverName=symfony
+        extra_hosts:
+            # Ensure that host.docker.internal is correctly defined on Linux
+            - host.docker.internal:host-gateway
     workers:
         container_name: workers
         image: pbourdet/workers-dev
