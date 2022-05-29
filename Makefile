@@ -45,10 +45,14 @@ fixtures:
 migrations:
 	docker-compose exec symfony bin/console doctrine:migration:migrate --no-interaction
 
+database-test:
+	docker-compose exec -e APP_ENV=test symfony bin/console doctrine:database:create --if-not-exists
+	docker-compose exec -e APP_ENV=test symfony bin/console doctrine:migration:migrate --no-interaction
+	docker-compose exec -e APP_ENV=test symfony bin/console doctrine:fixtures:load --no-interaction
+
 back-test:
-	make fixtures
+	docker-compose exec -e APP_ENV=test symfony bin/console doctrine:fixtures:load --no-interaction
 	docker-compose exec symfony ./vendor/bin/simple-phpunit
-	make fixtures
 
 back-check:
 	make code-check
@@ -62,5 +66,5 @@ cc:
 	docker-compose exec symfony bin/console cache:clear
 
 coverage:
-	make fixtures
+	docker-compose exec -e APP_ENV=test symfony bin/console doctrine:fixtures:load --no-interaction
 	docker-compose exec -e XDEBUG_MODE=coverage symfony ./vendor/bin/simple-phpunit --coverage-html coverage
