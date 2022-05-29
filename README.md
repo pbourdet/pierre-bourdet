@@ -26,3 +26,8 @@ make eslint
 make code-check
 ```
 will run linter on both front-end and back-end.
+
+## Debug
+Xdebug is installed  in the Symfony container.
+
+To use it with PHPStorm, follow [this documentation](https://github.com/dunglas/symfony-docker/blob/main/docs/xdebug.md#debugging-with-xdebug-and-phpstorm).
