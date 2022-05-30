@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'game_name', type: 'string')]
-#[ORM\DiscriminatorMap(['snake' => 'SnakeGame'])]
+#[ORM\DiscriminatorMap(['snake' => SnakeGame::class])]
 abstract class Game
 {
     public const READ_COLLECTION_TOP_GROUP = 'read:collection:top';

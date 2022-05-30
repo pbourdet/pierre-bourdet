@@ -54,6 +54,7 @@ class Conversation
     ])]
     private Uuid $id;
 
+    /** @var Collection<int, Participant> */
     #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Participant::class, cascade: ['PERSIST'], orphanRemoval: true)]
     #[Serializer\Groups(groups: [
         Conversation::READ_COLLECTION_GROUP,
@@ -61,6 +62,7 @@ class Conversation
     ])]
     private Collection $participants;
 
+    /** @var Collection<int, Message> */
     #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Message::class, orphanRemoval: true)]
     #[ORM\OrderBy(['date' => Criteria::ASC])]
     #[Serializer\Groups(groups: [Conversation::READ_ITEM_GROUP])]
