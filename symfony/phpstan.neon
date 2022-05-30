@@ -1,8 +1,3 @@
-includes:
-    - vendor/phpstan/phpstan-doctrine/extension.neon
-    - vendor/phpstan/phpstan-doctrine/rules.neon
-    - vendor/phpstan/phpstan-symfony/extension.neon
-    - vendor/phpstan/phpstan-symfony/rules.neon
 parameters:
 	level: max
 	paths:
@@ -11,3 +6,7 @@ parameters:
 		- src/App/DataFixtures
 	checkMissingIterableValueType: false
 	checkGenericClassInNonGenericObjectType: false
+	symfony:
+		containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+	scanDirectories:
+		- var/cache/dev/Symfony/Config
