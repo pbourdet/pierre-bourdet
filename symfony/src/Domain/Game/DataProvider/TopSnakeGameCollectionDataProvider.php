@@ -16,6 +16,7 @@ class TopSnakeGameCollectionDataProvider implements CollectionDataProviderInterf
     ) {
     }
 
+    /** @param class-string<SnakeGame> $resourceClass */
     public function getCollection(string $resourceClass, string $operationName = null): array
     {
         return $this->gameRepository->getTopFiveGamesByGameType($resourceClass);

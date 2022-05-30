@@ -24,7 +24,11 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
-    /** @return array<SnakeGame> */
+    /**
+     * @param class-string<Game> $gameClassName
+     *
+     * @return array<SnakeGame>
+     */
     public function getTopFiveGamesByGameType(string $gameClassName): array
     {
         /** @var array<SnakeGame> $snakeGames */

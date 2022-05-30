@@ -9,10 +9,12 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmailMessageHandler implements MessageHandlerInterface
 {
+    /** @param TranslatorInterface&LocaleAwareInterface $translator */
     public function __construct(
         private MailerInterface $mailer,
         private TranslatorInterface $translator,
@@ -25,7 +27,6 @@ class EmailMessageHandler implements MessageHandlerInterface
         $locale = $emailMessage->getLocale();
 
         if (null !== $locale) {
-            /* @phpstan-ignore-next-line */
             $this->translator->setLocale($locale);
         }
 
