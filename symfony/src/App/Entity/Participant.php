@@ -31,6 +31,7 @@ class Participant
     #[ORM\JoinColumn(nullable: false)]
     private Conversation $conversation;
 
+    /** @var Collection<int, Message>  */
     #[ORM\OneToMany(mappedBy: 'sender', targetEntity: Message::class, orphanRemoval: true)]
     private Collection $messages;
 

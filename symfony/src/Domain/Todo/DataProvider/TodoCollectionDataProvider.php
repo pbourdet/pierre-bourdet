@@ -23,6 +23,7 @@ final class TodoCollectionDataProvider implements CollectionDataProviderInterfac
         return Todo::class === $resourceClass;
     }
 
+    /** @return Collection<int, Todo> */
     public function getCollection(string $resourceClass, string $operationName = null): Collection
     {
         /** @var User $user */

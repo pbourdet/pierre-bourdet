@@ -111,6 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private string $password = '';
 
+    /** @var Collection<int, Todo> */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Todo::class, orphanRemoval: true)]
     private Collection $todos;
 
@@ -135,9 +136,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private string $language = '';
 
+    /** @var Collection<int, Game> */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Game::class, orphanRemoval: true)]
     private Collection $games;
 
+    /** @var Collection<int, Participant> */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Participant::class, orphanRemoval: true)]
     private Collection $participants;
 
@@ -348,6 +351,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /** @return Collection<int, Game> */
     public function getGames(): Collection
     {
         return $this->games;
