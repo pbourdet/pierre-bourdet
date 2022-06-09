@@ -68,12 +68,12 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/security, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/security, roles: PUBLIC_ACCESS }
+        - { path: ^/public, roles: PUBLIC_ACCESS }
         - { path: ^/users, roles: IS_AUTHENTICATED_FULLY, methods: [DELETE, GET] }
         - { path: ^/todos, roles: IS_AUTHENTICATED_FULLY, methods: [GET, POST, PUT, DELETE] }
         - { path: ^/account, roles: IS_AUTHENTICATED_FULLY, methods: [GET, POST, PUT, DELETE] }
-        - { path: ^/games/\w+/top, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [GET, POST] }
+        - { path: ^/games/\w+/top, roles: PUBLIC_ACCESS, methods: [GET, POST] }
         - { path: ^/games, roles: IS_AUTHENTICATED_FULLY, methods: [GET, POST] }
         - { path: ^/conversations, roles: IS_AUTHENTICATED_FULLY, methods: [GET, POST] }
         - { path: ^/messages, roles: IS_AUTHENTICATED_FULLY, methods: [POST] }
