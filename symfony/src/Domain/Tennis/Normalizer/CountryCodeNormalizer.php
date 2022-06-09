@@ -14,6 +14,8 @@ class CountryCodeNormalizer implements NormalizerInterface, NormalizerAwareInter
 {
     use NormalizerAwareTrait;
 
+    private const TAIPEI_COUNTRY_CODE = 'TPE';
+
     /** @param Competitor $competitor */
     public function normalize($competitor, string $format = null, array $context = []): array
     {
@@ -22,7 +24,10 @@ class CountryCodeNormalizer implements NormalizerInterface, NormalizerAwareInter
 
         try {
             $data['countryCode'] = Countries::getAlpha2Code($competitor->countryCode);
-        } catch (\Exception) {
+        } catch (\Exception $exception) {
+            if (self::TAIPEI_COUNTRY_CODE !== $competitor->countryCode) {
+                throw $exception;
+            }
             // Case of TPE country code (Chinese Taipei)
             $data['countryCode'] = 'TW';
         }
