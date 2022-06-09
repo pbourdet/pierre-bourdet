@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Account;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Model\Account\UpdatePasswordDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +19,8 @@ class UpdatePasswordController extends AbstractController
 
     public function __construct(
         private ValidatorInterface $validator,
-        private UserPasswordHasherInterface $hasher
+        private UserPasswordHasherInterface $hasher,
+        private EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -34,9 +36,8 @@ class UpdatePasswordController extends AbstractController
         $user->setPassword($this->hasher->hashPassword($user, $data->getNewPassword()));
         $user->hasBeenUpdated();
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
         return $this->json(['message' => 'PASSWORD_UPDATED'], Response::HTTP_OK);
     }

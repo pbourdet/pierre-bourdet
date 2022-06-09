@@ -6,15 +6,13 @@ namespace Domain\Tennis\Normalizer;
 
 use Model\Tennis\PlayerProfile\Period;
 use Model\Tennis\PlayerProfile\PlayerProfile;
-use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class PlayerProfilePeriodsSumNormalizer implements ContextAwareNormalizerInterface
+class PlayerProfilePeriodsSumNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
-    public function __construct(
-        private ObjectNormalizer $normalizer
-    ) {
-    }
+    use NormalizerAwareTrait;
 
     /** @param PlayerProfile $playerProfile */
     public function normalize($playerProfile, string $format = null, array $context = []): array

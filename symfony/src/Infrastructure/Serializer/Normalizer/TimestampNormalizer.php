@@ -21,7 +21,7 @@ class TimestampNormalizer implements NormalizerInterface, DenormalizerInterface
         return $object->getTimestamp() * 1000;
     }
 
-    public function supportsNormalization($data, string $format = null): bool
+    public function supportsNormalization($data, string $format = null, array $context = []): bool
     {
         return $data instanceof \DateTimeInterface;
     }
@@ -31,7 +31,7 @@ class TimestampNormalizer implements NormalizerInterface, DenormalizerInterface
         return (new \DateTime())->setTimestamp($data / 1000);
     }
 
-    public function supportsDenormalization($data, string $type, string $format = null): bool
+    public function supportsDenormalization($data, string $type, string $format = null, array $context = []): bool
     {
         return in_array($type, self::SUPPORTED_TYPE) && is_int($data);
     }
