@@ -23,7 +23,7 @@ class CountryCodeNormalizer implements NormalizerInterface, NormalizerAwareInter
         try {
             $data['countryCode'] = Countries::getAlpha2Code($competitor->countryCode);
         } catch (\Exception) {
-            //Case of TPE country code (Chinese Taipei)
+            // Case of TPE country code (Chinese Taipei)
             $data['countryCode'] = 'TW';
         }
 

@@ -80,7 +80,7 @@ class Conversation
         return $this->id;
     }
 
-    //For testing purposes
+    // For testing purposes
     public function setId(Uuid $uuid): void
     {
         $this->id = $uuid;

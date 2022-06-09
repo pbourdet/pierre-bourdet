@@ -64,7 +64,7 @@ class SportRadarClient
                 ]
             );
 
-            throw new SportRadarApiException($response->getStatusCode(), $response->getContent(false), );
+            throw new SportRadarApiException($response->getStatusCode(), $response->getContent(false));
         }
 
         return $this->serializer->deserialize(
