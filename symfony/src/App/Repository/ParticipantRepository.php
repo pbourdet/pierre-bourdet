@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Participant>
+ *
  * @method Participant|null find($id, $lockMode = null, $lockVersion = null)
  * @method Participant|null findOneBy(array $criteria, array $orderBy = null)
  * @method Participant[]    findAll()

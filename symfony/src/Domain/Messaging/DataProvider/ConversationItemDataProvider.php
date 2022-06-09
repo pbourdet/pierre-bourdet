@@ -21,6 +21,11 @@ class ConversationItemDataProvider implements ItemDataProviderInterface, Restric
     ) {
     }
 
+    /**
+     * @param class-string         $resourceClass
+     * @param mixed                $id
+     * @param array<string, mixed> $context
+     */
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?Conversation
     {
         $conversation = $this->conversationRepository->find($id);
@@ -39,6 +44,7 @@ class ConversationItemDataProvider implements ItemDataProviderInterface, Restric
         return $conversation;
     }
 
+    /** @param array<string, mixed> $context */
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
     {
         return Conversation::class === $resourceClass;

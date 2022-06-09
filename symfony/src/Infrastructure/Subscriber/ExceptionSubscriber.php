@@ -13,9 +13,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @return array<array>
-     */
+    /** @return array<string, string|array{0: string, 1: int}|list<array{0: string, 1?: int}>> */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -32,7 +30,9 @@ class ExceptionSubscriber implements EventSubscriberInterface
             : Response::HTTP_INTERNAL_SERVER_ERROR
         ;
 
-        $event->setResponse(new JsonResponse([
+        $event->setResponse(
+            new JsonResponse(
+                [
                     'code' => $statusCode,
                     'message' => $exception->getMessage(),
                 ],

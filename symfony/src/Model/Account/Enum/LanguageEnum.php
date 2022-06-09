@@ -17,6 +17,7 @@ final class LanguageEnum
         self::FR_ISO639 => self::FR,
     ];
 
+    /** @return array<string> */
     public static function getIsoLanguages(): array
     {
         return [

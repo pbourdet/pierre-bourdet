@@ -9,6 +9,7 @@ use App\Controller\Account\GetMeController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Model\User\CreateUserDTO;
 use Symfony\Component\HttpFoundation\Request;
@@ -355,6 +356,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getGames(): Collection
     {
         return $this->games;
+    }
+
+    /**
+     * @phpstan-template T of Game
+     * @phpstan-param class-string<T> $gameClassName
+     * @phpstan-return array<int, T>
+     */
+    public function getGamesByType(string $gameClassName): array
+    {
+        /** @var array<int, T> $games */
+        $games = $this->games
+            ->matching(Criteria::create()->orderBy(['score' => Criteria::DESC]))
+            ->filter(fn ($game) => $game instanceof $gameClassName)
+            ->slice(0, 5)
+        ;
+
+        return $games;
     }
 
     public function addGame(Game $game): self
