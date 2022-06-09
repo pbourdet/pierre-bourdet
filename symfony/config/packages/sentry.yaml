@@ -1,6 +1,2 @@
 sentry:
     dsn: '%env(SENTRY_DSN)%'
-
-sensio_framework_extra:
-    psr_message:
-        enabled: false

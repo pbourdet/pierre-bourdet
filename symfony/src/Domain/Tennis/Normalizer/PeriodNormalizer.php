@@ -7,15 +7,13 @@ namespace Domain\Tennis\Normalizer;
 use Model\Tennis\Enum\SurfaceTypeEnum;
 use Model\Tennis\PlayerProfile\Period;
 use Model\Tennis\PlayerProfile\Surface;
-use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class PeriodNormalizer implements ContextAwareNormalizerInterface
+class PeriodNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
-    public function __construct(
-        private ObjectNormalizer $normalizer
-    ) {
-    }
+    use NormalizerAwareTrait;
 
     /** @param Period $period */
     public function normalize($period, string $format = null, array $context = []): array

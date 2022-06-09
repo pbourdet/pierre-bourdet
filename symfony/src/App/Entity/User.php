@@ -155,7 +155,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    //For tests purposes
+    // For tests purposes
     public function setId(Uuid $id): void
     {
         $this->id = $id;
@@ -383,7 +383,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->participants;
     }
 
-    //For tests purposes
+    // For tests purposes
     public function addParticipant(Participant $participant): self
     {
         if (!$this->participants->contains($participant)) {

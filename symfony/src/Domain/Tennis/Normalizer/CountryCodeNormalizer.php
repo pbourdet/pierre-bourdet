@@ -6,15 +6,15 @@ namespace Domain\Tennis\Normalizer;
 
 use Model\Tennis\PlayerProfile\Competitor;
 use Symfony\Component\Intl\Countries;
-use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class CountryCodeNormalizer implements ContextAwareNormalizerInterface
+class CountryCodeNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
-    public function __construct(
-        private ObjectNormalizer $normalizer
-    ) {
-    }
+    use NormalizerAwareTrait;
+
+    private const TAIPEI_COUNTRY_CODE = 'TPE';
 
     /** @param Competitor $competitor */
     public function normalize($competitor, string $format = null, array $context = []): array
@@ -24,8 +24,11 @@ class CountryCodeNormalizer implements ContextAwareNormalizerInterface
 
         try {
             $data['countryCode'] = Countries::getAlpha2Code($competitor->countryCode);
-        } catch (\Exception) {
-            //Case of TPE country code (Chinese Taipei)
+        } catch (\Exception $exception) {
+            if (self::TAIPEI_COUNTRY_CODE !== $competitor->countryCode) {
+                throw $exception;
+            }
+            // Case of TPE country code (Chinese Taipei)
             $data['countryCode'] = 'TW';
         }
 
