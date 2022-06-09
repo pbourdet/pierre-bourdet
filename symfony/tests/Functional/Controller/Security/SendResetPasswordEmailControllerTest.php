@@ -19,7 +19,7 @@ class SendResetPasswordEmailControllerTest extends AbstractEndPoint
     protected function setUp(): void
     {
         self::bootKernel();
-        $container = self::$container;
+        $container = self::getContainer();
         $this->userRepository = $container->get(UserRepository::class);
         self::ensureKernelShutdown();
     }

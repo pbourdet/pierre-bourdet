@@ -12,6 +12,7 @@ use Model\Tennis\PlayerProfile\Statistics;
 use Model\Tennis\PlayerProfile\Surface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class PeriodNormalizerTest extends TestCase
@@ -22,14 +23,10 @@ class PeriodNormalizerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->normalizer = $this
-            ->getMockBuilder(ObjectNormalizer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->normalizer = $this->createMock(NormalizerInterface::class);
 
-        $this->testedObject = new PeriodNormalizer(
-            $this->normalizer
-        );
+        $this->testedObject = new PeriodNormalizer();
+        $this->testedObject->setNormalizer($this->normalizer);
     }
 
     public function testNormalize(): void

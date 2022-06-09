@@ -23,10 +23,7 @@ class UserCreationSubscriberTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->hasher = $this->getMockBuilder(UserPasswordHasherInterface::class)
-            ->disableOriginalConstructor()
-            ->addMethods(['hashPassword'])
-            ->getMock();
+        $this->hasher = $this->createMock(UserPasswordHasherInterface::class);
 
         $this->testedObject = new UserCreationSubscriber(
             $this->hasher

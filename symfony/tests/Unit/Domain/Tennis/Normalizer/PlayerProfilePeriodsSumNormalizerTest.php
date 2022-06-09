@@ -22,14 +22,10 @@ class PlayerProfilePeriodsSumNormalizerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->normalizer = $this
-            ->getMockBuilder(ObjectNormalizer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->normalizer = $this->createMock(ObjectNormalizer::class);
 
-        $this->testedObject = new PlayerProfilePeriodsSumNormalizer(
-            $this->normalizer
-        );
+        $this->testedObject = new PlayerProfilePeriodsSumNormalizer();
+        $this->testedObject->setNormalizer($this->normalizer);
     }
 
     public function testNormalize(): void
