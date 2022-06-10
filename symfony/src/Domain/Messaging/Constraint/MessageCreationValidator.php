@@ -14,8 +14,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class MessageCreationValidator extends ConstraintValidator
 {
     public function __construct(
-        private Security $security,
-        private ConversationRepository $conversationRepository
+        private readonly Security $security,
+        private readonly ConversationRepository $conversationRepository
     ) {
     }
 

@@ -16,11 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SinglesRankingsController extends AbstractController
 {
-    public const PATH = '/tennis/singles-rankings/{competitionName}';
+    final public const PATH = '/tennis/singles-rankings/{competitionName}';
 
     public function __construct(
-        private RankingsRepository $rankingsRepository,
-        private LoggerInterface $logger
+        private readonly RankingsRepository $rankingsRepository,
+        private readonly LoggerInterface $logger
     ) {
     }
 

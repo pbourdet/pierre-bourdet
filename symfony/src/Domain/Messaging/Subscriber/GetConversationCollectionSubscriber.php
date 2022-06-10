@@ -18,9 +18,9 @@ use Symfony\Component\Security\Core\Security;
 class GetConversationCollectionSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private Authorization $authorization,
-        private RouterInterface $router,
-        private Security $security
+        private readonly Authorization $authorization,
+        private readonly RouterInterface $router,
+        private readonly Security $security
     ) {
     }
 

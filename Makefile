@@ -33,9 +33,13 @@ yamlint:
 cs-fixer:
 	docker-compose exec symfony ./vendor/bin/php-cs-fixer fix --allow-risky=yes $(1)
 
+rector:
+	docker-compose exec symfony ./vendor/bin/rector process src
+
 code-check:
 	make yamlint
 	make cs-fixer
+	make rector
 	make phpstan
 
 fixtures:

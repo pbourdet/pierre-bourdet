@@ -11,7 +11,7 @@ use Model\Tennis\Rankings\Ranking;
 class RankingsRepository
 {
     public function __construct(
-        private SportRadarClient $client
+        private readonly SportRadarClient $client
     ) {
     }
 

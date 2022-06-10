@@ -18,7 +18,7 @@ use App\Controller\Security\SendResetPasswordEmailController;
 final class OpenApiDecorator implements OpenApiFactoryInterface
 {
     public function __construct(
-        private OpenApiFactoryInterface $decorated
+        private readonly OpenApiFactoryInterface $decorated
     ) {
     }
 

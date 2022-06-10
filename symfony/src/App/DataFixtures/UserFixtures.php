@@ -13,14 +13,14 @@ use Symfony\Component\Uid\Uuid;
 
 class UserFixtures extends Fixture
 {
-    public const DEFAULT_EMAIL = 'test@test.fr';
-    public const DEFAULT_PASSWORD = '123456';
-    public const DEFAULT_NICKNAME = 'pierre';
-    public const DEFAULT_UUID = '20354d7a-e4fe-47af-8ff6-187bca92f3f9';
-    public const USER_WITH_NO_CONVERSATION = 'c138ab77-11d0-45a4-b2b1-f826875efb0e';
+    final public const DEFAULT_EMAIL = 'test@test.fr';
+    final public const DEFAULT_PASSWORD = '123456';
+    final public const DEFAULT_NICKNAME = 'pierre';
+    final public const DEFAULT_UUID = '20354d7a-e4fe-47af-8ff6-187bca92f3f9';
+    final public const USER_WITH_NO_CONVERSATION = 'c138ab77-11d0-45a4-b2b1-f826875efb0e';
 
     public function __construct(
-        private UserPasswordHasherInterface $hasher
+        private readonly UserPasswordHasherInterface $hasher
     ) {
     }
 

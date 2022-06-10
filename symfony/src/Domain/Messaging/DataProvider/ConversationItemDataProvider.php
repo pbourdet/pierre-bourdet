@@ -16,8 +16,8 @@ use Symfony\Component\Security\Core\Security;
 class ConversationItemDataProvider implements ItemDataProviderInterface, RestrictedDataProviderInterface
 {
     public function __construct(
-        private Security $security,
-        private ConversationRepository $conversationRepository
+        private readonly Security $security,
+        private readonly ConversationRepository $conversationRepository
     ) {
     }
 

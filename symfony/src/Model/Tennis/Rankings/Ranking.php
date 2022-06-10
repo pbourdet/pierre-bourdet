@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\Annotation as Serializer;
 
 class Ranking
 {
-    public const READ = 'ranking:read';
+    final public const READ = 'ranking:read';
 
     public int $typeId = 0;
 

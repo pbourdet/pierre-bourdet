@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Security;
 class UserSnakeGameCollectionDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
 {
     public function __construct(
-        private Security $security
+        private readonly Security $security
     ) {
     }
 
@@ -28,9 +28,7 @@ class UserSnakeGameCollectionDataProvider implements CollectionDataProviderInter
         );
 
         return $games
-            ->filter(function ($game) {
-                return $game instanceof SnakeGame;
-            })
+            ->filter(fn ($game) => $game instanceof SnakeGame)
             ->slice(0, 5);
     }
 

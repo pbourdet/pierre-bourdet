@@ -13,10 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GetPlayerProfileController extends AbstractController
 {
-    public const PATH = '/tennis/player-profile/{playerId}';
+    final public const PATH = '/tennis/player-profile/{playerId}';
 
     public function __construct(
-        private SportRadarClient $sportRadarClient
+        private readonly SportRadarClient $sportRadarClient
     ) {
     }
 

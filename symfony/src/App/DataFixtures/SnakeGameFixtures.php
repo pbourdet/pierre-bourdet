@@ -15,7 +15,7 @@ use Symfony\Component\Uid\Uuid;
 class SnakeGameFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
-        private UserRepository $userRepository
+        private readonly UserRepository $userRepository
     ) {
     }
 

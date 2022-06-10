@@ -15,12 +15,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ContactMeController extends AbstractController
 {
-    public const PATH = '/public/contact-me';
+    final public const PATH = '/public/contact-me';
 
     public function __construct(
-        private ValidatorInterface $validator,
-        private MessageBusInterface $bus,
-        private EmailFactory $emailFactory
+        private readonly ValidatorInterface $validator,
+        private readonly MessageBusInterface $bus,
+        private readonly EmailFactory $emailFactory
     ) {
     }
 

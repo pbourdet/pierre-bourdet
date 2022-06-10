@@ -9,8 +9,8 @@ use Symfony\Component\Mime\Email;
 class EmailMessage
 {
     public function __construct(
-        private Email $email,
-        private ?string $locale = null
+        private readonly Email $email,
+        private readonly ?string $locale = null
     ) {
     }
 

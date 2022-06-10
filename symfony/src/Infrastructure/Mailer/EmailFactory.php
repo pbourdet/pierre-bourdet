@@ -13,10 +13,10 @@ use Symfony\Component\Mime\Address;
 class EmailFactory
 {
     public function __construct(
-        private string $frontendDomain,
-        private string $contactEmail,
-        private string $contactName,
-        private string $personalEmail
+        private readonly string $frontendDomain,
+        private readonly string $contactEmail,
+        private readonly string $contactName,
+        private readonly string $personalEmail
     ) {
     }
 

@@ -11,7 +11,7 @@ use Symfony\Component\Uid\Uuid;
 
 class ConversationFixtures extends Fixture
 {
-    public const CONVERSATION_UUID = '4abd874c-b113-4ddc-866e-1cdc99526fcd';
+    final public const CONVERSATION_UUID = '4abd874c-b113-4ddc-866e-1cdc99526fcd';
 
     public function load(ObjectManager $manager): void
     {

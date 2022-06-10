@@ -14,10 +14,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final class UserCreatedDataPersister implements ContextAwareDataPersisterInterface
 {
     public function __construct(
-        private EmailFactory $emailFactory,
-        private MessageBusInterface $bus,
-        private ContextAwareDataPersisterInterface $decorator,
-        private TranslatorInterface $translator
+        private readonly EmailFactory $emailFactory,
+        private readonly MessageBusInterface $bus,
+        private readonly ContextAwareDataPersisterInterface $decorator,
+        private readonly TranslatorInterface $translator
     ) {
     }
 

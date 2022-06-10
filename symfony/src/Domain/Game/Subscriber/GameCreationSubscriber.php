@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Security;
 class GameCreationSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private Security $security
+        private readonly Security $security
     ) {
     }
 

@@ -17,9 +17,9 @@ use Symfony\Component\Security\Core\Security;
 class CreateMessageDataTransformer implements DataTransformerInterface
 {
     public function __construct(
-        private Security $security,
-        private ValidatorInterface $validator,
-        private ConversationRepository $conversationRepository,
+        private readonly Security $security,
+        private readonly ValidatorInterface $validator,
+        private readonly ConversationRepository $conversationRepository,
     ) {
     }
 

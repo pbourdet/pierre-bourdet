@@ -19,9 +19,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 class MessageCreationSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private HubInterface $hub,
-        private RouterInterface $router,
-        private SerializerInterface $serializer
+        private readonly HubInterface $hub,
+        private readonly RouterInterface $router,
+        private readonly SerializerInterface $serializer
     ) {
     }
 

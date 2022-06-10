@@ -15,8 +15,8 @@ use Doctrine\Persistence\ObjectManager;
 class ParticipantFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
-        private ConversationRepository $conversationRepository,
-        private UserRepository $userRepository
+        private readonly ConversationRepository $conversationRepository,
+        private readonly UserRepository $userRepository
     ) {
     }
 
@@ -29,9 +29,9 @@ class ParticipantFixtures extends Fixture implements DependentFixtureInterface
         /** @var User $defaultUser */
         $defaultUser = $this->userRepository->find(UserFixtures::DEFAULT_UUID);
 
-        $users = array_values(array_filter($users, function ($user) {
-            return !in_array((string) $user->getId(), [UserFixtures::DEFAULT_UUID, UserFixtures::USER_WITH_NO_CONVERSATION]);
-        }));
+        $users = array_values(
+            array_filter($users, fn ($user) => !in_array((string) $user->getId(), [UserFixtures::DEFAULT_UUID, UserFixtures::USER_WITH_NO_CONVERSATION]))
+        );
 
         foreach ($conversations as $key => $conversation) {
             $defaultParticipant = (new Participant())

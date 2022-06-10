@@ -14,12 +14,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ResetPasswordController extends AbstractController
 {
-    public const PATH = '/security/reset-password';
+    final public const PATH = '/security/reset-password';
 
     public function __construct(
-        private ValidatorInterface $validator,
-        private UserPasswordHasherInterface $hasher,
-        private UserRepository $userRepository
+        private readonly ValidatorInterface $validator,
+        private readonly UserPasswordHasherInterface $hasher,
+        private readonly UserRepository $userRepository
     ) {
     }
 

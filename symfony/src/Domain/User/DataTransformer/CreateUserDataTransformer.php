@@ -14,7 +14,7 @@ use Model\User\CreateUserDTO;
 final class CreateUserDataTransformer implements DataTransformerInterface
 {
     public function __construct(
-        private ValidatorInterface $validator
+        private readonly ValidatorInterface $validator
     ) {
     }
 
