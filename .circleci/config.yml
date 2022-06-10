@@ -140,16 +140,23 @@ commands:
                       docker-compose exec symfony bin/console doctrine:migration:migrate --no-interaction
                       docker-compose exec symfony bin/console doctrine:fixtures:load --no-interaction
             - run:
-                  name: Run php-cs-fixer and yaml lint
+                  name: Run YAML lint
                   command: |
                       docker-compose exec symfony ./vendor/bin/yaml-lint config/
+            - run:
+                  name: Run php-cs-fixer
+                  command: |
                       docker-compose exec symfony ./vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no --allow-risky=yes
+            - run:
+                  name: Run Rector
+                  command: |
+                      docker-compose exec symfony ./vendor/bin/rector process src --dry-run
             - run:
                   name: Run Phpstan
                   command: docker-compose exec symfony ./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=-1
             - run:
-                name: Run PhpUnit tests
-                command: docker-compose exec symfony ./vendor/bin/simple-phpunit
+                  name: Run PhpUnit tests
+                  command: docker-compose exec symfony ./vendor/bin/simple-phpunit
     test_front:
         steps:
             - run:
