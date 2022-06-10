@@ -16,9 +16,9 @@ class EmailMessageHandler implements MessageHandlerInterface
 {
     /** @param TranslatorInterface&LocaleAwareInterface $translator */
     public function __construct(
-        private MailerInterface $mailer,
-        private TranslatorInterface $translator,
-        private LoggerInterface $logger
+        private readonly MailerInterface $mailer,
+        private readonly TranslatorInterface $translator,
+        private readonly LoggerInterface $logger
     ) {
     }
 

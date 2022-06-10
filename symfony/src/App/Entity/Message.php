@@ -33,7 +33,7 @@ use Symfony\Component\Uid\Uuid;
 )]
 class Message
 {
-    public const CREATE_GROUP = 'message:create';
+    final public const CREATE_GROUP = 'message:create';
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]

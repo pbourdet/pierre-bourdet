@@ -13,11 +13,9 @@ use Faker\Factory;
 
 class TodoFixtures extends Fixture implements DependentFixtureInterface
 {
-    private UserRepository $userRepository;
-
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
+    public function __construct(
+        private readonly UserRepository $userRepository
+    ) {
     }
 
     public function load(ObjectManager $manager): void

@@ -15,12 +15,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UpdatePasswordController extends AbstractController
 {
-    public const PATH = '/account/update-password';
+    final public const PATH = '/account/update-password';
 
     public function __construct(
-        private ValidatorInterface $validator,
-        private UserPasswordHasherInterface $hasher,
-        private EntityManagerInterface $entityManager,
+        private readonly ValidatorInterface $validator,
+        private readonly UserPasswordHasherInterface $hasher,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 

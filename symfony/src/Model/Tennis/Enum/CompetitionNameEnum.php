@@ -6,7 +6,7 @@ namespace Model\Tennis\Enum;
 
 class CompetitionNameEnum
 {
-    public const ATP = 'ATP';
+    final public const ATP = 'ATP';
 
-    public const WTA = 'WTA';
+    final public const WTA = 'WTA';
 }

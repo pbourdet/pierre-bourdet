@@ -14,7 +14,7 @@ use Faker\Factory;
 class MessageFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(
-        private ParticipantRepository $participantRepository
+        private readonly ParticipantRepository $participantRepository
     ) {
     }
 

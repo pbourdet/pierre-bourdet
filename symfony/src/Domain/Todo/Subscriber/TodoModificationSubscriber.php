@@ -21,7 +21,7 @@ class TodoModificationSubscriber implements EventSubscriberInterface
     ];
 
     public function __construct(
-        private UserAuthorizationChecker $userAuthorizationChecker
+        private readonly UserAuthorizationChecker $userAuthorizationChecker
     ) {
     }
 

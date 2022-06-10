@@ -12,7 +12,7 @@ use App\Repository\GameRepository;
 class TopSnakeGameCollectionDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
 {
     public function __construct(
-        private GameRepository $gameRepository
+        private readonly GameRepository $gameRepository
     ) {
     }
 

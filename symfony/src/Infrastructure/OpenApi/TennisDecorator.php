@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
 class TennisDecorator implements OpenApiFactoryInterface
 {
     public function __construct(
-        private OpenApiFactoryInterface $decorated,
-        private SchemaFactoryInterface $schemaFactory
+        private readonly OpenApiFactoryInterface $decorated,
+        private readonly SchemaFactoryInterface $schemaFactory
     ) {
     }
 

@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Security;
 class UserAuthorizationChecker
 {
     public function __construct(
-        private Security $security
+        private readonly Security $security
     ) {
     }
 

@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\Annotation as Serializer;
 
 class PlayerProfile
 {
-    public const READ = 'player-profile:read';
+    final public const READ = 'player-profile:read';
 
     #[Serializer\Groups([PlayerProfile::READ])]
     public Competitor $competitor;

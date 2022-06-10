@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Security;
 class ConversationCollectionDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
 {
     public function __construct(
-        private Security $security
+        private readonly Security $security
     ) {
     }
 

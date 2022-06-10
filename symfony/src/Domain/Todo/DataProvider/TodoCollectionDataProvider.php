@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Security;
 final class TodoCollectionDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
 {
     public function __construct(
-        private Security $security
+        private readonly Security $security
     ) {
     }
 

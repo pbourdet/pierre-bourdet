@@ -21,10 +21,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ConversationCreationSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private HubInterface $hub,
-        private RouterInterface $router,
-        private SerializerInterface $serializer,
-        private Security $security
+        private readonly HubInterface $hub,
+        private readonly RouterInterface $router,
+        private readonly SerializerInterface $serializer,
+        private readonly Security $security
     ) {
     }
 

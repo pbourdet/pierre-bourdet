@@ -11,7 +11,8 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RefreshTokenRequestListener implements EventSubscriberInterface
 {
-    public function __construct(private RouterInterface $router
+    public function __construct(
+        private readonly RouterInterface $router
     ) {
     }
 
@@ -38,7 +39,7 @@ class RefreshTokenRequestListener implements EventSubscriberInterface
             $request->cookies->all(),
             $request->files->all(),
             $request->server->all(),
-            (string) json_encode(['refreshToken' => $request->cookies->get('REFRESH_TOKEN')])
+            (string) json_encode(['refreshToken' => $request->cookies->get('REFRESH_TOKEN')], JSON_THROW_ON_ERROR)
         );
     }
 }

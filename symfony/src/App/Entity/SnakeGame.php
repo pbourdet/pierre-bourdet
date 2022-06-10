@@ -76,6 +76,6 @@ use Symfony\Component\HttpFoundation\Response;
 ]
 class SnakeGame extends Game
 {
-    public const TOP_GAMES_OPERATION_NAME = 'getTopGames';
-    public const USER_GAMES_OPERATION_NAME = 'getUserGames';
+    final public const TOP_GAMES_OPERATION_NAME = 'getTopGames';
+    final public const USER_GAMES_OPERATION_NAME = 'getUserGames';
 }

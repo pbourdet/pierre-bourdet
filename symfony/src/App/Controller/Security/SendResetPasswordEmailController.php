@@ -18,14 +18,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SendResetPasswordEmailController extends AbstractController
 {
-    public const PATH = '/security/reset-password-email';
+    final public const PATH = '/security/reset-password-email';
 
     public function __construct(
-        private ValidatorInterface $validator,
-        private UserRepository $userRepository,
-        private MessageBusInterface $bus,
-        private EmailFactory $emailFactory,
-        private TranslatorInterface $translator
+        private readonly ValidatorInterface $validator,
+        private readonly UserRepository $userRepository,
+        private readonly MessageBusInterface $bus,
+        private readonly EmailFactory $emailFactory,
+        private readonly TranslatorInterface $translator
     ) {
     }
 

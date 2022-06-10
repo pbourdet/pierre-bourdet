@@ -41,8 +41,8 @@ use Symfony\Component\Uid\Uuid;
 )]
 class Conversation
 {
-    public const READ_COLLECTION_GROUP = 'conversation:read:collection';
-    public const READ_ITEM_GROUP = 'conversation:read:item';
+    final public const READ_COLLECTION_GROUP = 'conversation:read:collection';
+    final public const READ_ITEM_GROUP = 'conversation:read:item';
 
     #[ORM\Id]
     #[ORM\Column(type: 'uuid')]

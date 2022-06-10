@@ -19,8 +19,8 @@ class PersistTodoDataTransformer implements DataTransformerInterface
     private const CREATE_VALIDATION_GROUP = 'create_todo';
 
     public function __construct(
-        private Security $security,
-        private ValidatorInterface $validator
+        private readonly Security $security,
+        private readonly ValidatorInterface $validator
     ) {
     }
 

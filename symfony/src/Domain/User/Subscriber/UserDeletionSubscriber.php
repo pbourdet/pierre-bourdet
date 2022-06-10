@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class UserDeletionSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private UserAuthorizationChecker $userAuthorizationChecker
+        private readonly UserAuthorizationChecker $userAuthorizationChecker
     ) {
     }
 

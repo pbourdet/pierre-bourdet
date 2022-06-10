@@ -15,11 +15,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UpdateLanguageController extends AbstractController
 {
-    public const PATH = '/account/update-language';
+    final public const PATH = '/account/update-language';
 
     public function __construct(
-        private ValidatorInterface $validator,
-        private UserRepository $userRepository
+        private readonly ValidatorInterface $validator,
+        private readonly UserRepository $userRepository
     ) {
     }
 

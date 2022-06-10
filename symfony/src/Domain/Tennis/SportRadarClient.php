@@ -17,12 +17,13 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class SportRadarClient
 {
+    private string $locale = '';
+
     public function __construct(
-        private HttpClientInterface $client,
-        private SerializerInterface $serializer,
-        private LoggerInterface $logger,
+        private readonly HttpClientInterface $client,
+        private readonly SerializerInterface $serializer,
+        private readonly LoggerInterface $logger,
         RequestStack $requestStack,
-        private string $locale = ''
     ) {
         $this->locale = $requestStack->getMainRequest()?->getLocale() ?? LanguageEnum::EN;
     }

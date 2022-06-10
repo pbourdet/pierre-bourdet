@@ -8,5 +8,5 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AuthenticationException extends HttpException
 {
-    public const AUTHENTICATION_EXCEPTION = 'You are not authenticated';
+    final public const AUTHENTICATION_EXCEPTION = 'You are not authenticated';
 }

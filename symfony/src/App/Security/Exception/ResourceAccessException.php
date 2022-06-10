@@ -8,5 +8,5 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ResourceAccessException extends HttpException
 {
-    public const RESOURCE_ACCESS_EXCEPTION = 'This is not your resource';
+    final public const RESOURCE_ACCESS_EXCEPTION = 'This is not your resource';
 }
