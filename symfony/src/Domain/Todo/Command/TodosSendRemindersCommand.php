@@ -8,12 +8,14 @@ use App\Repository\TodoRepository;
 use Infrastructure\Mailer\EmailFactory;
 use Infrastructure\Mailer\EmailMessage;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[AsCommand('app:todos:send-reminders')]
 class TodosSendRemindersCommand extends Command
 {
     protected static $defaultName = 'app:todos:send-reminders';
