@@ -29,7 +29,7 @@ class LocaleListener implements EventSubscriberInterface
 
         $language = $request->headers->get('accept-language');
 
-        if (null === $language || false === in_array($language, LanguageEnum::getIsoLanguages())) {
+        if (null === $language || false === in_array($language, LanguageEnum::getIsoLanguages(), true)) {
             return;
         }
 

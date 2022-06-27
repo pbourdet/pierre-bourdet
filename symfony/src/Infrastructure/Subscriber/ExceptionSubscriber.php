@@ -8,7 +8,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class ExceptionSubscriber implements EventSubscriberInterface
@@ -23,7 +22,6 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     public function processException(ExceptionEvent $event): void
     {
-        /** @var HttpException $exception */
         $exception = $event->getThrowable();
         $statusCode = method_exists($exception, 'getStatusCode')
             ? $exception->getStatusCode()

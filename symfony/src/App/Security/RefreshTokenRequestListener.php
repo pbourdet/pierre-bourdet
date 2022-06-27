@@ -40,7 +40,7 @@ class RefreshTokenRequestListener implements EventSubscriberInterface
             $request->cookies->all(),
             $request->files->all(),
             $request->server->all(),
-            (string) json_encode(['refreshToken' => $request->cookies->get('REFRESH_TOKEN')], JSON_THROW_ON_ERROR)
+            json_encode(['refreshToken' => $request->cookies->get('REFRESH_TOKEN')], JSON_THROW_ON_ERROR)
         );
     }
 }
