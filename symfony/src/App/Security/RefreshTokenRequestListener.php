@@ -16,6 +16,7 @@ class RefreshTokenRequestListener implements EventSubscriberInterface
     ) {
     }
 
+    /** @return array<string, string|array{0: string, 1: int}|list<array{0: string, 1?: int}>> */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -39,7 +40,7 @@ class RefreshTokenRequestListener implements EventSubscriberInterface
             $request->cookies->all(),
             $request->files->all(),
             $request->server->all(),
-            (string) json_encode(['refreshToken' => $request->cookies->get('REFRESH_TOKEN')], JSON_THROW_ON_ERROR)
+            json_encode(['refreshToken' => $request->cookies->get('REFRESH_TOKEN')], JSON_THROW_ON_ERROR)
         );
     }
 }

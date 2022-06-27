@@ -8,7 +8,6 @@ use ApiPlatform\Core\DataProvider\CollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use App\Entity\SnakeGame;
 use App\Entity\User;
-use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\Security\Core\Security;
 
 class UserSnakeGameCollectionDataProvider implements CollectionDataProviderInterface, RestrictedDataProviderInterface
@@ -18,18 +17,13 @@ class UserSnakeGameCollectionDataProvider implements CollectionDataProviderInter
     ) {
     }
 
+    /** @return array<SnakeGame> */
     public function getCollection(string $resourceClass, string $operationName = null): array
     {
         /** @var User $user */
         $user = $this->security->getUser();
 
-        $games = $user->getGames()->matching(
-            Criteria::create()->orderBy(['score' => Criteria::DESC])
-        );
-
-        return $games
-            ->filter(fn ($game) => $game instanceof SnakeGame)
-            ->slice(0, 5);
+        return $user->getGamesByType(SnakeGame::class);
     }
 
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool

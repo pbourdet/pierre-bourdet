@@ -41,6 +41,7 @@ class CreateMessageDataTransformer implements DataTransformerInterface
             ->setSender($participant);
     }
 
+    /** @param object $data */
     public function supportsTransformation($data, string $to, array $context = []): bool
     {
         return false === $data instanceof Message

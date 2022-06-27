@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\App\Entity;
 
+use App\Entity\Game;
+use App\Entity\SnakeGame;
 use App\Entity\Todo;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
@@ -102,5 +104,18 @@ class UserTest extends TestCase
         $this->testedObject->hasBeenUpdated();
 
         $this->assertEquals($now->format('d/m/Y H:i'), $this->testedObject->getUpdatedAt()->format('d/m/Y H:i'));
+    }
+
+    public function testGetGamesByType(): void
+    {
+        $this->testedObject->addGame((new SnakeGame())->setScore(2));
+        $this->testedObject->addGame((new SnakeGame())->setScore(100));
+        $this->testedObject->addGame(($this->getMockBuilder(Game::class)->getMockForAbstractClass()));
+
+        $actual = $this->testedObject->getGamesByType(SnakeGame::class);
+
+        $this->assertIsArray($actual);
+        $this->assertCount(2, $actual);
+        $this->assertEquals(100, current($actual)->getScore());
     }
 }

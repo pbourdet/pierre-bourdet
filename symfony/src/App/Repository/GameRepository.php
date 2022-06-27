@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Game;
-use App\Entity\SnakeGame;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @extends ServiceEntityRepository<Game>
+ *
  * @method Game|null find($id, $lockMode = null, $lockVersion = null)
  * @method Game|null findOneBy(array $criteria, array $orderBy = null)
  * @method Game[]    findAll()
@@ -25,13 +26,15 @@ class GameRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param class-string<Game> $gameClassName
+     * @phpstan-template T of Game
      *
-     * @return array<SnakeGame>
+     * @param class-string<T> $gameClassName
+     *
+     * @return array<T>
      */
     public function getTopFiveGamesByGameType(string $gameClassName): array
     {
-        /** @var array<SnakeGame> $snakeGames */
+        /** @var array<T> $snakeGames */
         $snakeGames = $this->createQueryBuilder('g')
             ->where('g INSTANCE OF :class')
             ->orderBy('g.score', 'DESC')

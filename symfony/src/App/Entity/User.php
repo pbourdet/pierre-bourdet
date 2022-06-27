@@ -9,6 +9,7 @@ use App\Controller\Account\GetMeController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Model\User\CreateUserDTO;
 use Symfony\Component\HttpFoundation\Request;
@@ -111,6 +112,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private string $password = '';
 
+    /** @var Collection<int, Todo> */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Todo::class, orphanRemoval: true)]
     private Collection $todos;
 
@@ -135,9 +137,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private string $language = '';
 
+    /** @var Collection<int, Game> */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Game::class, orphanRemoval: true)]
     private Collection $games;
 
+    /** @var Collection<int, Participant> */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Participant::class, orphanRemoval: true)]
     private Collection $participants;
 
@@ -209,7 +213,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     /**
@@ -239,7 +243,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -348,9 +352,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /** @return Collection<int, Game> */
     public function getGames(): Collection
     {
         return $this->games;
+    }
+
+    /**
+     * @phpstan-template T of Game
+     * @phpstan-param class-string<T> $gameClassName
+     * @phpstan-return array<int, T>
+     */
+    public function getGamesByType(string $gameClassName): array
+    {
+        /** @var array<int, T> $games */
+        $games = $this->games
+            ->matching(Criteria::create()->orderBy(['score' => Criteria::DESC]))
+            ->filter(fn ($game) => $game instanceof $gameClassName)
+            ->slice(0, 5)
+        ;
+
+        return $games;
     }
 
     public function addGame(Game $game): self

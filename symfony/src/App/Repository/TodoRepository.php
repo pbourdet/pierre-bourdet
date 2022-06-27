@@ -9,6 +9,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @extends ServiceEntityRepository<Todo>
+ *
  * @method Todo|null find($id, $lockMode = null, $lockVersion = null)
  * @method Todo|null findOneBy(array $criteria, array $orderBy = null)
  * @method Todo[]    findAll()

@@ -4,8 +4,8 @@ parameters:
 		- src
 	excludePaths:
 		- src/App/DataFixtures
+		- src/Infrastructure/OpenApi
 	checkMissingIterableValueType: false
-	checkGenericClassInNonGenericObjectType: false
 	symfony:
 		containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
 	scanDirectories:

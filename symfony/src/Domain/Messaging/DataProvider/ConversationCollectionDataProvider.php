@@ -17,6 +17,7 @@ class ConversationCollectionDataProvider implements CollectionDataProviderInterf
     ) {
     }
 
+    /** @return array<Conversation> */
     public function getCollection(string $resourceClass, string $operationName = null): array
     {
         /** @var User $user */

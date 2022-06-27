@@ -30,11 +30,10 @@ final class UserCreatedDataPersister implements ContextAwareDataPersisterInterfa
     /**
      * @param mixed $data
      *
-     * @return mixed
+     * @return object|void
      */
     public function persist($data, array $context = [])
     {
-        /** @var User $result */
         $result = $this->decorator->persist($data, $context);
 
         if ($data instanceof User && 'post' === $context['collection_operation_name']) {

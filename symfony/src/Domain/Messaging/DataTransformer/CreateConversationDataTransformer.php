@@ -39,6 +39,7 @@ class CreateConversationDataTransformer implements DataTransformerInterface
         return $conversation;
     }
 
+    /** @param object $data */
     public function supportsTransformation($data, string $to, array $context = []): bool
     {
         return false === $data instanceof Conversation
