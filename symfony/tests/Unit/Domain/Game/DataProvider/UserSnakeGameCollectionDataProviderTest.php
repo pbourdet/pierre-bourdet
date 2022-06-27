@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Domain\Game\DataProvider;
 
-use App\Entity\Game;
 use App\Entity\SnakeGame;
 use App\Entity\User;
-use Doctrine\Common\Collections\ArrayCollection;
 use Domain\Game\DataProvider\UserSnakeGameCollectionDataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -32,23 +30,22 @@ class UserSnakeGameCollectionDataProviderTest extends TestCase
 
     public function testGetCollection(): void
     {
-        $games = new ArrayCollection();
-        $games->add((new SnakeGame())->setScore(2));
-        $games->add((new SnakeGame())->setScore(100));
-        $games->add(($this->getMockBuilder(Game::class)->getMockForAbstractClass()));
+        $games = [
+            (new SnakeGame())->setScore(2),
+            (new SnakeGame())->setScore(100),
+        ];
 
-        $user = $this->getMockBuilder(User::class)->getMock();
+        $user = $this->createMock(User::class);
         $this->security
             ->expects($this->once())
             ->method('getUser')
             ->willReturn($user);
 
-        $user->expects($this->once())->method('getGames')->willReturn($games);
+        $user->expects($this->once())->method('getGamesByType')->with(SnakeGame::class)->willReturn($games);
 
         $actual = $this->testedObject->getCollection(SnakeGame::class);
 
         $this->assertIsArray($actual);
         $this->assertCount(2, $actual);
-        $this->assertEquals(100, current($actual)->getScore());
     }
 }
