@@ -56,8 +56,8 @@ services:
             - "443:443/udp"
         environment:
             SERVER_NAME: localhost, caddy:80
-            MERCURE_PUBLISHER_JWT_KEY: 1234
-            MERCURE_SUBSCRIBER_JWT_KEY: 1234
+            MERCURE_PUBLISHER_JWT_KEY: 1234567890123456789012345678901234567890
+            MERCURE_SUBSCRIBER_JWT_KEY: 1234567890123456789012345678901234567890
             MERCURE_EXTRA_DIRECTIVES: |-
                 cors_origins https://localhost:3000
     php-logs:
