@@ -13,15 +13,10 @@ services:
             - php_logs:/srv/app/var/log
             - ./symfony/:/srv/app:rw,cached
             - ./symfony/docker/php/conf.d/symfony.dev.ini:/usr/local/etc/php/conf.d/symfony.ini
+            - ./symfony/docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
         environment:
             APP_ENV: dev
             RUN_FIXTURES: 'true'
-            #Xdebug config
-            XDEBUG_CONFIG: >-
-                client_host=host.docker.internal
-                start_with_request=yes
-            XDEBUG_MODE: debug
-            PHP_IDE_CONFIG: serverName=symfony
         extra_hosts:
             # Ensure that host.docker.internal is correctly defined on Linux
             - host.docker.internal:host-gateway
@@ -101,7 +96,7 @@ services:
             - /app/node_modules
             - ./frontend-react/:/app
         ports:
-            - 3000:3000
+            - "3000:3000"
 volumes:
     php_socket:
     caddy_data:
