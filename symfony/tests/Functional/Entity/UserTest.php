@@ -99,12 +99,12 @@ class UserTest extends AbstractEndPoint
     public function testPatchDefaultUser(string $id): void
     {
         $response = $this->getResponseFromRequest(
-                Request::METHOD_PATCH,
-                self::USERS_URI.'/'.$id,
-                $this->getPayload(),
-                [],
-                false
-            );
+            Request::METHOD_PATCH,
+            self::USERS_URI.'/'.$id,
+            $this->getPayload(),
+            [],
+            false
+        );
 
         $content = $response->getContent();
         $contentDecoded = json_decode($content, true);
@@ -141,9 +141,9 @@ class UserTest extends AbstractEndPoint
     public function testDeleteOtherUserWithJWT(string $id): void
     {
         $response = $this->getResponseFromRequest(
-                Request::METHOD_DELETE,
-                self::USERS_URI.'/'.$id
-            );
+            Request::METHOD_DELETE,
+            self::USERS_URI.'/'.$id
+        );
 
         $content = $response->getContent();
         $contentDecoded = json_decode($content, true);
@@ -160,9 +160,9 @@ class UserTest extends AbstractEndPoint
     public function testDeleteDefaultUserWithJWT(string $id): void
     {
         $response = $this->getResponseFromRequest(
-                Request::METHOD_DELETE,
-                self::USERS_URI.'/'.$id
-            );
+            Request::METHOD_DELETE,
+            self::USERS_URI.'/'.$id
+        );
 
         $this->assertEquals(Response::HTTP_NO_CONTENT, $response->getStatusCode());
     }

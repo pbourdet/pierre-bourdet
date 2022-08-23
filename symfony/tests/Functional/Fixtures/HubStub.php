@@ -35,6 +35,6 @@ class HubStub implements HubInterface
 
     public function getFactory(): ?TokenFactoryInterface
     {
-        return new LcobucciFactory('1234');
+        return new LcobucciFactory('1234567890123456789012345678901234567890');
     }
 }
