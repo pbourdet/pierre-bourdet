@@ -105,7 +105,7 @@ class TodoTest extends AbstractEndPoint
             '',
             [],
             false
-            );
+        );
 
         $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
     }

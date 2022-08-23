@@ -110,7 +110,7 @@ class UserTest extends TestCase
     {
         $this->testedObject->addGame((new SnakeGame())->setScore(2));
         $this->testedObject->addGame((new SnakeGame())->setScore(100));
-        $this->testedObject->addGame(($this->getMockBuilder(Game::class)->getMockForAbstractClass()));
+        $this->testedObject->addGame($this->getMockBuilder(Game::class)->getMockForAbstractClass());
 
         $actual = $this->testedObject->getGamesByType(SnakeGame::class);
 
