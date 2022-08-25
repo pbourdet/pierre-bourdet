@@ -45,6 +45,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fakerphp/faker": "^1.14",
         "friendsofphp/php-cs-fixer": "^3.0",
+        "infection/infection": "^0.26.13",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^1.0",
         "phpstan/phpstan-doctrine": "^1.0",
@@ -60,7 +61,8 @@
             "symfony/flex": true,
             "symfony/runtime": true,
             "composer/package-versions-deprecated": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "infection/extension-installer": true
         },
         "optimize-autoloader": true,
         "preferred-install": {

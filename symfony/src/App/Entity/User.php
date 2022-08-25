@@ -360,7 +360,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @phpstan-template T of Game
+     *
      * @phpstan-param class-string<T> $gameClassName
+     *
      * @phpstan-return array<int, T>
      */
     public function getGamesByType(string $gameClassName): array

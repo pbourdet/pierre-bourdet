@@ -1,0 +1,28 @@
+{
+    "source": {
+        "directories": [
+            "src"
+        ],
+        "excludes": [
+            "Model",
+            "App/Controller",
+            "App/DataFixtures",
+            "App/Repository",
+            "Infrastructure/OpenApi",
+            "Kernel.php"
+        ]
+    },
+    "mutators": {
+        "@default": true,
+        "global-ignore": [
+            "*\\*::getSubscribedEvents"
+        ]
+    },
+    "phpUnit": {
+        "customPath": "vendor/bin/simple-phpunit"
+    },
+    "logs": {
+        "html": "infection.html"
+    },
+    "testFrameworkOptions": "--testsuite=unit"
+}
