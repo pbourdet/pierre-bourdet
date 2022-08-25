@@ -6,12 +6,12 @@ namespace Domain\Todo\DataTransformer;
 
 use ApiPlatform\Core\Bridge\Symfony\Validator\Exception\ValidationException;
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
-use ApiPlatform\Core\Serializer\AbstractItemNormalizer;
 use ApiPlatform\Core\Validator\ValidatorInterface;
 use App\Entity\Todo;
 use App\Entity\User;
 use Model\Todo\PersistTodoDTO;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 class PersistTodoDataTransformer implements DataTransformerInterface
 {
@@ -40,7 +40,7 @@ class PersistTodoDataTransformer implements DataTransformerInterface
             $todo->setUser($user);
         } else {
             $validationGroup = self::UPDATE_VALIDATION_GROUP;
-            $todo = $context[AbstractItemNormalizer::OBJECT_TO_POPULATE];
+            $todo = $context[AbstractNormalizer::OBJECT_TO_POPULATE];
         }
 
         $this->validator->validate($object, ['groups' => $validationGroup]);
@@ -58,6 +58,6 @@ class PersistTodoDataTransformer implements DataTransformerInterface
 
     public function supportsTransformation($data, string $to, array $context = []): bool
     {
-        return isset($context['input']['class']) && PersistTodoDTO::class === $context['input']['class'];
+        return PersistTodoDTO::class === ($context['input']['class'] ?? null);
     }
 }
