@@ -52,11 +52,21 @@ migrations:
 database-test:
 	docker compose exec -e APP_ENV=test symfony bin/console doctrine:database:create --if-not-exists
 	docker compose exec -e APP_ENV=test symfony bin/console doctrine:migration:migrate --no-interaction
-	docker compose exec -e APP_ENV=test symfony bin/console doctrine:fixtures:load --no-interaction
 
 back-test:
-	docker compose exec -e APP_ENV=test symfony bin/console doctrine:fixtures:load --no-interaction
-	docker compose exec symfony ./vendor/bin/simple-phpunit
+	make back-test-unit
+	make mutation
+	make back-test-functional
+
+back-test-functional:
+	docker-compose exec -e APP_ENV=test symfony bin/console doctrine:fixtures:load --no-interaction
+	docker-compose exec symfony ./vendor/bin/simple-phpunit --testsuite=functional
+
+back-test-unit:
+	docker-compose exec symfony ./vendor/bin/simple-phpunit --testsuite=unit
+
+mutation:
+	docker-compose exec symfony ./vendor/bin/infection --threads=4 --min-msi=70
 
 back-check:
 	make code-check
