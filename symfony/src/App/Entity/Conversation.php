@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Model\Messaging\CreateConversationDTO;
+use Model\Messaging\Exception\InvalidConversationException;
 use Symfony\Component\Serializer\Annotation as Serializer;
 use Symfony\Component\Uid\Uuid;
 
@@ -113,7 +114,7 @@ class Conversation
         return null;
     }
 
-    public function getOtherParticipant(User $user): ?Participant
+    public function getOtherParticipant(User $user): Participant
     {
         foreach ($this->participants as $participant) {
             if ($participant->getUser() !== $user) {
@@ -121,7 +122,7 @@ class Conversation
             }
         }
 
-        return null;
+        throw new InvalidConversationException((string) $this->id, (string) $user->getId());
     }
 
     public function hasUser(User $user): bool

@@ -45,10 +45,6 @@ class MessageCreationSubscriber implements EventSubscriberInterface
         $user = $message->getSender()->getUser();
         $otherParticipant = $message->getConversation()->getOtherParticipant($user);
 
-        if (null === $otherParticipant) {
-            return;
-        }
-
         $conversationTopic = $this->router->generate(
             name: 'api_conversations_get_item',
             parameters: ['id' => $message->getConversation()->getId()],
