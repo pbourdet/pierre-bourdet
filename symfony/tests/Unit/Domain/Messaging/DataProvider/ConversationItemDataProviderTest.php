@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Domain\Messaging\DataProvider;
 
 use App\Entity\Conversation;
+use App\Entity\Participant;
 use App\Entity\User;
 use App\Repository\ConversationRepository;
 use App\Security\Exception\ResourceAccessException;
@@ -30,6 +31,26 @@ class ConversationItemDataProviderTest extends TestCase
             $this->security,
             $this->conversationRepository
         );
+    }
+
+    /** @dataProvider dataSupports */
+    public function testSupportsNormalization(string $resourceClass, bool $expected): void
+    {
+        $this->assertSame($expected, $this->testedObject->supports($resourceClass));
+    }
+
+    public function dataSupports(): array
+    {
+        return [
+            'case wrong class' => [
+                'resourceClass' => Participant::class,
+                'expected' => false,
+            ],
+            'case Conversation' => [
+                'data' => Conversation::class,
+                'expected' => true,
+            ],
+        ];
     }
 
     public function testGetItem(): void

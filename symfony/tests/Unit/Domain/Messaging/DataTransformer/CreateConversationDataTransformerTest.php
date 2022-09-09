@@ -56,9 +56,10 @@ class CreateConversationDataTransformerTest extends TestCase
             ->with($userId)
             ->willReturn(new User());
 
-        $actual = $this->testedObject->transform($object, '', []);
+        $actual = $this->testedObject->transform($object, '');
 
         $this->assertInstanceOf(Conversation::class, $actual);
+        $this->assertCount(2, $actual->getParticipants());
     }
 
     /** @dataProvider dataTestSupportsTransformation */

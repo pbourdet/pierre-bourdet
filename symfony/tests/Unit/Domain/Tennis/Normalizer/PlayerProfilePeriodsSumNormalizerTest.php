@@ -6,6 +6,7 @@ namespace Tests\Unit\Domain\Tennis\Normalizer;
 
 use Domain\Tennis\Normalizer\PlayerProfilePeriodsSumNormalizer;
 use Model\Tennis\Enum\SurfaceTypeEnum;
+use Model\Tennis\PlayerProfile\Competitor;
 use Model\Tennis\PlayerProfile\Period;
 use Model\Tennis\PlayerProfile\PlayerProfile;
 use Model\Tennis\PlayerProfile\Statistics;
@@ -26,6 +27,26 @@ class PlayerProfilePeriodsSumNormalizerTest extends TestCase
 
         $this->testedObject = new PlayerProfilePeriodsSumNormalizer();
         $this->testedObject->setNormalizer($this->normalizer);
+    }
+
+    /** @dataProvider dataSupportsNormalization */
+    public function testSupportsNormalization(object $data, bool $expected): void
+    {
+        $this->assertSame($expected, $this->testedObject->supportsNormalization($data));
+    }
+
+    public function dataSupportsNormalization(): array
+    {
+        return [
+            'case wrong class' => [
+                'data' => new Competitor(),
+                'expected' => false,
+            ],
+            'case PlayerProfile' => [
+                'data' => new PlayerProfile(),
+                'expected' => true,
+            ],
+        ];
     }
 
     public function testNormalize(): void

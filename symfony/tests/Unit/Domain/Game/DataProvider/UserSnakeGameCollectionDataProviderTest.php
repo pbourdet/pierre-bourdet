@@ -28,6 +28,35 @@ class UserSnakeGameCollectionDataProviderTest extends TestCase
         );
     }
 
+    /** @dataProvider dataSupports */
+    public function testSupports(string $resourceClass, string $operationName, bool $expected): void
+    {
+        $actual = $this->testedObject->supports($resourceClass, $operationName);
+
+        $this->assertSame($actual, $expected);
+    }
+
+    public function dataSupports(): array
+    {
+        return [
+            'case unsupported class' => [
+                'resourceClass' => User::class,
+                'operationName' => SnakeGame::USER_GAMES_OPERATION_NAME,
+                'expected' => false,
+            ],
+            'case unsupported operation' => [
+                'resourceClass' => SnakeGame::class,
+                'operationName' => 'operation',
+                'expected' => false,
+            ],
+            'case supported' => [
+                'resourceClass' => SnakeGame::class,
+                'operationName' => SnakeGame::USER_GAMES_OPERATION_NAME,
+                'expected' => true,
+            ],
+        ];
+    }
+
     public function testGetCollection(): void
     {
         $games = [

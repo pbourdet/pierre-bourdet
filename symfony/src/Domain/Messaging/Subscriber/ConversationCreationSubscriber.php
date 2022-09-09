@@ -49,10 +49,6 @@ class ConversationCreationSubscriber implements EventSubscriberInterface
         $user = $this->security->getUser();
         $otherParticipant = $conversation->getOtherParticipant($user);
 
-        if (null === $otherParticipant) {
-            return;
-        }
-
         $conversationTopic = $this->router->generate(
             name: 'api_conversations_get_collection',
             referenceType: UrlGeneratorInterface::ABSOLUTE_URL,

@@ -31,10 +31,18 @@ class CountryCodeNormalizerTest extends TestCase
         $competitor = new Competitor();
         $competitor->countryCode = 'FRA';
 
+        $this->normalizer
+            ->expects($this->once())
+            ->method('normalize')
+            ->with($competitor)
+            ->willReturn(['country' => 'France']);
+
         $actual = $this->testedObject->normalize($competitor);
 
         $this->assertArrayHasKey('countryCode', $actual);
+        $this->assertArrayHasKey('country', $actual);
         $this->assertSame('FR', $actual['countryCode']);
+        $this->assertSame('France', $actual['country']);
     }
 
     public function testNormalizeWithInvalidCountryCode(): void
@@ -52,10 +60,18 @@ class CountryCodeNormalizerTest extends TestCase
         $competitor = new Competitor();
         $competitor->countryCode = 'TPE';
 
+        $this->normalizer
+            ->expects($this->once())
+            ->method('normalize')
+            ->with($competitor)
+            ->willReturn(['country' => 'Taiwan']);
+
         $actual = $this->testedObject->normalize($competitor);
 
         $this->assertArrayHasKey('countryCode', $actual);
+        $this->assertArrayHasKey('country', $actual);
         $this->assertSame('TW', $actual['countryCode']);
+        $this->assertSame('Taiwan', $actual['country']);
     }
 
     /** @dataProvider dataSupportsNormalization */

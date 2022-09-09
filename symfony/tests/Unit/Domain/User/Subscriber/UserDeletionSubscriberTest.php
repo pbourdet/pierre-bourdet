@@ -63,6 +63,8 @@ class UserDeletionSubscriberTest extends TestCase
 
         $event = new ViewEvent($httpKernel, $request, 1, $user);
 
+        $this->userAuthorizationChecker->expects($this->never())->method('check')->with($user);
+
         $this->testedObject->check($event);
     }
 
@@ -71,10 +73,12 @@ class UserDeletionSubscriberTest extends TestCase
         $resource = $this->getMockBuilder(Todo::class)->getMock();
 
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $request->expects($this->once())->method('getMethod')->willReturn(Request::METHOD_POST);
+        $request->expects($this->once())->method('getMethod')->willReturn(Request::METHOD_DELETE);
         $httpKernel = $this->getMockBuilder(HttpKernelInterface::class)->getMock();
 
         $event = new ViewEvent($httpKernel, $request, 1, $resource);
+
+        $this->userAuthorizationChecker->expects($this->never())->method('check')->with($resource);
 
         $this->testedObject->check($event);
     }
