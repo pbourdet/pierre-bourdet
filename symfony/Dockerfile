@@ -74,7 +74,7 @@ ENV PATH="${PATH}:/root/.composer/vendor/bin"
 WORKDIR /srv/app
 
 # Download the Symfony skeleton and leverage Docker cache layers
-RUN composer create-project "symfony/skeleton 5.3.*" . --stability=stable --prefer-dist --no-dev --no-progress --no-interaction; \
+RUN composer create-project "symfony/skeleton 6.1.*" . --stability=stable --prefer-dist --no-dev --no-progress --no-interaction; \
 	composer clear-cache
 
 # Postgres extensions

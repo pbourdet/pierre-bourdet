@@ -155,8 +155,20 @@ commands:
                   name: Run Phpstan
                   command: docker-compose exec symfony ./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=-1
             - run:
-                  name: Run PhpUnit tests
-                  command: docker-compose exec symfony ./vendor/bin/simple-phpunit
+                  name: Run PhpUnit unit tests
+                  command: docker-compose exec symfony ./vendor/bin/simple-phpunit --testsuite=unit
+            - run:
+                  name: Install xdebug for coverage
+                  command: |
+                      docker-compose exec symfony apk add --no-cache --virtual .build-deps autoconf dpkg-dev dpkg file g++ gcc libc-dev pkgconf re2c
+                      docker-compose exec symfony pecl install xdebug
+                      docker-compose exec symfony docker-php-ext-enable xdebug
+            - run:
+                  name: Run mutation testing
+                  command: docker-compose exec symfony ./vendor/bin/infection --threads=4 --min-msi=70
+            - run:
+                  name: Run PhpUnit functional tests
+                  command: docker-compose exec symfony ./vendor/bin/simple-phpunit --testsuite=functional
     test_front:
         steps:
             - run:
