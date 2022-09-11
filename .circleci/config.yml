@@ -43,25 +43,9 @@ commands:
                       fi;
     install_compose:
         steps:
-            - when:
-                  condition:
-                      equal: [ master, << pipeline.git.branch >> ]
-                  steps:
-                      - run:
-                            name: Install docker-compose
-                            command: apk add docker-compose
-            - unless:
-                  condition:
-                      equal: [ master, << pipeline.git.branch >> ]
-                  steps:
-                      - run:
-                            name: Install docker-compose
-                            environment:
-                                COMPOSE_VERSION: '2.10.2'
-                            command : |
-                                curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
-                                chmod +x ~/docker-compose
-                                sudo mv ~/docker-compose /usr/local/bin/docker-compose
+            - run:
+                  name: Install docker-compose
+                  command: apk add docker-compose
     login_docker:
         steps:
             - run:
@@ -116,7 +100,7 @@ commands:
                                 gsutil cp gs://$GCP_PROJECT_NAME.appspot.com/secret-key-prod/prod.decrypt.private.php symfony/config/secrets/prod/
                       - run:
                             name: Build symfony and caddy production images
-                            command: docker compose -f docker-compose.prod.yaml build
+                            command: docker-compose -f docker-compose.prod.yaml build
                       - run:
                             name: Push images to artifact registry
                             command: |
@@ -218,8 +202,8 @@ commands:
                   name: Restart containers
                   command: |
                       gcloud compute ssh $GCP_ENGINE_INSTANCE --command "\
-                            sudo docker compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml down --remove-orphans \
-                            && sudo SERVER_NAME='api.pierre-bourdet.dev, caddy:80' CADDY_MERCURE_JWT_SECRET=${MERCURE_JWT_SECRET} POSTGRES_PASSWORD=${POSTGRES_PASSWORD} docker compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml up -d \
+                            sudo docker-compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml down --remove-orphans \
+                            && sudo SERVER_NAME='api.pierre-bourdet.dev, caddy:80' CADDY_MERCURE_JWT_SECRET=${MERCURE_JWT_SECRET} POSTGRES_PASSWORD=${POSTGRES_PASSWORD} docker-compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml up -d \
                             && sudo docker image prune -f \
                             && sudo docker volume prune -f"
     update_sha_back:
@@ -254,7 +238,6 @@ jobs:
             - check_sha_front
             - setup_remote_docker:
                   docker_layer_caching: true
-            - install_compose
             - build_front
             - test_front
 
@@ -266,7 +249,6 @@ jobs:
             - check_sha_back
             - setup_remote_docker:
                   docker_layer_caching: true
-            - install_compose
             - build_back
             - test_back
 
