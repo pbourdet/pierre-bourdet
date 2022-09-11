@@ -1,3 +1,6 @@
+bash:
+	docker compose exec symfony bash
+
 up:
 	docker compose up -d
 

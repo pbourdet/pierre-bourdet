@@ -57,7 +57,7 @@ commands:
                       - run:
                             name: Install docker-compose
                             environment:
-                                COMPOSE_VERSION: '1.29.2'
+                                COMPOSE_VERSION: '2.10.2'
                             command : |
                                 curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
                                 chmod +x ~/docker-compose
@@ -101,8 +101,8 @@ commands:
                       equal: [ master, << pipeline.git.branch >> ]
                   steps:
                       - run:
-                            name: Build React testing image
-                            command : docker-compose -f docker-compose-test-react.yaml up -d
+                          name: Build React testing image
+                          command: docker compose -f docker-compose-test-react.yaml up -d
     build_back:
         steps:
             - when:
@@ -116,7 +116,7 @@ commands:
                                 gsutil cp gs://$GCP_PROJECT_NAME.appspot.com/secret-key-prod/prod.decrypt.private.php symfony/config/secrets/prod/
                       - run:
                             name: Build symfony and caddy production images
-                            command: docker-compose -f docker-compose.prod.yaml build
+                            command: docker compose -f docker-compose.prod.yaml build
                       - run:
                             name: Push images to artifact registry
                             command: |
@@ -130,53 +130,53 @@ commands:
                   steps:
                       - run:
                             name: Build Symfony testing image
-                            command: docker-compose -f docker-compose-test-symfony.yaml up -d
+                            command: docker compose -f docker-compose-test-symfony.yaml up -d
     test_back:
         steps:
             - run:
                   name: Install dev dependencies and prepare database
                   command: |
-                      docker-compose exec symfony composer install
-                      docker-compose exec symfony bin/console doctrine:migration:migrate --no-interaction
-                      docker-compose exec symfony bin/console doctrine:fixtures:load --no-interaction
+                      docker compose exec symfony composer install
+                      docker compose exec symfony bin/console doctrine:migration:migrate --no-interaction
+                      docker compose exec symfony bin/console doctrine:fixtures:load --no-interaction
             - run:
                   name: Run YAML lint
                   command: |
-                      docker-compose exec symfony ./vendor/bin/yaml-lint config/
+                      docker compose exec symfony ./vendor/bin/yaml-lint config/
             - run:
                   name: Run php-cs-fixer
                   command: |
-                      docker-compose exec symfony ./vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no --allow-risky=yes
+                      docker compose exec symfony ./vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no --allow-risky=yes
             - run:
                   name: Run Rector
                   command: |
-                      docker-compose exec symfony ./vendor/bin/rector process src --dry-run
+                      docker compose exec symfony ./vendor/bin/rector process src --dry-run
             - run:
                   name: Run Phpstan
-                  command: docker-compose exec symfony ./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=-1
+                  command: docker compose exec symfony ./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=-1
             - run:
                   name: Run PhpUnit unit tests
-                  command: docker-compose exec symfony ./vendor/bin/simple-phpunit --testsuite=unit
+                  command: docker compose exec symfony ./vendor/bin/simple-phpunit --testsuite=unit
             - run:
                   name: Install xdebug for coverage
                   command: |
-                      docker-compose exec symfony apk add --no-cache --virtual .build-deps autoconf dpkg-dev dpkg file g++ gcc libc-dev pkgconf re2c
-                      docker-compose exec symfony pecl install xdebug
-                      docker-compose exec symfony docker-php-ext-enable xdebug
+                      docker compose exec symfony apk add --no-cache --virtual .build-deps autoconf dpkg-dev dpkg file g++ gcc libc-dev pkgconf re2c
+                      docker compose exec symfony pecl install xdebug
+                      docker compose exec symfony docker-php-ext-enable xdebug
             - run:
                   name: Run mutation testing
-                  command: docker-compose exec symfony ./vendor/bin/infection --threads=4 --min-msi=70
+                  command: docker compose exec symfony ./vendor/bin/infection --threads=4 --min-msi=70
             - run:
                   name: Run PhpUnit functional tests
-                  command: docker-compose exec symfony ./vendor/bin/simple-phpunit --testsuite=functional
+                  command: docker compose exec symfony ./vendor/bin/simple-phpunit --testsuite=functional
     test_front:
         steps:
             - run:
                   name: Run eslint
-                  command: docker-compose exec react yarn eslint-fix
+                  command: docker compose exec react yarn eslint-fix
             - run:
                   name: Run Jest tests
-                  command: docker-compose exec react yarn test src/ --watchAll=false
+                  command: docker compose exec react yarn test src/ --watchAll=false
     deploy_front:
         steps:
             - run:
@@ -218,8 +218,8 @@ commands:
                   name: Restart containers
                   command: |
                       gcloud compute ssh $GCP_ENGINE_INSTANCE --command "\
-                            sudo docker-compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml down --remove-orphans \
-                            && sudo SERVER_NAME='api.pierre-bourdet.dev, caddy:80' CADDY_MERCURE_JWT_SECRET=${MERCURE_JWT_SECRET} POSTGRES_PASSWORD=${POSTGRES_PASSWORD} docker-compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml up -d \
+                            sudo docker compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml down --remove-orphans \
+                            && sudo SERVER_NAME='api.pierre-bourdet.dev, caddy:80' CADDY_MERCURE_JWT_SECRET=${MERCURE_JWT_SECRET} POSTGRES_PASSWORD=${POSTGRES_PASSWORD} docker compose -f ${PROJECT_DIRECTORY}/docker-compose.prod.yaml up -d \
                             && sudo docker image prune -f \
                             && sudo docker volume prune -f"
     update_sha_back:
@@ -253,7 +253,7 @@ jobs:
             - setup_env_vars
             - check_sha_front
             - setup_remote_docker:
-                  version: 20.10.7
+                  docker_layer_caching: true
             - install_compose
             - build_front
             - test_front
@@ -265,7 +265,7 @@ jobs:
             - setup_env_vars
             - check_sha_back
             - setup_remote_docker:
-                  version: 20.10.7
+                  docker_layer_caching: true
             - install_compose
             - build_back
             - test_back
@@ -277,7 +277,7 @@ jobs:
             - setup_env_vars
             - check_sha_back
             - setup_remote_docker:
-                  version: 20.10.7
+                  docker_layer_caching: true
             - install_compose
             - login_docker
             - build_back
@@ -291,7 +291,7 @@ jobs:
             - setup_env_vars
             - check_sha_front
             - setup_remote_docker:
-                  version: 20.10.7
+                  docker_layer_caching: true
             - install_compose
             - login_docker
             - build_front
