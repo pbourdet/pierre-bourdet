@@ -5,6 +5,7 @@ default:
                 - Tests\Behat\DemoContext
 
     extensions:
+        Behatch\Extension: ~
         FriendsOfBehat\SymfonyExtension:
             kernel:
                 class: App\Kernel
@@ -12,3 +13,9 @@ default:
                 environment: test
                 debug: false
             bootstrap: tests/bootstrap.php
+        Behat\MinkExtension:
+            base_url: 'https://localhost/'
+            default_session: symfony
+            sessions:
+                symfony:
+                    symfony: ~

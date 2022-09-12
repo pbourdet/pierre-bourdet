@@ -62,8 +62,8 @@ back-test:
 	make back-test-functional
 
 back-test-functional:
-	docker-compose exec -e APP_ENV=test symfony bin/console doctrine:fixtures:load --no-interaction
-	docker-compose exec symfony ./vendor/bin/simple-phpunit --testsuite=functional
+	docker compose exec -e APP_ENV=test symfony bin/console cache:clear
+	docker compose exec symfony ./vendor/bin/behat
 
 back-test-unit:
 	docker-compose exec symfony ./vendor/bin/simple-phpunit --testsuite=unit
