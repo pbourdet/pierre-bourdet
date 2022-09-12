@@ -42,8 +42,10 @@
         "symfony/yaml": "6.1.*"
     },
     "require-dev": {
+        "behat/behat": "^3.11",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fakerphp/faker": "^1.14",
+        "friends-of-behat/symfony-extension": "^2.3",
         "friendsofphp/php-cs-fixer": "^3.0",
         "infection/infection": "^0.26.13",
         "phpstan/extension-installer": "^1.1",

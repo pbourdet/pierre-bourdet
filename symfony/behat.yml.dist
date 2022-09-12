@@ -1,0 +1,14 @@
+default:
+    suites:
+        default:
+            contexts:
+                - Tests\Behat\DemoContext
+
+    extensions:
+        FriendsOfBehat\SymfonyExtension:
+            kernel:
+                class: App\Kernel
+                path: src/Kernel.php
+                environment: test
+                debug: false
+            bootstrap: tests/bootstrap.php
