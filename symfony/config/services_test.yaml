@@ -5,3 +5,10 @@ services:
 
     Tests\Behat\:
         resource: '../tests/Behat/*'
+
+    Tests\Functional\Fixtures\HubStub:
+        decorates: mercure.hub.default
+
+    Infrastructure\Mailer\EmailMessageHandler:
+        arguments:
+            $mailer: '@Tests\Behat\Mock\MockMailer'

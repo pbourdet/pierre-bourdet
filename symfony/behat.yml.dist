@@ -2,7 +2,10 @@ default:
     suites:
         default:
             contexts:
-                - Tests\Behat\DemoContext
+                - behatch:context:rest
+                - behatch:context:json
+                - Behat\MinkExtension\Context\MinkContext
+                - Tests\Behat\Context\MailerContext
 
     extensions:
         Behatch\Extension: ~

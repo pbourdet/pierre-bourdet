@@ -1,3 +1,0 @@
-services:
-    Tests\Functional\Fixtures\HubStub:
-        decorates: mercure.hub.default
