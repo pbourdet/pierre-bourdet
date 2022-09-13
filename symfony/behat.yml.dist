@@ -6,6 +6,7 @@ default:
                 - behatch:context:json
                 - Behat\MinkExtension\Context\MinkContext
                 - Tests\Behat\Context\MailerContext
+                - Tests\Behat\Context\UserContext
 
     extensions:
         Behatch\Extension: ~
