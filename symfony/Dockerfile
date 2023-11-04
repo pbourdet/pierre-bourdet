@@ -118,6 +118,7 @@ FROM symfony_php as symfony_php_dev
 # Install xdebug
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps $PHPIZE_DEPS; \
+	apk add --update linux-headers; \
 	pecl install xdebug; \
 	docker-php-ext-enable xdebug; \
 	apk del .build-deps
